@@ -1594,7 +1594,7 @@ body[data-ds-dark-theme] .dshp-launch{background:color-mix(in srgb,var(--dsw-ali
 				const ceiling = listedCeiling(versions, d && d.localVersion);
 				const next = { stable: "", beta: "" };
 				for (const id of ["stable", "beta"]) {
-					const list = versions.filter((item) => item.channel === id && keepListedVersion(item, ceiling));
+					const list = versions.filter((item) => item.channel === id);
 					const hit = preferListed(list, d && d.localVersion, d && d.pin);
 					next[id] = (hit && hit.ref) || "";
 				}
@@ -2073,7 +2073,7 @@ body[data-ds-dark-theme] .dshp-launch{background:color-mix(in srgb,var(--dsw-ali
 			const renderEdition = (id) => {
 				const lane = (updateInfo && updateInfo.lanes && updateInfo.lanes[id]) || {};
 				const ceiling = listedCeiling(versions, localVer || (updateInfo && updateInfo.localVersion));
-				const list = versions.filter((item) => item.channel === id && keepListedVersion(item, ceiling));
+				const list = versions.filter((item) => item.channel === id);
 				const selectedRef = pick[id] || "";
 				const hit = list.find((item) => item.ref === selectedRef) || preferListed(list, localVer, updateInfo && updateInfo.pin);
 				const onLane = channelNow === id;
