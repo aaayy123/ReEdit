@@ -1,0 +1,26 @@
+【实测现象（203.0.113.105:13030「LLM 管理中心」）】
+- GET /API/admin/channels 里 nvidia 渠道的 api_keys 字段 = []（0 条）
+- GET /API/channel/nvidia/info 实际返回 1204 条（其中 945 条带 requestStatuses）
+- 后果：按主列表统计全量 = 3509 条 key / 3479 唯一；逐渠道详情汇总 = **4999 条 / 4947 唯一**（差 1490 条，唯一 key 差 1468）。少掉的量占 30%。
+
+【规律：什么情况下主列表会漏报】
+主列表对"密钥不是直接存在该对象里、而是由外部文件加载"的对象会报空/报 0。
+本例的判据：渠道配置里 config.apikey_path 有值（15 个渠道走外部文件加载，如 openai-local-apikeys、groq-local-apikeys、xai-local-apikeys）
+→ 这 15 个渠道在主列表几乎全是 0 条，而 /channel/<name>/info 能拿到真实密钥（因为密钥已被加载进内存）。
+
+【第二个陷阱：被禁用对象返回 404，不代表没有数据】
+渠道 enabled=false 时，GET /API/channel/<name>/info 返回 404 {"error":"Channel 'x' not found"}。
+本例三个：nebius、gemini_gemini30_pro、gemini_gemini30_pro_15k（都是 enabled=false），密钥其实仍在配置的 api_keys 字段里。
+→ 结论：404 ≠ 无密钥，需从主列表的 api_keys 字段补读，或让面板重新启用（不可取，会惊动运营方）。
+
+【可复用规则】
+统计任何"主从结构"资源（渠道-密钥、用户-权限、订单-明细、主机-端口）时：
+1. **主列表只用来取对象清单（name/id）**，绝不用它统计明细数量；
+2. **明细数量一律以"逐对象详情接口"汇总为准**；
+3. 发现"主列表明细为空但对象存在"时，优先怀疑外部加载/懒加载/权限过滤，换详情接口复核；
+4. 汇报数字前先做一次**双向集合比对**（导出结果 vs 基线：新增 0 / 消失 0 才算一致）。
+
+【正确接口（本例）】
+读取密钥的正确接口：GET /API/channel/<渠道名>/info（**不带** ?skipQuota=1）
+返回结构：{"channel":"x","hasQuota":false,"keys":{"keys":[{"key":"...","enabled":true,"requestStatuses":[]}]},"quota":null}
+统计脚本需对 105 个渠道逐个请求，串行间隔 ≥0.8s（避免触发限速）。

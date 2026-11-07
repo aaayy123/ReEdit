@@ -1,0 +1,6 @@
+【零凭证渲染点】GET /example.com?g=Home&m=Index&a=bbs&post=<article_id>  → 200，直接渲染 article 表该行内容，页面「作者:」= $cont['ename']（= 创建者 admin 用户名）。
+实测（176）：post=5 → 页面显示「稳赢九肖」；post=10 → 「花心萝卜」。
+⇒ 两个推论：① article.ename = 创建者 admin 用户名 ⇒ 可以零凭证枚举出后台全部账号名（用于 cookie 伪造的 admin_user 值 / 登录用户名清单）；② 该接口是「article 内容零凭证渲染点」，若某站能零凭证写 article（如 166 的 Admin/Autoart::article_save），配合此接口即构成"内容可控 + 会渲染"。
+【配套写库原语】POST /example.com?g=Admin&m=Autoart&a=article_save  data: ids=<catid> → 200 body "N"（写 N 条 article）；166 上该模块整模块免鉴权可达；176 上 Autoart 全 404（新构建已删）。
+【配套写文件/模板原语】GET /example.com?g=Home&m=Order&a=get_html1 → 200 {"ok":1,...}，会把抓取内容写进 App/Tpl/Home/Index_example.com 与 /Upload/atop/jquery3_5.txt|jquery3_6.txt|attime3_5.txt（176 上零凭证可用；166 上该动作 404）。
+【注意事项】bbs 在 166 上是 404（166 前台被裁）：166 的 List/index 无论 type 取值恒为 365B 同一份存根，getapp_html/user/kfhtml/selectm 全 404 ⇒ 166 缺少渲染点。

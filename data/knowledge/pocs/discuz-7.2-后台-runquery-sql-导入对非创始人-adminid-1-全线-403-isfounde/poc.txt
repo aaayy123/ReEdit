@@ -1,0 +1,7 @@
+实测流程（全部带固定 Client-IP: 203.0.113.77 + mNc_auth 前台会话）：
+1) GET /example.com → 后台 frames 页（sid 有效标记）→ GET /example.com?action=db&operation=runquery&sid=<sid> → "您沒有權限訪問管理中心"（非登录态错误，home 页同会话正常返回"歡迎進入…管理中心"）。
+2) POST /example.com?action=db&operation=runquery（sid/formhash/sqlsubmit/queries=SELECT md5(1)，带 Referer）→ 同样"您沒有權限訪問管理中心"，无 SQL 回显。
+3) XHR 头 + inajax=1 变体 → 同样拦截页。
+4) POST action=db&operation=import（from=server&datafile_server=...）与 multipart action=db&operation=importzip → 同样"您沒有權限訪問管理中心"。
+5) 交叉验证无偏差：action=styles&operation=import 同会话正常返回导入表单（formhash 正常），action=counter 正常，action=tools&operation=runquery 返回空 cpcontainer（无该子操作）。
+结论：Discuz 7.2 example.com:86 的 action=db isfounder 闸先于 checkpermission('runquery') 生效，adminid=1 非创始人管理员完全摸不到后台 SQL 执行原语；依赖 runquery/INTO OUTFILE 的 getshell 路线对非创始人不可行，须先解创始人（UCenter 创始人路线 / forumfounders）或改走 styles/smilies/plugins 导入等非 founder 写入点。

@@ -1,0 +1,19 @@
+## 实测
+```
+POST /Home/Index/login   name=test&pwd=test
+→ 200 {"ok":1,"ms":"登录成功","username":"test","balance":"0"}   (Set-Cookie: PHPSESSID=...; HttpOnly)
+
+GET /Index/user  Cookie: PHPSESSID=<同上>
+→ 200/21307B，正文含 test、0.00 金币、level 0
+GET /Index/user  无 Cookie → 200/21301B，不含 test（对照）
+
+GET /App/Tpl/Admin/Index_login.html  零凭证
+→ 200/1086B，<title>后台登录 - ...</title>，仅 username/password，无验证码/无 CSRF token
+```
+
+## 频控测试
+连续 34 组错误口令（间隔 0.7s）：全部同一错误 JSON，无验证码刷新、无 429、无账号锁定 ⇒ 可在线无限速爆破。
+
+## 影响
+- 会员侧：弱口令账号直登，读取用户名/余额/等级
+- 后台侧：登录接口结构与前台同构（username/password、无验证码），一旦拿到白名单入口即可无阻碍撞库

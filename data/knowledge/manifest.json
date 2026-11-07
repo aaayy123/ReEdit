@@ -1,0 +1,3437 @@
+{
+ "source_zip_sha256": "6B9882A1B80E9D6A316B8888ADB87689B74004C4E36104AED8C8516361BD573F",
+ "source_db_sha256": "4c72823e3b4919e3317440668e0b4c33c2e8e13262aeb70fe6029458d62b8c08",
+ "target_commit": "fb180cadd77f868719f9ccaa1e16a51e6fa54c97",
+ "target_version": "1.1.90-beta.1",
+ "poc_rows": 489,
+ "skills_main": 46,
+ "skills_refs": 59,
+ "pocs_materialized": 145,
+ "pocs_exec_skipped": 262,
+ "pocs_no_path": 82,
+ "items": [
+  {
+   "id": 1,
+   "code": "thinkphp-精确版本与绝对路径识别-异常页法",
+   "src_path": "pocs/thinkphp-精确版本与绝对路径识别-异常页法/poc.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 2,
+   "code": "未鉴权接口回显完整-sql-表结构-资金字段-拼接写法泄露",
+   "src_path": "pocs/未鉴权接口回显完整-sql-表结构-资金字段-拼接写法泄露/poc.http",
+   "dst_path": "pocs/未鉴权接口回显完整-sql-表结构-资金字段-拼接写法泄露/poc.http",
+   "action": "text-materialized"
+  },
+  {
+   "id": 3,
+   "code": "wg-lobby-新葡京系-前端加密模型还原-oss-预签名写入利用链",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 4,
+   "code": "wg-lobby-游客-token-数据面拖库-getsysinfo-取-token-chipher-重放-响应解密-接口普查翻页",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 5,
+   "code": "暴露数据库-ssh-服务弱口令与未授权探测脚本-mysql-postgresql-ssh-三合一",
+   "src_path": "pocs/暴露数据库-ssh-服务弱口令与未授权探测脚本-mysql-postgresql-ssh-三合一/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 6,
+   "code": "nextauth-v4-jwe-会话令牌解密与伪造-弱-nextauth_secret-检测",
+   "src_path": "pocs/nextauth-v4-jwe-会话令牌解密与伪造-弱-nextauth_secret-检测/nextauth-jwe-forge.js",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 7,
+   "code": "new-api-one-api-未授权面枚举与源码鉴权对照审计清单",
+   "src_path": "pocs/new-api-one-api-未授权面枚举与源码鉴权对照审计清单/newapi_unauth_audit.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 8,
+   "code": "1panel-安全入口-security-entrance-旁路探测-未认证路由与-assets-静态目录不受入口保护",
+   "src_path": "pocs/1panel-安全入口-security-entrance-旁路探测-未认证路由与-assets-静态目录不受入口保护/1panel_entrance_probe.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 9,
+   "code": "1panel-验证码绕过-cve-2025-66507-rsa-公钥加密口令在线爆破脚本",
+   "src_path": "pocs/1panel-验证码绕过-cve-2025-66507-rsa-公钥加密口令在线爆破脚本/1panel_login_brute_rsa.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 10,
+   "code": "1panel-login-password-encryption-rsa-aes-3seg",
+   "src_path": "pocs/1panel-login-password-encryption-rsa-aes-3seg/1panel_password_encrypt.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 11,
+   "code": "express-rate-limit-限速绕过-伪造-x-forwarded-for-变换限速-key",
+   "src_path": "pocs/express-rate-limit-限速绕过-伪造-x-forwarded-for-变换限速-key/rate_limit_bypass_xff.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 12,
+   "code": "纯-python-aws-sigv4-实现-无-awscli-boto3-时实测-aws-凭据有效性-sts-getcalleridentity",
+   "src_path": "pocs/纯-python-aws-sigv4-实现-无-awscli-boto3-时实测-aws-凭据有效性-sts-getcalleridentity/aws_sigv4_sts_check.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 13,
+   "code": "直连本机-chromemcpserver-驱动用户真实-chrome-mcp-streamable-http-自建会话-裸-ip-导航缺陷绕法",
+   "src_path": "pocs/直连本机-chromemcpserver-驱动用户真实-chrome-mcp-streamable-http-自建会话-裸-ip-导航缺陷绕法/cmcp.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 14,
+   "code": "express-鉴权中间件路径判定绕过-大小写前缀-api-url-编码-.html-配套变体清单与只读收割顺序",
+   "src_path": "pocs/express-鉴权中间件路径判定绕过-大小写前缀-api-url-编码-.html-配套变体清单与只读收割顺序/express_auth_bypass.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 15,
+   "code": "tgt2403-发卡系统-订单-游客订单鉴权模型-api-契约-订单号格式与-idor-判定速查",
+   "src_path": "pocs/tgt2403-发卡系统-订单-游客订单鉴权模型-api-契约-订单号格式与-idor-判定速查/tgt2403-order-auth-model.md",
+   "dst_path": "pocs/tgt2403-发卡系统-订单-游客订单鉴权模型-api-契约-订单号格式与-idor-判定速查/tgt2403-order-auth-model.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 16,
+   "code": "tgt2403-用户中心与认证链路速查-me-wallet-affiliate-2fa-鉴权事实-验证码节流与限流缺口",
+   "src_path": "pocs/tgt2403-用户中心与认证链路速查-me-wallet-affiliate-2fa-鉴权事实-验证码节流与限流缺口/tgt2403-usercenter-auth-facts.md",
+   "dst_path": "pocs/tgt2403-用户中心与认证链路速查-me-wallet-affiliate-2fa-鉴权事实-验证码节流与限流缺口/tgt2403-usercenter-auth-facts.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 17,
+   "code": "cloudflare_temp_email-example.com-鉴权模型与匿名端点-oracle-地址存在性枚举",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 18,
+   "code": "llm-中转面板渠道-config.quota.url-ssrf-触发三条件-绕过前置-squid-直连-可达性判据表",
+   "src_path": "pocs/llm-中转面板渠道-config.quota.url-ssrf-触发三条件-绕过前置-squid-直连-可达性判据表/quota-url-ssrf.md",
+   "dst_path": "pocs/llm-中转面板渠道-config.quota.url-ssrf-触发三条件-绕过前置-squid-直连-可达性判据表/quota-url-ssrf.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 19,
+   "code": "microsoft-google-oauth-refresh_token-特征-grep-清单-tgt7737-org-13030-数据面阴性结论",
+   "src_path": "pocs/microsoft-google-oauth-refresh_token-特征-grep-清单-tgt7737-org-13030-数据面阴性结论/ms-oauth-token-grep.md",
+   "dst_path": "pocs/microsoft-google-oauth-refresh_token-特征-grep-清单-tgt7737-org-13030-数据面阴性结论/ms-oauth-token-grep.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 20,
+   "code": "airouter-白标-ai-网关-管理面鉴权绕过尝试集-api-大小写-admin-2ehtml-编码变体-与被证伪的迁移性",
+   "src_path": "pocs/airouter-白标-ai-网关-管理面鉴权绕过尝试集-api-大小写-admin-2ehtml-编码变体-与被证伪的迁移性/poc.http",
+   "dst_path": "pocs/airouter-白标-ai-网关-管理面鉴权绕过尝试集-api-大小写-admin-2ehtml-编码变体-与被证伪的迁移性/poc.http",
+   "action": "text-materialized"
+  },
+  {
+   "id": 21,
+   "code": "llm-api-key-零消费只读验活-deepseek-余额-openrouter-分层-通用-models",
+   "src_path": "pocs/llm-api-key-零消费只读验活-deepseek-余额-openrouter-分层-通用-models/llm_key_readonly_probe.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 22,
+   "code": "gptcdk-卡密兑换站群自托管后端未授权卡密查询-枚举探测",
+   "src_path": "pocs/gptcdk-卡密兑换站群自托管后端未授权卡密查询-枚举探测/probe_gptcdk_backend.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 23,
+   "code": "nps-authkey-md5-bypass",
+   "src_path": "pocs/nps-authkey-md5-bypass/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 24,
+   "code": "自研卡密兑换站未授权批量查询接口-api-v1-cdk-batch-20-张-请求-响应含套餐-订单",
+   "src_path": "pocs/自研卡密兑换站未授权批量查询接口-api-v1-cdk-batch-20-张-请求-响应含套餐-订单/cdk_batch_unauth.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 25,
+   "code": "nps-panel-post-only-apis",
+   "src_path": "pocs/nps-panel-post-only-apis/poc.http",
+   "dst_path": "pocs/nps-panel-post-only-apis/poc.http",
+   "action": "text-materialized"
+  },
+  {
+   "id": 26,
+   "code": "mssql-tds-prelogin-probe-47",
+   "src_path": "pocs/mssql-tds-prelogin-probe-47/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 27,
+   "code": "get-post-分支鉴权不一致导致-userid-水平越权遍历-含无盐-md5-口令泄露",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 28,
+   "code": "proxy-host-header-false-origin",
+   "src_path": "pocs/proxy-host-header-false-origin/poc.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 29,
+   "code": "灰产资金站追踪链-灰云判别-中转页统计js-workers跳板-会员系统js-spa-bundle-逆向-api",
+   "src_path": "pocs/灰产资金站追踪链-灰云判别-中转页统计js-workers跳板-会员系统js-spa-bundle-逆向-api/dgha_fund_chain_trace.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 30,
+   "code": "对象存储凭据有效性验证器-七牛-ak-sk-只读端点四连测",
+   "src_path": "pocs/对象存储凭据有效性验证器-七牛-ak-sk-只读端点四连测/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 31,
+   "code": "未授权越权接口-受控批量导出用户档案-idor-遍历-弱口令反查",
+   "src_path": "pocs/未授权越权接口-受控批量导出用户档案-idor-遍历-弱口令反查/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 32,
+   "code": "druid-statviewservlet-暴露检测-含从-actuator-prometheus-的-statviewservlet-指标反推",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 33,
+   "code": "移动-app-侦察-从-pcap-配置分发文件定位真实后端-认证头校难强度对照实验",
+   "src_path": "pocs/移动-app-侦察-从-pcap-配置分发文件定位真实后端-认证头校难强度对照实验/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 34,
+   "code": "sockjs-stomp-websocket-客户端实现要点-json-数组发送侧编码-版本协商-cdp-抄帧法",
+   "src_path": "pocs/sockjs-stomp-websocket-客户端实现要点-json-数组发送侧编码-版本协商-cdp-抄帧法/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 35,
+   "code": "用-actuator-prometheus-的-exception-标签做参数名-字段名-oracle-异常处理器统一返回-200-时的参数枚举法",
+   "src_path": "pocs/用-actuator-prometheus-的-exception-标签做参数名-字段名-oracle-异常处理器统一返回-200-时的参数枚举法/param_name_oracle_via_prometheus.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 36,
+   "code": "android-app-自研-api-加密协议还原-dex-反汇编定位-aes-密钥-param-密文协议-登录三层校验差分定位",
+   "src_path": "pocs/android-app-自研-api-加密协议还原-dex-反汇编定位-aes-密钥-param-密文协议-登录三层校验差分定位/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 37,
+   "code": "阿里云验证码-2.0-aliyuncaptcha-自动化跑通并取得-captchaverifyparam-app-web-登录风控绕过通用打法",
+   "src_path": "pocs/阿里云验证码-2.0-aliyuncaptcha-自动化跑通并取得-captchaverifyparam-app-web-登录风控绕过通用打法/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 38,
+   "code": "spa-bundle-端点半自动提取-只读白名单批量未授权探测-含写语义端点硬跳过",
+   "src_path": "pocs/spa-bundle-端点半自动提取-只读白名单批量未授权探测-含写语义端点硬跳过/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 39,
+   "code": "null-自研-java-资金站-timestamp-通道-安全凭证头-aes-ecb-请求体加密与时间片密钥派生算法",
+   "src_path": "pocs/null-自研-java-资金站-timestamp-通道-安全凭证头-aes-ecb-请求体加密与时间片密钥派生算法/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 40,
+   "code": "目标不可达的-三出口对照-诊断法-区分目标侧故障-vs-我方出口被封",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 41,
+   "code": "阿里云-waf-封禁维度识别-敏感端点为-方法-路径-来源-持续封禁-405-拦截页-非频率限流-附三态判据",
+   "src_path": "pocs/阿里云-waf-封禁维度识别-敏感端点为-方法-路径-来源-持续封禁-405-拦截页-非频率限流-附三态判据/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 42,
+   "code": "代理分流造假样本-example.com-经-7892-返回伪造-502-404-hello",
+   "src_path": "pocs/代理分流造假样本-target30.example.com-经-7892-返回伪造-502-404-hello/poc.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 43,
+   "code": "ocs-在线客服系统-stomp-over-sockjs-握手真值-客服侧-protobuf-信封-usermsgpack",
+   "src_path": "pocs/ocs-在线客服系统-stomp-over-sockjs-握手真值-客服侧-protobuf-信封-usermsgpack/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 44,
+   "code": "sockjs-文本通道无法承载-protobuf-二进制-成因-对照实验与判据",
+   "src_path": "pocs/sockjs-文本通道无法承载-protobuf-二进制-成因-对照实验与判据/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 45,
+   "code": "nginx-location-绕过-2e-2e-系列必然失败-及用-不存在路径对照-证伪-..-假穿越",
+   "src_path": "pocs/nginx-location-绕过-2e-2e-系列必然失败-及用-不存在路径对照-证伪-..-假穿越/poc.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 46,
+   "code": "nps-web-管理面板-auth_key-md5-timestamp-认证绕过-隧道-客户端枚举",
+   "src_path": "pocs/nps-web-管理面板-auth_key-md5-timestamp-认证绕过-隧道-客户端枚举/nps_panel_bypass.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 47,
+   "code": "密钥分发范式-4-段密钥-盐-公钥-xor-0x5a-隐写在-4-个未授权图片接口的尾部-2048-字节-标记-p1-p2-s-aes",
+   "src_path": "pocs/密钥分发范式-4-段密钥-盐-公钥-xor-0x5a-隐写在-4-个未授权图片接口的尾部-2048-字节-标记-p1-p2-s-aes/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 48,
+   "code": "阿里云-waf-封禁维度修正实测-换出口无效-非-ip-维度-裸-curl-python-必被拦-真实浏览器可通过",
+   "src_path": "pocs/阿里云-waf-封禁维度修正实测-换出口无效-非-ip-维度-裸-curl-python-必被拦-真实浏览器可通过/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 49,
+   "code": "mqtt-over-websocket-未授权接入与-acl-绕过-被拒-全量放行-emqx",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 50,
+   "code": "spring-boot-whitelabel-error-page-参数名-oracle-accept-text-html-读出必需-requestparam",
+   "src_path": "pocs/spring-boot-whitelabel-error-page-参数名-oracle-accept-text-html-读出必需-requestparam/spring_param_oracle.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 51,
+   "code": "cve-2025-66507-1panel-验证码绕过对照判定-三段式加密登录探针-可直接换字典做在线口令审计",
+   "src_path": "pocs/cve-2025-66507-1panel-验证码绕过对照判定-三段式加密登录探针-可直接换字典做在线口令审计/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 52,
+   "code": "tomcat-ajp-8009-探测-ghostcat-cve-2020-1938-文件读取-含-http-代理-connect-盲回-200-的识破判据",
+   "src_path": "pocs/tomcat-ajp-8009-探测-ghostcat-cve-2020-1938-文件读取-含-http-代理-connect-盲回-200-的识破判据/ajp_8009_probe.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 53,
+   "code": "powershell-下-curl-内联-json-body-被吃双引号-服务端全-500-被误判为目标故障",
+   "src_path": "pocs/powershell-下-curl-内联-json-body-被吃双引号-服务端全-500-被误判为目标故障/poc.ps1",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 54,
+   "code": "cve-2025-66507-1panel-版本指纹-路由集合差集法-离线-把面板压到具体-lts-版本",
+   "src_path": "pocs/cve-2025-66507-1panel-版本指纹-路由集合差集法-离线-把面板压到具体-lts-版本/version_fingerprint_by_routes.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 55,
+   "code": "教训-1panel-版本区间误判避坑指南-ghsa-first_patched_version-漏掉-lts-分支-正确判据-swagger-basepath",
+   "src_path": "pocs/教训-1panel-版本区间误判避坑指南-ghsa-first_patched_version-漏掉-lts-分支-正确判据-swagger-basepath/1panel-version-judgement-lessons.md",
+   "dst_path": "pocs/教训-1panel-版本区间误判避坑指南-ghsa-first_patched_version-漏掉-lts-分支-正确判据-swagger-basepath/1panel-version-judgement-lessons.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 56,
+   "code": "本机红队环境事实与替代方案-windows-elf-平台限制",
+   "src_path": "pocs/本机红队环境事实与替代方案-windows-elf-平台限制/poc.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 57,
+   "code": "环境事实-全体适用-本机-windows-出口被-tun-劫持-探测改走演练-vps-工具白名单与用法",
+   "src_path": "pocs/环境事实-全体适用-本机-windows-出口被-tun-劫持-探测改走演练-vps-工具白名单与用法/poc.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 58,
+   "code": "1panel-安全入口拦截页与-swagger-拼接-未认证绕读完整-target33.example.com-实测-无-swagger-时的版本夹逼探针",
+   "src_path": "pocs/1panel-安全入口拦截页与-swagger-拼接-未认证绕读完整-swagger-v1.10.28-lts-实测-无-swagger-时的版本夹逼探针/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 59,
+   "code": "gm-collection-邮件工具站免登录开放接口未授权探测清单-outlook-icloud-邮件与凭据查询",
+   "src_path": "pocs/gm-collection-邮件工具站免登录开放接口未授权探测清单-outlook-icloud-邮件与凭据查询/poc.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 60,
+   "code": "new-api-漏洞清单与未修复版本边界对照-cve-2026-42339-ssrf-33655-64865-30886",
+   "src_path": "pocs/new-api-漏洞清单与未修复版本边界对照-cve-2026-42339-ssrf-33655-64865-30886/poc.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 61,
+   "code": "vue3-vite-spa-接口测绘法-入口-js-只给路由-真实-api-在懒加载-chunk-的数据层-use-.js-里",
+   "src_path": "pocs/vue3-vite-spa-接口测绘法-入口-js-只给路由-真实-api-在懒加载-chunk-的数据层-use-.js-里/poc.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 62,
+   "code": "商城游客订单自认证头机制-authorization-guest-base64url-email-n-order_password-含空口令-畸形头边界实测",
+   "src_path": "pocs/商城游客订单自认证头机制-authorization-guest-base64url-email-n-order_password-含空口令-畸形头边界实测/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 63,
+   "code": "白标-spa-商城溯源到上游开源项目-品牌名兜底值-app_version-转离线源码审计",
+   "src_path": "pocs/白标-spa-商城溯源到上游开源项目-品牌名兜底值-app_version-转离线源码审计/poc.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 64,
+   "code": "webpack-异步-chunk-收割枚举-spa-全量-api-面-new-api-定制构建实测",
+   "src_path": "pocs/webpack-异步-chunk-收割枚举-spa-全量-api-面-new-api-定制构建实测/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 65,
+   "code": "通用方法-开源组件识别-拉源码离线审计-定向验证-找-advisory-之外的路由漏挂",
+   "src_path": "pocs/通用方法-开源组件识别-拉源码离线审计-定向验证-找-advisory-之外的路由漏挂/poc.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 66,
+   "code": "凭据来源侦察-公开代码托管泄露检索入口清单-仓库全树密钥扫描法",
+   "src_path": "pocs/凭据来源侦察-公开代码托管泄露检索入口清单-仓库全树密钥扫描法/repo-plaintext-secret-sweep.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 67,
+   "code": "new-api-one-api-网关令牌有效性判别法-invalid-token-vs-user-has-been-banned",
+   "src_path": "pocs/new-api-one-api-网关令牌有效性判别法-invalid-token-vs-user-has-been-banned/newapi-token-validity-probe.http",
+   "dst_path": "pocs/new-api-one-api-网关令牌有效性判别法-invalid-token-vs-user-has-been-banned/newapi-token-validity-probe.http",
+   "action": "text-materialized"
+  },
+  {
+   "id": 68,
+   "code": "被动-dns-证书透明可用源清单与-cdn-误判防护-实测可用性矩阵",
+   "src_path": "pocs/被动-dns-证书透明可用源清单与-cdn-误判防护-实测可用性矩阵/passive-dns-source-matrix.md",
+   "dst_path": "pocs/被动-dns-证书透明可用源清单与-cdn-误判防护-实测可用性矩阵/passive-dns-source-matrix.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 69,
+   "code": "cve-2026-81027-one-api-new-api-channelid-路径参数越权锁定信道-任意有效-token-无需余额",
+   "src_path": "pocs/cve-2026-81027-one-api-new-api-channelid-路径参数越权锁定信道-任意有效-token-无需余额/cve-2026-81027-oneapi-channelid.md",
+   "dst_path": "pocs/cve-2026-81027-one-api-new-api-channelid-路径参数越权锁定信道-任意有效-token-无需余额/cve-2026-81027-oneapi-channelid.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 70,
+   "code": "环境事实-全体适用-本机-python-urllib-走-ie-注册表代理-127.0.0.1-7892-导致请求超时-curl-正常",
+   "src_path": "pocs/环境事实-全体适用-本机-python-urllib-走-ie-注册表代理-127.0.0.1-7892-导致请求超时-curl-正常/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 71,
+   "code": "target46.example.com-checkusername-用户名枚举-零配额成本判定账号是否存在",
+   "src_path": "pocs/discuz-7.x-ajax.php-checkusername-用户名枚举-零配额成本判定账号是否存在/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 72,
+   "code": "phpwind-8.7-前台-sql-注入-actions-ajax-leaveword.php",
+   "src_path": "pocs/phpwind-8.7-前台-sql-注入-actions-ajax-leaveword.php/poc.http",
+   "dst_path": "pocs/phpwind-8.7-前台-sql-注入-actions-ajax-leaveword.php/poc.http",
+   "action": "text-materialized"
+  },
+  {
+   "id": 73,
+   "code": "智讯网站群管理系统-api-未授权访问-form-urlencoded-传参-action-index-泄露站点配置",
+   "src_path": "pocs/智讯网站群管理系统-api-未授权访问-form-urlencoded-传参-action-index-泄露站点配置/poc_zhixun_api.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 74,
+   "code": "中文站群-网站防火墙-waf-识别判据-403-1200b-中文页-按扩展名拦截-多长度分类法",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 75,
+   "code": "phpwind-头像上传任意文件写入-example.com-action-uploadicon-step-2-filename-x.php",
+   "src_path": "pocs/203.0.113.1-站群跳转机全机地图与负面情报-唯一动态程序-phpwind-7.3.2-全静态页-三套异机真入口/poc.http",
+   "dst_path": "pocs/phpwind-头像上传任意文件写入-example.com-action-uploadicon-step-2-filename-x.php/poc.http",
+   "action": "text-materialized"
+  },
+  {
+   "id": 76,
+   "code": "phpwind-附件上传扩展名黑名单审计结论-前台变形不可行-口子在后台-db_uploadfiletype",
+   "src_path": "pocs/phpwind-附件上传扩展名黑名单审计结论-前台变形不可行-口子在后台-db_uploadfiletype/poc.php",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 77,
+   "code": "六零导航页-target54.example.com-后台-getshell-ajax_link.php-submit-update-任意-zip-解压到站点根-未",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 78,
+   "code": "智讯网站群-注册接口用户名枚举-口令大小写不敏感判定",
+   "src_path": "pocs/智讯网站群-注册接口用户名枚举-口令大小写不敏感判定/poc_user_enum.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 79,
+   "code": "六零导航页-lylme-spage-admin_token-离线伪造器-sys_key-硬编码-lylme_key-任意配置泄露即通吃会话",
+   "src_path": "pocs/六零导航页-lylme-spage-admin_token-离线伪造器-sys_key-硬编码-lylme_key-任意配置泄露即通吃会话/lylme_token.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 80,
+   "code": "网段存活探测纪律-nmap-pn-会把全部-ip-判为-up-必须用-sn-复核",
+   "src_path": "pocs/网段存活探测纪律-nmap-pn-会把全部-ip-判为-up-必须用-sn-复核/poc.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 81,
+   "code": "fofa_key-在本机需从-workspace-.env-显式加载-shell-环境变量未继承",
+   "src_path": "pocs/fofa_key-在本机需从-.dsh-.env-显式加载-shell-环境变量未继承/fofa-key-load.ps1",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 82,
+   "code": "主域-nxdomain-后从姊妹域证书按机器命名规律挖跨段新资产",
+   "src_path": "pocs/主域-nxdomain-后从姊妹域证书按机器命名规律挖跨段新资产/crt-sibling-enum.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 83,
+   "code": "ssrf-判据三陷阱-外层码-目标状态-icon-非空-端口开放-快速返回-存活",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 84,
+   "code": "假阴性判据-路径级-403-ip-封禁-curl-默认-ua-被拦-不可达-按时间下线-被封",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 85,
+   "code": "批量扫描三条对照实验-戳破假存活-假-403-假全开",
+   "src_path": "pocs/批量扫描三条对照实验-戳破假存活-假-403-假全开/scan-claims-counter-test.md",
+   "dst_path": "pocs/批量扫描三条对照实验-戳破假存活-假-403-假全开/scan-claims-counter-test.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 86,
+   "code": "jwt-hs256-秘密密钥组合爆破器-无依赖-含-0-99999-数字后缀与词组组合",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 87,
+   "code": "自研-vue-vite-spa-面板-从-bundle-递归还原完整-api-面-含-admin-与开放-api-协议",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 88,
+   "code": "智讯网站群-root_user_index-免认证读取全站用户表-含明文-opass-附-curpage-分页被忽略的踩坑",
+   "src_path": "pocs/智讯网站群-root_user_index-免认证读取全站用户表-含明文-opass-附-curpage-分页被忽略的踩坑/zhanqun_root_user_index.md",
+   "dst_path": "pocs/智讯网站群-root_user_index-免认证读取全站用户表-含明文-opass-附-curpage-分页被忽略的踩坑/zhanqun_root_user_index.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 89,
+   "code": "从单点证书反查整个站群-cert-一把捞全网同证书资产",
+   "src_path": "pocs/从单点证书反查整个站群-cert-一把捞全网同证书资产/cert-pivot-enum.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 90,
+   "code": "第三方-ip-归属库不可靠-必须用响应特征自行验证",
+   "src_path": "pocs/第三方-ip-归属库不可靠-必须用响应特征自行验证/ip-attribution-verify.md",
+   "dst_path": "pocs/第三方-ip-归属库不可靠-必须用响应特征自行验证/ip-attribution-verify.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 91,
+   "code": "指令边界歧义处理-指定-ip-白名单-vs-禁扫网段-定向优先-显式确认",
+   "src_path": "pocs/指令边界歧义处理-指定-ip-白名单-vs-禁扫网段-定向优先-显式确认/scope-intent-parsing.md",
+   "dst_path": "pocs/指令边界歧义处理-指定-ip-白名单-vs-禁扫网段-定向优先-显式确认/scope-intent-parsing.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 92,
+   "code": "lfi-注入点定位法-先找不经过守卫的可达文件目录-再用数组参数判定是否读参数",
+   "src_path": "pocs/lfi-注入点定位法-先找不经过守卫的可达文件目录-再用数组参数判定是否读参数/poc.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 93,
+   "code": "取证表述纪律-区分-实测-与-推断-同一证据存在两个同样合理解释时-未排除的那个不得写进结论",
+   "src_path": "pocs/取证表述纪律-区分-实测-与-推断-同一证据存在两个同样合理解释时-未排除的那个不得写进结论/poc.txt",
+   "dst_path": "pocs/取证表述纪律-区分-实测-与-推断-同一证据存在两个同样合理解释时-未排除的那个不得写进结论/poc.txt",
+   "action": "text-materialized"
+  },
+  {
+   "id": 94,
+   "code": "从-tls-证书-cn-反查不走-cdn-的子域-源站-ip-泄露-绕过-cloudflare-含-http.sys-host-头路由命中技巧",
+   "src_path": "pocs/从-tls-证书-cn-反查不走-cdn-的子域-源站-ip-泄露-绕过-cloudflare-含-http.sys-host-头路由命中技巧/origin-ip-leak-via-cert-cn.md",
+   "dst_path": "pocs/从-tls-证书-cn-反查不走-cdn-的子域-源站-ip-泄露-绕过-cloudflare-含-http.sys-host-头路由命中技巧/origin-ip-leak-via-cert-cn.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 95,
+   "code": "同一-apiinterface-跨控制器对照法-定位漏挂-authorize-的控制器",
+   "src_path": "pocs/同一-apiinterface-跨控制器对照法-定位漏挂-authorize-的控制器/apiinterface-cross-controller-authorize-diff.md",
+   "dst_path": "pocs/同一-apiinterface-跨控制器对照法-定位漏挂-authorize-的控制器/apiinterface-cross-controller-authorize-diff.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 96,
+   "code": "文件爆破假阳性证伪法-换词对照-原始-location-相对路径-后缀断崖-nginx-通配规则识别",
+   "src_path": "pocs/文件爆破假阳性证伪法-换词对照-原始-location-相对路径-后缀断崖-nginx-通配规则识别/poc.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 97,
+   "code": "203.0.113.36-.23-先验排除表-两条恒定假阳性-code-验证码端点-爆破前置-五处已穷尽面",
+   "src_path": "pocs/203.0.113.1-.23-先验排除表-两条恒定假阳性-code-验证码端点-爆破前置-五处已穷尽面/poc.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 98,
+   "code": "http-range-精准抽取远端-zip-内任意单文件-不下载整包",
+   "src_path": "pocs/http-range-精准抽取远端-zip-内任意单文件-不下载整包/ziprange.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 99,
+   "code": "vhost-真伪判定-sni-双置位法-curl-resolve-同时置位-sni-host-逐-sni-证书对比",
+   "src_path": "pocs/vhost-真伪判定-sni-双置位法-curl-resolve-同时置位-sni-host-逐-sni-证书对比/vhost-true-check.ps1",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 100,
+   "code": "mssql-1433-防火墙握手代理式伪装的判定法与-tds-prelogin-探针",
+   "src_path": "pocs/mssql-1433-防火墙握手代理式伪装的判定法与-tds-prelogin-探针/tds_probe.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 101,
+   "code": "curl-resolve-端口陷阱-url-不带端口会静默逃逸到真实-dns-伪造出-目标有业务-的假象",
+   "src_path": "pocs/curl-resolve-端口陷阱-url-不带端口会静默逃逸到真实-dns-伪造出-目标有业务-的假象/curl-resolve-port-trap.md",
+   "dst_path": "pocs/curl-resolve-端口陷阱-url-不带端口会静默逃逸到真实-dns-伪造出-目标有业务-的假象/curl-resolve-port-trap.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 102,
+   "code": "证书域名提取陷阱-leaf-san-与链内-ocsp-crl-ca-issuers-域名必须分开-否则误当业务域名",
+   "src_path": "pocs/证书域名提取陷阱-leaf-san-与链内-ocsp-crl-ca-issuers-域名必须分开-否则误当业务域名/cert-domain-extract-pitfall.md",
+   "dst_path": "pocs/证书域名提取陷阱-leaf-san-与链内-ocsp-crl-ca-issuers-域名必须分开-否则误当业务域名/cert-domain-extract-pitfall.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 103,
+   "code": "会话态不完整时后台功能页静默返回-200-0-字节-必须把-0-字节-200-当-会话可疑-而非-页面为空",
+   "src_path": "pocs/会话态不完整时后台功能页静默返回-200-0-字节-必须把-0-字节-200-当-会话可疑-而非-页面为空/session-stale-200-empty-body-trap.md",
+   "dst_path": "pocs/会话态不完整时后台功能页静默返回-200-0-字节-必须把-0-字节-200-当-会话可疑-而非-页面为空/session-stale-200-empty-body-trap.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 104,
+   "code": "浏览器实测必须用-hosts-映射-chrome-host-resolver-rules-在本机-153-版不生效-附-server-头复验判据与当即还原纪律",
+   "src_path": "pocs/浏览器实测必须用-hosts-映射-chrome-host-resolver-rules-在本机-153-版不生效-附-server-头复验判据与当即还原纪律/chrome-host-resolver-rules-broken-use-hosts.md",
+   "dst_path": "pocs/浏览器实测必须用-hosts-映射-chrome-host-resolver-rules-在本机-153-版不生效-附-server-头复验判据与当即还原纪律/chrome-host-resolver-rules-broken-use-hosts.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 105,
+   "code": "带验证码且无回显差异的后台弱口令打法-验证码放大-6-倍识别-每组口令独立会话-以-302-为唯一成功信号",
+   "src_path": "pocs/带验证码且无回显差异的后台弱口令打法-验证码放大-6-倍识别-每组口令独立会话-以-302-为唯一成功信号/captcha-login-weakpass-amplified-ocr-per-session.md",
+   "dst_path": "pocs/带验证码且无回显差异的后台弱口令打法-验证码放大-6-倍识别-每组口令独立会话-以-302-为唯一成功信号/captcha-login-weakpass-amplified-ocr-per-session.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 106,
+   "code": "记分被-capped-时的正确处置-追加式更正-不改-target-规避去重-追加-chain-报告显式呈现差异",
+   "src_path": "pocs/记分被-capped-时的正确处置-追加式更正-不改-target-规避去重-追加-chain-报告显式呈现差异/score-capped-append-only-correction.md",
+   "dst_path": "pocs/记分被-capped-时的正确处置-追加式更正-不改-target-规避去重-追加-chain-报告显式呈现差异/score-capped-append-only-correction.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 107,
+   "code": "discuz-7.2-failedlogins-登录失败计数绕过-伪造-client-ip-x-forwarded-for-实现无限爆破",
+   "src_path": "pocs/discuz-7.2-failedlogins-登录失败计数绕过-伪造-client-ip-x-forwarded-for-实现无限爆破/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 108,
+   "code": "discuz-管理员-cookie-伪造-authkey-ua-签名-由-sql-注入取三要素",
+   "src_path": "pocs/discuz-管理员-cookie-伪造-authkey-ua-签名-由-sql-注入取三要素/discuz_cookie_forge.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 109,
+   "code": "sclub-168six-403-站点规则可被本站-referer-绕过-探测假阴性",
+   "src_path": "pocs/sclub-168six-403-站点规则可被本站-referer-绕过-探测假阴性/sclub_referer_bypass_403.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 110,
+   "code": "discuz-论坛平台-sclub-免费论坛-连接层封禁阈值探测方法-区分-并发触发-与-累计触发",
+   "src_path": "pocs/discuz-论坛平台-sclub-免费论坛-连接层封禁阈值探测方法-区分-并发触发-与-累计触发/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 117,
+   "code": "未授权接口必须-重读-diff-静态认知固化导致漏掉新增明文凭据-19-轮作业的真实教训",
+   "src_path": "pocs/未授权接口必须-重读-diff-静态认知固化导致漏掉新增明文凭据-19-轮作业的真实教训/poc.yaml",
+   "dst_path": "pocs/未授权接口必须-重读-diff-静态认知固化导致漏掉新增明文凭据-19-轮作业的真实教训/poc.yaml",
+   "action": "text-materialized"
+  },
+  {
+   "id": 118,
+   "code": "配置类接口-settings-config-option-明文回显管理员口令与-api-key-字段特征与取用方法",
+   "src_path": "pocs/配置类接口-settings-config-option-明文回显管理员口令与-api-key-字段特征与取用方法/poc.http",
+   "dst_path": "pocs/配置类接口-settings-config-option-明文回显管理员口令与-api-key-字段特征与取用方法/poc.http",
+   "action": "text-materialized"
+  },
+  {
+   "id": 119,
+   "code": "本地只读反代-把前端调用的-api-改写为大写转发-让原版管理后台界面直接可用",
+   "src_path": "pocs/本地只读反代-把前端调用的-api-改写为大写转发-让原版管理后台界面直接可用/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 120,
+   "code": "主列表漏报陷阱-明细统计必须逐对象走详情接口-本例少统计-30",
+   "src_path": "pocs/主列表漏报陷阱-明细统计必须逐对象走详情接口-本例少统计-30/poc.http",
+   "dst_path": "pocs/主列表漏报陷阱-明细统计必须逐对象走详情接口-本例少统计-30/poc.http",
+   "action": "text-materialized"
+  },
+  {
+   "id": 121,
+   "code": "凭据复用验证-vs-爆破的边界-拿到实证口令后-同集群各试-1-2-次的正确打法",
+   "src_path": "pocs/凭据复用验证-vs-爆破的边界-拿到实证口令后-同集群各试-1-2-次的正确打法/poc.yaml",
+   "dst_path": "pocs/凭据复用验证-vs-爆破的边界-拿到实证口令后-同集群各试-1-2-次的正确打法/poc.yaml",
+   "action": "text-materialized"
+  },
+  {
+   "id": 122,
+   "code": "ssrf-内网探测的两个陷阱-服务端自身卡顿伪装成-目标超时-以及把公网可见服务误报成-内网突破",
+   "src_path": "pocs/ssrf-内网探测的两个陷阱-服务端自身卡顿伪装成-目标超时-以及把公网可见服务误报成-内网突破/poc.yaml",
+   "dst_path": "pocs/ssrf-内网探测的两个陷阱-服务端自身卡顿伪装成-目标超时-以及把公网可见服务误报成-内网突破/poc.yaml",
+   "action": "text-materialized"
+  },
+  {
+   "id": 123,
+   "code": "登录-成功-的真伪三重证伪-字段校验-鉴权中间件-浏览器注入会话-清-cookie-对照",
+   "src_path": "pocs/登录-成功-的真伪三重证伪-字段校验-鉴权中间件-浏览器注入会话-清-cookie-对照/poc.yaml",
+   "dst_path": "pocs/登录-成功-的真伪三重证伪-字段校验-鉴权中间件-浏览器注入会话-清-cookie-对照/poc.yaml",
+   "action": "text-materialized"
+  },
+  {
+   "id": 124,
+   "code": "路由与端点发现的四个高频误判-options-不能证明路由存在-404-必须在三态对照下读-白名单形态特征-稳定性基线",
+   "src_path": "pocs/路由与端点发现的四个高频误判-options-不能证明路由存在-404-必须在三态对照下读-白名单形态特征-稳定性基线/poc.yaml",
+   "dst_path": "pocs/路由与端点发现的四个高频误判-options-不能证明路由存在-404-必须在三态对照下读-白名单形态特征-稳定性基线/poc.yaml",
+   "action": "text-materialized"
+  },
+  {
+   "id": 125,
+   "code": "cloud-mail-认证机制与探测要点-jwt-kv-双校验-init-secret-预言机-kv-键名规律",
+   "src_path": "pocs/cloud-mail-认证机制与探测要点-jwt-kv-双校验-init-secret-预言机-kv-键名规律/cloud-mail-auth-analysis.md",
+   "dst_path": "pocs/cloud-mail-认证机制与探测要点-jwt-kv-双校验-init-secret-预言机-kv-键名规律/cloud-mail-auth-analysis.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 126,
+   "code": "cloudflare_temp_email-认证机制与攻击面-四套认证头-address-jwt-需查库-admin_login-免认证爆破入口-disable",
+   "src_path": "pocs/cloudflare_temp_email-认证机制与攻击面-四套认证头-address-jwt-需查库-admin_login-免认证爆破入口-disable/cloudflare-temp-email-auth-analysis.md",
+   "dst_path": "pocs/cloudflare_temp_email-认证机制与攻击面-四套认证头-address-jwt-需查库-admin_login-免认证爆破入口-disable/cloudflare-temp-email-auth-analysis.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 127,
+   "code": "前端-chunk-硬编码凭据-共享钥匙-密钥库路径枚举批量导出",
+   "src_path": "pocs/前端-chunk-硬编码凭据-共享钥匙-密钥库路径枚举批量导出/frontend-hardcoded-cred-to-keystore-enum.md",
+   "dst_path": "pocs/前端-chunk-硬编码凭据-共享钥匙-密钥库路径枚举批量导出/frontend-hardcoded-cred-to-keystore-enum.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 128,
+   "code": "vite-dev-server-暴露-astro-生产误跑-dev-fs-raw-读取项目源码",
+   "src_path": "pocs/vite-dev-server-暴露-astro-生产误跑-dev-fs-raw-读取项目源码/vite_dev_leak.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 129,
+   "code": "1panel-v2-安全入口启用时的可打面与判定手册-匿名白名单路由-验证码是否为唯一前置",
+   "src_path": "pocs/1panel-v2-安全入口启用时的可打面与判定手册-匿名白名单路由-验证码是否为唯一前置/1panel_v2_security_entrance_playbook.md",
+   "dst_path": "pocs/1panel-v2-安全入口启用时的可打面与判定手册-匿名白名单路由-验证码是否为唯一前置/1panel_v2_security_entrance_playbook.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 130,
+   "code": "1panel-口令审计前置判据-必须先有-panel_public_key-与-安全入口启用时的-entrance-且无用户名-oracle",
+   "src_path": "pocs/1panel-口令审计前置判据-必须先有-panel_public_key-与-安全入口启用时的-entrance-且无用户名-oracle/1panel_password_audit_preconditions.md",
+   "dst_path": "pocs/1panel-口令审计前置判据-必须先有-panel_public_key-与-安全入口启用时的-entrance-且无用户名-oracle/1panel_password_audit_preconditions.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 131,
+   "code": "1panel-v2-登录验证码自动化攻破-ddddocr-errauth-errentrance-命中判据-有安全入口即不可行-结构性结论",
+   "src_path": "pocs/1panel-v2-登录验证码自动化攻破-ddddocr-errauth-errentrance-命中判据-有安全入口即不可行-结构性结论/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 132,
+   "code": "开放代理-穿内网-真伪判定法-内网-vs-公网同-sni-对照-body-hash-附-connect-自定义sni-手法",
+   "src_path": "pocs/开放代理-穿内网-真伪判定法-内网-vs-公网同-sni-对照-body-hash-附-connect-自定义sni-手法/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 133,
+   "code": "1panel-面板登录验证码绕过-ignorecaptcha-true-errauth",
+   "src_path": "pocs/1panel-面板登录验证码绕过-ignorecaptcha-true-errauth/1panel_ignorecaptcha_bypass.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 134,
+   "code": "端口定性三态判据-中间盒黑洞-vs-真-filtered-vs-真服务-同机对照-12-载荷-sni-矩阵",
+   "src_path": "pocs/端口定性三态判据-中间盒黑洞-vs-真-filtered-vs-真服务-同机对照-12-载荷-sni-矩阵/port_triage_blackhole_vs_filtered.md",
+   "dst_path": "pocs/端口定性三态判据-中间盒黑洞-vs-真-filtered-vs-真服务-同机对照-12-载荷-sni-矩阵/port_triage_blackhole_vs_filtered.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 135,
+   "code": "flask-before_request-鉴权跳过-options-未授权枚举后台路由表与方法-含变量规则噪声判据",
+   "src_path": "pocs/flask-before_request-鉴权跳过-options-未授权枚举后台路由表与方法-含变量规则噪声判据/flask_options_unauth_route_enum.md",
+   "dst_path": "pocs/flask-before_request-鉴权跳过-options-未授权枚举后台路由表与方法-含变量规则噪声判据/flask_options_unauth_route_enum.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 136,
+   "code": "new-api-支付回调-初始化免鉴权面判定清单-epay-notify-stripe-creem-waffo-webhook-api-setup",
+   "src_path": "pocs/new-api-支付回调-初始化免鉴权面判定清单-epay-notify-stripe-creem-waffo-webhook-api-setup/poc.txt",
+   "dst_path": "pocs/new-api-支付回调-初始化免鉴权面判定清单-epay-notify-stripe-creem-waffo-webhook-api-setup/poc.txt",
+   "action": "text-materialized"
+  },
+  {
+   "id": 137,
+   "code": "discuz-7.2-release-20101020-后台-getshell-全路径-离线白盒审计手册",
+   "src_path": "pocs/discuz-7.2-release-20101020-后台-getshell-全路径-离线白盒审计手册/poc.http",
+   "dst_path": "pocs/discuz-7.2-release-20101020-后台-getshell-全路径-离线白盒审计手册/poc.http",
+   "action": "text-materialized"
+  },
+  {
+   "id": 138,
+   "code": "单请求型隧道下的内网渗透方法论-op-chk-主机发现-目标侧-php-绕过多轮协议限制",
+   "src_path": "pocs/单请求型隧道下的内网渗透方法论-op-chk-主机发现-目标侧-php-绕过多轮协议限制/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 139,
+   "code": "null-phpwind-8.7-站群通用探测判据集-登录接口响应语义-额度机制实测-未授权接口-目录-deny-清单",
+   "src_path": "pocs/null-phpwind-8.7-站群通用探测判据集-登录接口响应语义-额度机制实测-未授权接口-目录-deny-清单/phpwind87_probe_playbook.md",
+   "dst_path": "pocs/null-phpwind-8.7-站群通用探测判据集-登录接口响应语义-额度机制实测-未授权接口-目录-deny-清单/phpwind87_probe_playbook.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 140,
+   "code": "phpwind-8.7-补丁面速查表-example.com-白盒产出-已修复-9-类-未验证缺陷-6-条-未穷尽面-4-个-全附源码行号",
+   "src_path": "pocs/phpwind-8.7-补丁面速查表-target124.example.com-白盒产出-已修复-9-类-未验证缺陷-6-条-未穷尽面-4-个-全附源码行号/poc.php",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 141,
+   "code": "博彩平台会话网关-ssid1-url-反射型-xss-开放重定向-可窃取-ssid1-会话-cookie-会员-代理-管理三端命中",
+   "src_path": "pocs/博彩平台会话网关-ssid1-url-反射型-xss-开放重定向-可窃取-ssid1-会话-cookie-会员-代理-管理三端命中/ssid1_xss.txt",
+   "dst_path": "pocs/博彩平台会话网关-ssid1-url-反射型-xss-开放重定向-可窃取-ssid1-会话-cookie-会员-代理-管理三端命中/ssid1_xss.txt",
+   "action": "text-materialized"
+  },
+  {
+   "id": 142,
+   "code": "phpwind-8.7-存储型-xss-选点判据-checkvar-豁免名单-prosign-零转义写入-apartment-校验绕过-groupid-7-拦截",
+   "src_path": "pocs/phpwind-8.7-存储型-xss-选点判据-checkvar-豁免名单-prosign-零转义写入-apartment-校验绕过-groupid-7-拦截/phpwind87_prosign_xss.txt",
+   "dst_path": "pocs/phpwind-8.7-存储型-xss-选点判据-checkvar-豁免名单-prosign-零转义写入-apartment-校验绕过-groupid-7-拦截/phpwind87_prosign_xss.txt",
+   "action": "text-materialized"
+  },
+  {
+   "id": 143,
+   "code": "phpwind-8.7-注册三必填绕过-regreason-_hexie-apartment-地区id-注册成功且自动登录",
+   "src_path": "pocs/phpwind-8.7-注册三必填绕过-regreason-_hexie-apartment-地区id-注册成功且自动登录/poc.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 144,
+   "code": "phpwind-8.7-decode-错位链-白盒审计结论-无需账号的裸引号-convert-e-路径不存在-cms-投稿链裸引号入库-展示-rce-代码级成立",
+   "src_path": "pocs/phpwind-8.7-decode-错位链-白盒审计结论-无需账号的裸引号-convert-e-路径不存在-cms-投稿链裸引号入库-展示-rce-代码级成立/poc.php",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 145,
+   "code": "入驻方资料接口未授权-idor-shop_user_id-任意遍历泄露商家微信-公众号",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 146,
+   "code": "域名清单接口未授权泄露全平台-20-个生产域名-后端回源-ip",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 147,
+   "code": "agent_id-鉴权分支绕过-免登录读取付费内容平台正文-goodshistory-goodslist-goodsdetail",
+   "src_path": "pocs/agent_id-鉴权分支绕过-免登录读取付费内容平台正文-goodshistory-goodslist-goodsdetail/gd_poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 148,
+   "code": "sclub-平台-example.com-注入客户端修正-繁体歡迎-hex左截断-from包层-限流特征",
+   "src_path": "pocs/sclub-平台-index.phtml-注入客户端修正-繁体歡迎-hex左截断-from包层-限流特征/sclub_sqli_client.md",
+   "dst_path": "pocs/sclub-平台-example.com-注入客户端修正-繁体歡迎-hex左截断-from包层-限流特征/sclub_sqli_client.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 149,
+   "code": "sclub-平台-example.com-注入回显客户端-含三个易踩根因与语句约束表",
+   "src_path": "pocs/sclub-平台-index.phtml-注入回显客户端-含三个易踩根因与语句约束表/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 150,
+   "code": "acg-faka-异次元发卡-免登录用户-api-访问控制模型与判定基准-secret-query-commodity-card",
+   "src_path": "pocs/acg-faka-异次元发卡-免登录用户-api-访问控制模型与判定基准-secret-query-commodity-card/acg-faka-user-api-access-control.md",
+   "dst_path": "pocs/acg-faka-异次元发卡-免登录用户-api-访问控制模型与判定基准-secret-query-commodity-card/acg-faka-user-api-access-control.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 151,
+   "code": "tgt2403-admin-后台指纹与-api-v1-admin-管理-api-全清单提取-含未授权定性探测",
+   "src_path": "pocs/tgt2403-admin-后台指纹与-api-v1-admin-管理-api-全清单提取-含未授权定性探测/tgt2403-admin-api-enum.md",
+   "dst_path": "pocs/tgt2403-admin-后台指纹与-api-v1-admin-管理-api-全清单提取-含未授权定性探测/tgt2403-admin-api-enum.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 152,
+   "code": "ruoyi-vueplus-frontend-encrypt-guard-bypass",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 153,
+   "code": "tgt2403-版本指纹-上游补丁差分法-app_version-免认证泄露-缺失安全修复清单-逐条可达性实测",
+   "src_path": "pocs/tgt2403-版本指纹-上游补丁差分法-app_version-免认证泄露-缺失安全修复清单-逐条可达性实测/tgt2403-version-diff.md",
+   "dst_path": "pocs/tgt2403-版本指纹-上游补丁差分法-app_version-免认证泄露-缺失安全修复清单-逐条可达性实测/tgt2403-version-diff.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 154,
+   "code": "agent-后台忘记密码流程逆向-未鉴权改密接口-getbackloginpassword-完整字段契约与差分探测法",
+   "src_path": "pocs/agent-后台忘记密码流程逆向-未鉴权改密接口-getbackloginpassword-完整字段契约与差分探测法/forgetpassword_reset_contract.md",
+   "dst_path": "pocs/agent-后台忘记密码流程逆向-未鉴权改密接口-getbackloginpassword-完整字段契约与差分探测法/forgetpassword_reset_contract.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 155,
+   "code": "x-api-xxx-waf-签名头逆向-路径绑定规则-验签缺失-任意十六进制即可穿透",
+   "src_path": "pocs/x-api-xxx-waf-签名头逆向-路径绑定规则-验签缺失-任意十六进制即可穿透/waf_sign_xxx_path_binding.md",
+   "dst_path": "pocs/x-api-xxx-waf-签名头逆向-路径绑定规则-验签缺失-任意十六进制即可穿透/waf_sign_xxx_path_binding.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 156,
+   "code": "next.js-ssr-pageprops.t-密文可解密-前端硬编码-aes-密钥-v-go-h-93a8jg",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 157,
+   "code": "主站登录-x-api-finger-指纹算法完整还原-fingerprintjs-x64hash128-seed-31",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 158,
+   "code": "代理后台-loginflow-两步验证流程完全逆向-isvalidate-checkcode-xcode-xcodeid-卡点精确定位为极验票据",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 159,
+   "code": "glaxy-网关-_glaxy_tus5r4_-命名空间-api-探测与签名复现-含-10050-证伪与-8-证书多租户识别",
+   "src_path": "pocs/glaxy-网关-_glaxy_tus5r4_-命名空间-api-探测与签名复现-含-10050-证伪与-8-证书多租户识别/glaxy_probe.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 160,
+   "code": "glaxy-业务网关签名复现-e-字符降序-匿名未授权读取后端配置-密钥-内网ip",
+   "src_path": "pocs/glaxy-业务网关签名复现-e-字符降序-匿名未授权读取后端配置-密钥-内网ip/poc_glaxy_auth_bypass.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 161,
+   "code": "club-upload-未授权任意图片上传-aes-ecb-响应解密-密钥-7egwy67n31rfk7gy-fastdfs-落地回读",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 162,
+   "code": "纯-python-rtmp-握手与-chunk-层实现-修掉-message-header-顺序与-s2-残留两个坑",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 163,
+   "code": "target159.example.com-1852-补丁面黑盒实测矩阵-13-类已封堵-5-个门槛不可越-write_config-落点存在但入口不可达",
+   "src_path": "pocs/target160.example.com-1852-补丁面黑盒实测矩阵-13-类已封堵-5-个门槛不可越-write_config-落点存在但入口不可达/phpwind87-1852-patch-matrix.md",
+   "dst_path": "pocs/target159.example.com-1852-补丁面黑盒实测矩阵-13-类已封堵-5-个门槛不可越-write_config-落点存在但入口不可达/phpwind87-1852-patch-matrix.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 164,
+   "code": "phpwind-8.7-download.php-type-message-零鉴权越权读任意附件-游客可读",
+   "src_path": "pocs/phpwind-8.7-download.php-type-message-零鉴权越权读任意附件-游客可读/poc.http",
+   "dst_path": "pocs/phpwind-8.7-download.php-type-message-零鉴权越权读任意附件-游客可读/poc.http",
+   "action": "text-materialized"
+  },
+  {
+   "id": 165,
+   "code": "obfuscator.io-字符串数组还原-前端-aes-密钥派生还原-vite-vue-spa-通用",
+   "src_path": "pocs/obfuscator.io-字符串数组还原-前端-aes-密钥派生还原-vite-vue-spa-通用/deobfuscate-io-string-array.js",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 166,
+   "code": "响应-请求加解密完整还原-金沙904.com-系-saas-博彩门户前端",
+   "src_path": "pocs/响应-请求加解密完整还原-金沙904.com-系-saas-博彩门户前端/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 167,
+   "code": "vite-spa-多子应用-api-面递归提取-子应用发现-manifest-chunk-清单-api-正则",
+   "src_path": "pocs/vite-spa-多子应用-api-面递归提取-子应用发现-manifest-chunk-清单-api-正则/vite-subapp-api-extract.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 168,
+   "code": "绕过前端响应加密-读取-vue-pinia-运行时-store-获取明文数据",
+   "src_path": "pocs/绕过前端响应加密-读取-vue-pinia-运行时-store-获取明文数据/bypass-frontend-crypto-via-pinia-store.js",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 169,
+   "code": "vue-router-路由全量枚举-获取-spa-完整页面地图",
+   "src_path": "pocs/vue-router-路由全量枚举-获取-spa-完整页面地图/vue-router-route-enumeration.js",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 170,
+   "code": "java-servlet-未授权数据读取探测-post-userid-参数-404-500-200-判别",
+   "src_path": "pocs/java-servlet-未授权数据读取探测-post-userid-参数-404-500-200-判别/servlet_unauth_probe.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 171,
+   "code": "spa-管理后台源码未授权下载-action-全量未授权测试-含子目录路径发现",
+   "src_path": "pocs/spa-管理后台源码未授权下载-action-全量未授权测试-含子目录路径发现/spa_admin_unauth_audit.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 172,
+   "code": "菠菜站群-aocai-api-未授权读取加密站点配置-aes-ecb-密钥硬编码于前端-app.js",
+   "src_path": "pocs/菠菜站群-aocai-api-未授权读取加密站点配置-aes-ecb-密钥硬编码于前端-app.js/poc.js",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 173,
+   "code": "aocai-站群-api-网关未授权访问-userguestregister-签发-token-getwebconfignew-配置泄露",
+   "src_path": "pocs/aocai-站群-api-网关未授权访问-userguestregister-签发-token-getwebconfignew-配置泄露/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 174,
+   "code": "菠菜站群-prodsite5-未授权文件上传-attachment-upload-uploadchat-落地-azure-blob-公网可读",
+   "src_path": "pocs/菠菜站群-prodsite5-未授权文件上传-attachment-upload-uploadchat-落地-azure-blob-公网可读/aocai_unauth_upload.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 175,
+   "code": "前端混淆-dart-aot-双路还原-websocket-上行协议-含心跳与可达性判定",
+   "src_path": "pocs/前端混淆-dart-aot-双路还原-websocket-上行协议-含心跳与可达性判定/ws_protocol_recover.md",
+   "dst_path": "pocs/前端混淆-dart-aot-双路还原-websocket-上行协议-含心跳与可达性判定/ws_protocol_recover.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 176,
+   "code": "aocai-站群前端双-aes-密钥完全复现-webconfig.key-派生-离线解密响应",
+   "src_path": "pocs/aocai-站群前端双-aes-密钥完全复现-webconfig.key-派生-离线解密响应/aocai_key2_decrypt.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 177,
+   "code": "wordpress-xml-rpc-system.multicall-批量口令爆破-含判定特征校准",
+   "src_path": "pocs/wordpress-xml-rpc-system.multicall-批量口令爆破-含判定特征校准/wp_xmlrpc_multicall.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 178,
+   "code": "wordpress-rest-api-未授权信息收割-用户枚举-全量页面媒体-版本指纹",
+   "src_path": "pocs/wordpress-rest-api-未授权信息收割-用户枚举-全量页面媒体-版本指纹/wp_rest_unauth_harvest.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 179,
+   "code": "优客服-ukefu-路径-acl-绕过-chat-前缀放行-sign-仅长度校验",
+   "src_path": "pocs/优客服-ukefu-路径-acl-绕过-chat-前缀放行-sign-仅长度校验/ukefu_path_acl_bypass.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 180,
+   "code": "sunflower-2.0-博彩系统-api-未授权访问-含-tls-拒绝绕过法",
+   "src_path": "pocs/sunflower-2.0-博彩系统-api-未授权访问-含-tls-拒绝绕过法/sunflower_unauth_api.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 181,
+   "code": "白标真人娱乐场-h5-客户端加密-签名方案完整还原-aes-128-cbc-iv-key-zlib-hmacsha1",
+   "src_path": "pocs/白标真人娱乐场-h5-客户端加密-签名方案完整还原-aes-128-cbc-iv-key-zlib-hmacsha1/client_crypto_reverse.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 182,
+   "code": "尾斜杠触发-traefik-301-清理泄露隐藏路由-base-通用绕过手法",
+   "src_path": "pocs/尾斜杠触发-traefik-301-清理泄露隐藏路由-base-通用绕过手法/traefik_slash_hidden_base.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 183,
+   "code": "执行式去混淆-伪装运行环境跑混淆脚本-直接读回-window-配置-通用手法",
+   "src_path": "pocs/执行式去混淆-伪装运行环境跑混淆脚本-直接读回-window-配置-通用手法/run_obfuscated_script.js",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 184,
+   "code": "jackson-未知字段报错泄露内部类名与-dto-字段清单-spring-boot-接口测绘手法",
+   "src_path": "pocs/jackson-未知字段报错泄露内部类名与-dto-字段清单-spring-boot-接口测绘手法/jackson_dto_leak.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 185,
+   "code": "拼图滑块验证绕过-clientnonce-明文内含滑块正确坐标且可离线伪造",
+   "src_path": "pocs/拼图滑块验证绕过-clientnonce-明文内含滑块正确坐标且可离线伪造/jigsaw_nonce_bypass.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 186,
+   "code": "gameplat-cms-api-img-upload-未授权任意文件上传-content-type-可控-存储型-xss",
+   "src_path": "pocs/gameplat-cms-api-img-upload-未授权任意文件上传-content-type-可控-存储型-xss/poc_unauth_upload.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 187,
+   "code": "cn7-平台-jumpto-img-lt-url-gt-未授权开放图片代理-ssrf",
+   "src_path": "pocs/cn7-平台-jumpto-img-lt-url-gt-未授权开放图片代理-ssrf/cn7_jumpto_img_ssrf.md",
+   "dst_path": "pocs/cn7-平台-jumpto-img-lt-url-gt-未授权开放图片代理-ssrf/cn7_jumpto_img_ssrf.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 188,
+   "code": "openssh-regresshion-cve-2024-6387-崩溃验证-7etsuo-poc-落盘-python-复刻-v1-v2",
+   "src_path": "pocs/openssh-regresshion-cve-2024-6387-崩溃验证-7etsuo-poc-落盘-python-复刻-v1-v2/regresshion.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 189,
+   "code": "vite-javascript-obfuscator-spa-还原-chunk-映射表-字符串表反混淆-服务层接口全量提取",
+   "src_path": "pocs/vite-javascript-obfuscator-spa-还原-chunk-映射表-字符串表反混淆-服务层接口全量提取/vite_obfuscated_spa_audit.md",
+   "dst_path": "pocs/vite-javascript-obfuscator-spa-还原-chunk-映射表-字符串表反混淆-服务层接口全量提取/vite_obfuscated_spa_audit.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 190,
+   "code": "ocs-在线客服中台-访客会话越权读取-vid-idor",
+   "src_path": "pocs/ocs-在线客服中台-访客会话越权读取-vid-idor/ocs_idor_poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 191,
+   "code": "自研-web-后台接管四步法-app.js-提-api-面-真实域名绕-origin-白名单-无锁定弱口令-数据面遍历",
+   "src_path": "pocs/自研-web-后台接管四步法-app.js-提-api-面-真实域名绕-origin-白名单-无锁定弱口令-数据面遍历/appjs_origin_bypass_takeover.md",
+   "dst_path": "pocs/自研-web-后台接管四步法-app.js-提-api-面-真实域名绕-origin-白名单-无锁定弱口令-数据面遍历/appjs_origin_bypass_takeover.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 192,
+   "code": "站群-rn-app-分发链下载-bundle-接口-密钥提取-域名轮换跳转-js-型分发",
+   "src_path": "pocs/站群-rn-app-分发链下载-bundle-接口-密钥提取-域名轮换跳转-js-型分发/rn_apk_download_extract.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 193,
+   "code": "phpwind-零鉴权信息泄露双接口-sitemap.php-泄露全站帖子标题-作者-example.com-泄露全部会员名",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 194,
+   "code": "target183.example.com-银行排行榜-bank_sort.php-代码注入-rce-官方称-8.7-才修复",
+   "src_path": "pocs/phpwind-v4-5-6-7-8-hack-bank-index.php-银行排行榜-bank_sort.php-代码注入-rce-官方称-8.7-才修复/poc.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 195,
+   "code": "target185.example.com-route-basepath-未初始化任意文件包含-前台零登录-可远程包含-ge",
+   "src_path": "pocs/203.0.113.1-站群跳转机全机地图与负面情报-唯一动态程序-phpwind-7.3.2-全静态页-三套异机真入口/poc.http",
+   "dst_path": "pocs/target185.example.com-route-basepath-未初始化任意文件包含-前台零登录-可远程包含-ge/poc.http",
+   "action": "text-materialized"
+  },
+  {
+   "id": 196,
+   "code": "phpwind-7.5-pw_api.php-api-class_base.php-mode-未过滤任意文件包含-来自-_post-_get-不依赖-regis",
+   "src_path": "pocs/phpwind-7.5-pw_api.php-api-class_base.php-mode-未过滤任意文件包含-来自-_post-_get-不依赖-regis/poc.http",
+   "dst_path": "pocs/phpwind-7.5-pw_api.php-api-class_base.php-mode-未过滤任意文件包含-来自-_post-_get-不依赖-regis/poc.http",
+   "action": "text-materialized"
+  },
+  {
+   "id": 197,
+   "code": "phpwind-7.x-8.x-后台-getshell-手法全谱-sql-into-outfile-模板包导入-备份恢复-cache.php-level.php",
+   "src_path": "pocs/colour-判死与-7.5-等价字段-titlefont-证据链-eis-注入必须的-与-都被前台清洗吃掉/poc.php",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 198,
+   "code": "phpwind-7.3.2-负面情报清单-register_globals-已移除-mawhole-eval-证否-setstyles-转义-example.com",
+   "src_path": "pocs/phpwind-7.3.2-负面情报清单-register_globals-已移除-mawhole-eval-证否-setstyles-转义-hack.php/poc.http",
+   "dst_path": "pocs/phpwind-7.3.2-负面情报清单-register_globals-已移除-mawhole-eval-证否-setstyles-转义-example.com/poc.http",
+   "action": "text-materialized"
+  },
+  {
+   "id": 199,
+   "code": "phpwind-7.3.2-负面情报-example.com-的-orderway-asc-排序参数未进入-sql-纯回显",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 200,
+   "code": "phpwind-7.x-hack-bank-savearray-data-bbscache-bank_sort.php-用户名注入-写码-同请求include",
+   "src_path": "pocs/phpwind-7.x-hack-bank-savearray-data-bbscache-bank_sort.php-用户名注入-写码-同请求include/poc.php",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 201,
+   "code": "phpwind-global.php-initgp-array-u-a-装载-a-但被无条件-unset-eval-a-取不到值的判据",
+   "src_path": "pocs/phpwind-global.php-initgp-array-u-a-装载-a-但被无条件-unset-eval-a-取不到值的判据/poc.php",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 202,
+   "code": "phpwind-7.x-eis-注入点-copyctrl-read-colour-需-pw_threads.colour-列存在",
+   "src_path": "pocs/phpwind-7.x-eis-注入点-copyctrl-read-colour-需-pw_threads.colour-列存在/poc.php",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 203,
+   "code": "phpwind-7.x-入参清洗边界与-5-个-post-豁免字段-payload-构造必须遵守",
+   "src_path": "pocs/phpwind-7.x-入参清洗边界与-5-个-post-豁免字段-payload-构造必须遵守/poc.php",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 204,
+   "code": "phpwind-uploadicon-头像上传在-7.5-sp3-的校验实现-7.3.2-需实测是否有白名单",
+   "src_path": "pocs/phpwind-uploadicon-头像上传在-7.5-sp3-的校验实现-7.3.2-需实测是否有白名单/poc.php",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 205,
+   "code": "phpwind-7.x-后台入口机制-admin_file-php_self-全站唯一入口-example.com-install.php-存在则后台拒绝进入",
+   "src_path": "pocs/phpwind-7.x-后台入口机制-admin_file-php_self-全站唯一入口-admin.php-install.php-存在则后台拒绝进入/poc.php",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 206,
+   "code": "phpwind-passport_client.php-通行证接口-verify-md5-action-userdb-forward-db_pptkey-可改写",
+   "src_path": "pocs/phpwind-passport_client.php-通行证接口-verify-md5-action-userdb-forward-db_pptkey-可改写/poc.php",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 207,
+   "code": "phpwind-7.5-sp3-全站-e-与代码求值点穷举-30-处-e-仅-2-处可注入-均为-read-colour",
+   "src_path": "pocs/phpwind-7.5-sp3-全站-e-与代码求值点穷举-30-处-e-仅-2-处可注入-均为-read-colour/poc.php",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 208,
+   "code": "colour-判死与-7.5-等价字段-titlefont-证据链-eis-注入必须的-与-都被前台清洗吃掉",
+   "src_path": "pocs/colour-判死与-7.5-等价字段-titlefont-证据链-eis-注入必须的-与-都被前台清洗吃掉/poc.php",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 209,
+   "code": "phpwind-7.5-sp3-上传扩展名变形的黑名单缺口-pht-phar-inc-未覆盖",
+   "src_path": "pocs/phpwind-7.5-sp3-上传扩展名变形的黑名单缺口-pht-phar-inc-未覆盖/poc.php",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 210,
+   "code": "phpwind-mode.php-apps.php-路由审计-m-与-q-都不进路径-两侧均无文件包含-含-mode-o-真实文件清单",
+   "src_path": "pocs/phpwind-mode.php-apps.php-路由审计-m-与-q-都不进路径-两侧均无文件包含-含-mode-o-真实文件清单/poc.php",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 211,
+   "code": "照片上传-mode.php-m-o-q-photos-a-upload-判死-扩展名白名单硬编码-文件名全服务端生成-getimgsize-内容校验-.user",
+   "src_path": "pocs/照片上传-mode.php-m-o-q-photos-a-upload-判死-扩展名白名单硬编码-文件名全服务端生成-getimgsize-内容校验-.user/poc.php",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 212,
+   "code": "php-e-修饰符引擎级否证-捕获组被-php_addslashes-转义-return-前缀-断引攻击不成立-php_pcre.c-961",
+   "src_path": "pocs/php-e-修饰符引擎级否证-捕获组被-php_addslashes-转义-return-前缀-断引攻击不成立-php_pcre.c-961/poc.php",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 213,
+   "code": "phpwind-7.5-sp3-全站-30-处-e-逐条判定-含-atc_content-最强候选链-prosign-与-titlefont-链路判死",
+   "src_path": "pocs/phpwind-7.5-sp3-全站-30-处-e-逐条判定-含-atc_content-最强候选链-prosign-与-titlefont-链路判死/poc.php",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 214,
+   "code": "phpwind-7.5-sp3-全部-e-替换串原文与形态判定-30-处无一为形态-b-参数位逃逸-全死",
+   "src_path": "pocs/phpwind-7.5-sp3-全部-e-替换串原文与形态判定-30-处无一为形态-b-参数位逃逸-全死/poc.php",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 215,
+   "code": "phpwind-7.3.2-实测判据集-prosign-写入姿势-引号实体化-admincheck-无自助入口-mode.php-m-o-各-q-可用性-载体长",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 216,
+   "code": "phpwind-7.5-sp3-反序列化判死-全站-0-个魔术方法-无链起点-无-cookie-请求参数来源",
+   "src_path": "pocs/phpwind-7.5-sp3-反序列化判死-全站-0-个魔术方法-无链起点-无-cookie-请求参数来源/poc.php",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 217,
+   "code": "phpwind-7.5-sp3-cookie-登录态-strcode-无-mac-可逆-但伪造受-db_hash-封死-拿到-db_hash-即账号接管",
+   "src_path": "pocs/phpwind-7.5-sp3-cookie-登录态-strcode-无-mac-可逆-但伪造受-db_hash-封死-拿到-db_hash-即账号接管/poc.php",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 218,
+   "code": "站群同源判定-多-vhost-是否指向同一-document_root-body-diff-相似度-尺寸-4-主机名长度差",
+   "src_path": "pocs/站群同源判定-多-vhost-是否指向同一-document_root-body-diff-相似度-尺寸-4-主机名长度差/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 219,
+   "code": "端口开放判定判据-代理-connect-假成功陷阱-以应用层数据为准-宝塔-pure-ftpd-nginx-403-实测",
+   "src_path": "pocs/端口开放判定判据-代理-connect-假成功陷阱-以应用层数据为准-宝塔-pure-ftpd-nginx-403-实测/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 220,
+   "code": "宝塔-pure-ftpd-口令面判据-存在-不存在用户同一条-530-无法枚举-只有-230-算通-字典来源与-put-马战术",
+   "src_path": "pocs/宝塔-pure-ftpd-口令面判据-存在-不存在用户同一条-530-无法枚举-只有-230-算通-字典来源与-put-马战术/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 221,
+   "code": "eyoucms-前台任意文件写入-getshell-api-uploadify-preview-后缀绕过",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 222,
+   "code": "eyoucms-后台模板编辑-rce-cve-2026-7388-thinkphp-标签绕过过滤",
+   "src_path": "pocs/eyoucms-后台模板编辑-rce-cve-2026-7388-thinkphp-标签绕过过滤/eyoucms_filemanager_editfile_rce.md",
+   "dst_path": "pocs/eyoucms-后台模板编辑-rce-cve-2026-7388-thinkphp-标签绕过过滤/eyoucms_filemanager_editfile_rce.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 224,
+   "code": "cve-2026-7389-eyoucms-前台-pre-auth-sql-注入-common.php-getsortdata-参数-sort_asc",
+   "src_path": "pocs/cve-2026-7389-eyoucms-前台-pre-auth-sql-注入-common.php-getsortdata-参数-sort_asc/poc.txt",
+   "dst_path": "pocs/cve-2026-7389-eyoucms-前台-pre-auth-sql-注入-common.php-getsortdata-参数-sort_asc/poc.txt",
+   "action": "text-materialized"
+  },
+  {
+   "id": 225,
+   "code": "eyoucms-后台-logo-上传不受限-getshell-cve-2024-11211",
+   "src_path": "pocs/eyoucms-后台-logo-上传不受限-getshell-cve-2024-11211/eyoucms_logo_upload_rce.md",
+   "dst_path": "pocs/eyoucms-后台-logo-上传不受限-getshell-cve-2024-11211/eyoucms_logo_upload_rce.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 226,
+   "code": "eyoucms-未授权任意文件读-文件包含致代码执行-cve-2026-1107-diyajax-check_userinfo",
+   "src_path": "pocs/eyoucms-未授权任意文件读-文件包含致代码执行-cve-2026-1107-diyajax-check_userinfo/eyoucms_diyajax_check_userinfo.md",
+   "dst_path": "pocs/eyoucms-未授权任意文件读-文件包含致代码执行-cve-2026-1107-diyajax-check_userinfo/eyoucms_diyajax_check_userinfo.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 227,
+   "code": "eyoucms-二次反序列化-target238.example.com-arcpagelist-参数-attstr",
+   "src_path": "pocs/eyoucms-二次反序列化-rce-cve-2025-15375-api-ajax.php-arcpagelist-参数-attstr/eyoucms_arcpagelist_unserialize.md",
+   "dst_path": "pocs/eyoucms-二次反序列化-target238.example.com-arcpagelist-参数-attstr/eyoucms_arcpagelist_unserialize.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 228,
+   "code": "eyoucms-后台接管跳板-官方-setpwd.php-密码-密保重置工具-配合任意文件写",
+   "src_path": "pocs/eyoucms-后台接管跳板-官方-setpwd.php-密码-密保重置工具-配合任意文件写/eyoucms_setpwd_admin_takeover.md",
+   "dst_path": "pocs/eyoucms-后台接管跳板-官方-setpwd.php-密码-密保重置工具-配合任意文件写/eyoucms_setpwd_admin_takeover.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 229,
+   "code": "trade.php-判死-全-nul-成因-防护清零-反推前人用的是-bank-链-真正该查-data-bbscache-bank_sort.php",
+   "src_path": "pocs/trade.php-判死-全-nul-成因-防护清零-反推前人用的是-bank-链-真正该查-data-bbscache-bank_sort.php/poc.php",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 230,
+   "code": "phpwind-7.5-8.7-根目录标准文件清单对照-trade.php-是标准-example.com-与-example.com-是非标准",
+   "src_path": "pocs/phpwind-7.5-8.7-根目录标准文件清单对照-trade.php-是标准-moneylog.php-与-userinfo.php-是非标准/poc.php",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 231,
+   "code": "easypay-支付回调签名走私-return_url-内嵌-trade_status-伪造支付成功",
+   "src_path": "pocs/easypay-支付回调签名走私-return_url-内嵌-trade_status-伪造支付成功/poc.go",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 232,
+   "code": "eyoucms-后台任意文件复制-泄露数据库配置-cve-2026-6561-index-edit_adminlogo",
+   "src_path": "pocs/eyoucms-后台任意文件复制-泄露数据库配置-cve-2026-6561-index-edit_adminlogo/eyoucms_edit_adminlogo_filecopy.md",
+   "dst_path": "pocs/eyoucms-后台任意文件复制-泄露数据库配置-cve-2026-6561-index-edit_adminlogo/eyoucms_edit_adminlogo_filecopy.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 233,
+   "code": "eyoucms-版本判定速查-4-判据-最多-4-包锁定版本区间",
+   "src_path": "pocs/eyoucms-版本判定速查-4-判据-最多-4-包锁定版本区间/eyoucms_version_fingerprint.md",
+   "dst_path": "pocs/eyoucms-版本判定速查-4-判据-最多-4-包锁定版本区间/eyoucms_version_fingerprint.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 234,
+   "code": "eyoucms-低价值-已修复条目汇总-反面清单-勿耗包数",
+   "src_path": "pocs/eyoucms-低价值-已修复条目汇总-反面清单-勿耗包数/eyoucms_low_value_index.md",
+   "dst_path": "pocs/eyoucms-低价值-已修复条目汇总-反面清单-勿耗包数/eyoucms_low_value_index.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 235,
+   "code": "203.0.113.126-站群跳转机全机地图与负面情报-唯一动态程序-phpwind-7.3.2-全静态页-三套异机真入口",
+   "src_path": "pocs/203.0.113.1-站群跳转机全机地图与负面情报-唯一动态程序-phpwind-7.3.2-全静态页-三套异机真入口/poc.http",
+   "dst_path": "pocs/203.0.113.126-站群跳转机全机地图与负面情报-唯一动态程序-phpwind-7.3.2-全静态页-三套异机真入口/poc.http",
+   "action": "text-materialized"
+  },
+  {
+   "id": 236,
+   "code": "易支付回调伪造可行性判定-签名域是否含攻击者可控值-new-api-反面-sub2api-正面",
+   "src_path": "pocs/易支付回调伪造可行性判定-签名域是否含攻击者可控值-new-api-反面-sub2api-正面/easypay-forgery-triage.md",
+   "dst_path": "pocs/易支付回调伪造可行性判定-签名域是否含攻击者可控值-new-api-反面-sub2api-正面/easypay-forgery-triage.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 237,
+   "code": "得分系统-g1-去重陷阱-同档位重复记分会被累加-禁止为补-step_id-关联而重记得分",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 238,
+   "code": "idor-判定铁律-必须做-同身份换-id-对照实验-否则不算确认-含一次真实误报复盘",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 239,
+   "code": "phpwind-7.x-后台入口名定位-读-pw_config.db_adminfile-前台-db_adminfile-渲染-不做文件名爆破",
+   "src_path": "pocs/phpwind-7.x-后台入口名定位-读-pw_config.db_adminfile-前台-db_adminfile-渲染-不做文件名爆破/poc.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 240,
+   "code": "sub2api-easypay-支付回调验签绕过-参数走私-签名串拼接不一致-伪造回调入账",
+   "src_path": "pocs/sub2api-easypay-支付回调验签绕过-参数走私-签名串拼接不一致-伪造回调入账/easypay_forge_callback.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 241,
+   "code": "sub2api-易支付-easypay-回调验签绕过-通用参数化利用脚本-零密钥伪造回调入账",
+   "src_path": "pocs/sub2api-易支付-easypay-回调验签绕过-通用参数化利用脚本-零密钥伪造回调入账/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 242,
+   "code": "phpwind-hack-插件入口-example.com-h_name-lt-插件-gt-绕过-hack-lt-插件-target270.example.com-的-9b-forbi",
+   "src_path": "pocs/phpwind-hack-插件入口-hack.php-h_name-lt-插件-gt-绕过-hack-lt-插件-gt-index.php-的-9b-forbi/phpwind-hack-plugin-entry.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 243,
+   "code": "phpwind-7.x-pw_example.com-action-pcdelimg-fieldname-布尔盲注-wooyun-2010-0417-影响-phpwi",
+   "src_path": "pocs/phpwind-7.x-pw_ajax.php-action-pcdelimg-fieldname-布尔盲注-wooyun-2010-0417-影响-phpwi/pcdelimg-blind-sqli.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 244,
+   "code": "phpwind-7.x-pw_api.php-api-class_other.php-threadscategory-写码-rce-wooyun-2010-04",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 245,
+   "code": "phpwind-7.x-pw_api.php-api-class_base.php-mode-任意文件包含-cn-va10-02-点名文件-不依赖-regist",
+   "src_path": "pocs/phpwind-7.x-pw_api.php-api-class_base.php-mode-任意文件包含-cn-va10-02-点名文件-不依赖-regist/pwapi-mode-lfi.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 246,
+   "code": "phpwind-7.3.2-情报审计负面清单-7.5已修-7.3.2未修补丁对照-tag写码-hack_rate-lfi-faq-vote-apps-全部源码级",
+   "src_path": "pocs/phpwind-7.3.2-情报审计负面清单-7.5已修-7.3.2未修补丁对照-tag写码-hack_rate-lfi-faq-vote-apps-全部源码级/phpwind73x-negative-and-patch-diff.md",
+   "dst_path": "pocs/phpwind-7.3.2-情报审计负面清单-7.5已修-7.3.2未修补丁对照-tag写码-hack_rate-lfi-faq-vote-apps-全部源码级/phpwind73x-negative-and-patch-diff.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 247,
+   "code": "phpwind-7.3.2-生日显示写码链-6.3.2-前台-getshell-手法-成立性判定-机制成立但被注册名-char_cv-引号实体化阻断",
+   "src_path": "pocs/phpwind-7.3.2-生日显示写码链-6.3.2-前台-getshell-手法-成立性判定-机制成立但被注册名-char_cv-引号实体化阻断/phpwind-birth-cache-writecode-verdict.md",
+   "dst_path": "pocs/phpwind-7.3.2-生日显示写码链-6.3.2-前台-getshell-手法-成立性判定-机制成立但被注册名-char_cv-引号实体化阻断/phpwind-birth-cache-writecode-verdict.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 248,
+   "code": "phpwind-7.x-探测方法论-cc-防护-pwdefendcc-导致的-0-字节假阴性-与四条规避规范",
+   "src_path": "pocs/phpwind-7.x-探测方法论-cc-防护-pwdefendcc-导致的-0-字节假阴性-与四条规避规范/phpwind-probe-cc-bypass.md",
+   "dst_path": "pocs/phpwind-7.x-探测方法论-cc-防护-pwdefendcc-导致的-0-字节假阴性-与四条规避规范/phpwind-probe-cc-bypass.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 249,
+   "code": "phpwind-7.x-入口-action-全量枚举方法论-251-个-action-10-类危险标记-写点判死结论集-pw_var_export-转义-pcv",
+   "src_path": "pocs/phpwind-7.x-入口-action-全量枚举方法论-251-个-action-10-类危险标记-写点判死结论集-pw_var_export-转义-pcv/pw-action-enum.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 250,
+   "code": "phpwind-7.x-后台风格-css-编辑-data-style-_css.htm-updatecache_sy-eval-代码注入-rce",
+   "src_path": "pocs/phpwind-7.x-后台风格-css-编辑-data-style-_css.htm-updatecache_sy-eval-代码注入-rce/phpwind-setstyles-editcss-eval-rce.md",
+   "dst_path": "pocs/phpwind-7.x-后台风格-css-编辑-data-style-_css.htm-updatecache_sy-eval-代码注入-rce/phpwind-setstyles-editcss-eval-rce.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 251,
+   "code": "phpwind-写-php-文件-sink-的三面叠加扫描法-数据来源分类-变量路径补扫",
+   "src_path": "pocs/phpwind-写-php-文件-sink-的三面叠加扫描法-数据来源分类-变量路径补扫/pw-db-to-php-sink-scan.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 252,
+   "code": "phpwind-写-.php-缓存文件判死边界速查表-含-bank_sort-例外与字段长度表",
+   "src_path": "pocs/phpwind-写-.php-缓存文件判死边界速查表-含-bank_sort-例外与字段长度表/phpwind-write-sink-deadlist.md",
+   "dst_path": "pocs/phpwind-写-.php-缓存文件判死边界速查表-含-bank_sort-例外与字段长度表/phpwind-write-sink-deadlist.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 253,
+   "code": "phpwind-7.3.2-admin-bakup.php-任意-sql-执行-bakindata-多语句-bakuptable-表名注入",
+   "src_path": "pocs/phpwind-7.3.2-admin-bakup.php-任意-sql-执行-bakindata-多语句-bakuptable-表名注入/phpwind-bakup-arbitrary-sql.txt",
+   "dst_path": "pocs/phpwind-7.3.2-admin-bakup.php-任意-sql-执行-bakindata-多语句-bakuptable-表名注入/phpwind-bakup-arbitrary-sql.txt",
+   "action": "text-materialized"
+  },
+  {
+   "id": 254,
+   "code": "phpwind-7.3.2-系统性加固判死清单-bank_sort-rce-链-pw_hack-写入面-权限模型全量审计",
+   "src_path": "pocs/phpwind-7.3.2-系统性加固判死清单-bank_sort-rce-链-pw_hack-写入面-权限模型全量审计/phpwind-732-audit-verdicts.txt",
+   "dst_path": "pocs/phpwind-7.3.2-系统性加固判死清单-bank_sort-rce-链-pw_hack-写入面-权限模型全量审计/phpwind-732-audit-verdicts.txt",
+   "action": "text-materialized"
+  },
+  {
+   "id": 255,
+   "code": "gbk-站点后台表单-全量回放-必须走-latin-1-字节级往返-phpwind-7.3.2-实测",
+   "src_path": "pocs/gbk-站点后台表单-全量回放-必须走-latin-1-字节级往返-phpwind-7.3.2-实测/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 256,
+   "code": "phpwind-7.3.2-后台-getshell-优先级手册-权限自检-148xx-判据-p0-sql-outfile-p5-附件扩展名-源码级判死清单",
+   "src_path": "pocs/phpwind-7.3.2-后台-getshell-优先级手册-权限自检-148xx-判据-p0-sql-outfile-p5-附件扩展名-源码级判死清单/phpwind732-backend-getshell-playbook.md",
+   "dst_path": "pocs/phpwind-7.3.2-后台-getshell-优先级手册-权限自检-148xx-判据-p0-sql-outfile-p5-附件扩展名-源码级判死清单/phpwind732-backend-getshell-playbook.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 257,
+   "code": "phpwind-7.3.2-后台附件白名单放开-gbk-全量表单回放-与上传失败分层判据",
+   "src_path": "pocs/phpwind-7.3.2-后台附件白名单放开-gbk-全量表单回放-与上传失败分层判据/pw732-att-whitelist.ps1",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 258,
+   "code": "出口-ip-被宝塔-waf-拉黑后的应急出口-免费-http-代理池-抓取-验活-轮换-schannel-坑",
+   "src_path": "pocs/出口-ip-被宝塔-waf-拉黑后的应急出口-免费-http-代理池-抓取-验活-轮换-schannel-坑/proxy-pool-egress.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 259,
+   "code": "宝塔网站防火墙-9.8.9-拦截边界与绕过-ip-层换出口-url-关键词混合大小写-multipart-双拦-php-特征",
+   "src_path": "pocs/宝塔网站防火墙-9.8.9-拦截边界与绕过-ip-层换出口-url-关键词混合大小写-multipart-双拦-php-特征/btwaf-989-boundary.md",
+   "dst_path": "pocs/宝塔网站防火墙-9.8.9-拦截边界与绕过-ip-层换出口-url-关键词混合大小写-multipart-双拦-php-特征/btwaf-989-boundary.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 260,
+   "code": "出口-ip-与-host-头是两个独立变量-环境代理静默改道导致宝塔-waf-封禁被误读-curl-必须-noproxy",
+   "src_path": "pocs/出口-ip-与-host-头是两个独立变量-环境代理静默改道导致宝塔-waf-封禁被误读-curl-必须-noproxy/poc.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 261,
+   "code": "phpwind-7.x-前台-后台-post-一律被-showmsg-undefined_action-拒绝-根因是-postcheck-要求-referer",
+   "src_path": "pocs/phpwind-7.x-前台-后台-post-一律被-showmsg-undefined_action-拒绝-根因是-postcheck-要求-referer/phpwind-referer-host-check.md",
+   "dst_path": "pocs/phpwind-7.x-前台-后台-post-一律被-showmsg-undefined_action-拒绝-根因是-postcheck-要求-referer/phpwind-referer-host-check.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 262,
+   "code": "宝塔-waf-来源封禁实测判据-multipart-上传后全出口-000-proxyerror-而同代理到-baidu-200-区分-代理失效-vs-目标拒我",
+   "src_path": "pocs/宝塔-waf-来源封禁实测判据-multipart-上传后全出口-000-proxyerror-而同代理到-baidu-200-区分-代理失效-vs-目标拒我/waf-source-ban-criteria.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 263,
+   "code": "宝塔网站防火墙-9.8.9-拦截页指纹-403-1200-sql-关键字载荷被整拦的实测判据-代理出口两级验活法-noproxy-自杀陷阱",
+   "src_path": "pocs/宝塔网站防火墙-9.8.9-拦截页指纹-403-1200-sql-关键字载荷被整拦的实测判据-代理出口两级验活法-noproxy-自杀陷阱/poc.http",
+   "dst_path": "pocs/宝塔网站防火墙-9.8.9-拦截页指纹-403-1200-sql-关键字载荷被整拦的实测判据-代理出口两级验活法-noproxy-自杀陷阱/poc.http",
+   "action": "text-materialized"
+  },
+  {
+   "id": 264,
+   "code": "phpwind-7.3.2-7.5-后台写文件-getshell-三处写入端判死-pcv-封穿越-pw_var_export-转义数组键-setcss-非写入端",
+   "src_path": "pocs/phpwind-7.3.2-7.5-后台写文件-getshell-三处写入端判死-pcv-封穿越-pw_var_export-转义数组键-setcss-非写入端/poc.php",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 265,
+   "code": "spa-spring-cloud-网关批量未授权接口探测-xxa-前缀型",
+   "src_path": "pocs/spa-spring-cloud-网关批量未授权接口探测-xxa-前缀型/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 266,
+   "code": "点云客服-dotclouds-访客端未授权-multipart-任意文件上传-net.dotclouds-spring-boot",
+   "src_path": "pocs/点云客服-dotclouds-访客端未授权-multipart-任意文件上传-net.dotclouds-spring-boot/dotclouds_unauth_upload.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 267,
+   "code": "点云客服-dotclouds-会话接口零鉴权读取-idor-querychathistory-queryconvmessage",
+   "src_path": "pocs/点云客服-dotclouds-会话接口零鉴权读取-idor-querychathistory-queryconvmessage/dotclouds_unauth_convread.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 268,
+   "code": "dysaas-平台家族统一上传接口任意内容写入-xxa-longm-api-v1-file-upload",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 269,
+   "code": "dysaas-代理后台-api-前缀双写规律-匿名-clientcode-商户配置泄露",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 270,
+   "code": "点云客服-dotclouds-sendConvMessageFile-companyId-路径穿越-任意目录文件写入",
+   "src_path": "pocs/点云客服-dotclouds-sendConvMessageFile-companyId-路径穿越-任意目录文件写入/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 271,
+   "code": "dysaas-代理后台-cdn边缘ip轮换绕过源站封禁-请求格式与aes-匿名代理注册appsave",
+   "src_path": "pocs/dysaas-代理后台-cdn边缘ip轮换绕过源站封禁-请求格式与aes-匿名代理注册appsave/dysaas_agent_client.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 272,
+   "code": "直播平台未授权注册绕过短信验证-api-user-simple_regist-空-mobile_hash-直接签发-token",
+   "src_path": "pocs/直播平台未授权注册绕过短信验证-api-user-simple_regist-空-mobile_hash-直接签发-token/poc.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 273,
+   "code": "腾讯云-sts-临时凭证-cos-q-signature-手工签名-写入-边界判定-可用脚本",
+   "src_path": "pocs/腾讯云-sts-临时凭证-cos-q-signature-手工签名-写入-边界判定-可用脚本/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 274,
+   "code": "多租户直播平台前端响应加密还原-aes-256-cbc-硬编码-key-iv-时间戳尾部拼接",
+   "src_path": "pocs/多租户直播平台前端响应加密还原-aes-256-cbc-硬编码-key-iv-时间戳尾部拼接/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 275,
+   "code": "匿名注册-申请接口作账号存在性-oracle-用户名枚举通用手法-dysaas-代理-saas-判定表",
+   "src_path": "pocs/匿名注册-申请接口作账号存在性-oracle-用户名枚举通用手法-dysaas-代理-saas-判定表/oracle_username_enum.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 276,
+   "code": "xxa-longm-api-v1-file-upload-未授权文件上传-multipart-无-authorization",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 277,
+   "code": "密码喷洒-批量生成的运营账号共用默认口令-先证明登录无需验证码-按前端算法构造口令密文",
+   "src_path": "pocs/密码喷洒-批量生成的运营账号共用默认口令-先证明登录无需验证码-按前端算法构造口令密文/password_spray_batch_accounts.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 278,
+   "code": "swagger-驱动的水平越权批量探测-自己-他人-id-对照-未文档化参数注入-加密响应长度-oracle",
+   "src_path": "pocs/swagger-驱动的水平越权批量探测-自己-他人-id-对照-未文档化参数注入-加密响应长度-oracle/swagger_idor_sweep.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 279,
+   "code": "多租户-saas-后台-已证否方向-坑位卡-上传无解析-detail-非-idor-bearer-前缀与单会话顶号-验证码漏校验-错误码语义表",
+   "src_path": "pocs/多租户-saas-后台-已证否方向-坑位卡-上传无解析-detail-非-idor-bearer-前缀与单会话顶号-验证码漏校验-错误码语义表/saas_backend_pitfalls.md",
+   "dst_path": "pocs/多租户-saas-后台-已证否方向-坑位卡-上传无解析-detail-非-idor-bearer-前缀与单会话顶号-验证码漏校验-错误码语义表/saas_backend_pitfalls.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 280,
+   "code": "rn-expo-hermes-apk-逆向-提取后端签名密钥与加密算法",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 281,
+   "code": "cn7-jumpto-img-ssrf-内网-云元数据不可达-边缘代理阻断-实测负面",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 282,
+   "code": "博彩站群-203.0.113.16-10666-java-反序列化-jndi-log4j-rce-全否-严格",
+   "src_path": "pocs/cve-2026-7389-eyoucms-前台-pre-auth-sql-注入-common.php-getsortdata-参数-sort_asc/poc.txt",
+   "dst_path": "pocs/博彩站群-203.0.113.16-10666-java-反序列化-jndi-log4j-rce-全否-严格/poc.txt",
+   "action": "text-materialized"
+  },
+  {
+   "id": 283,
+   "code": "cn7-gameplat-10666-管理组件面-actuator-druid-swagger-若依-全否-spa",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 284,
+   "code": "cn7-gameplat-5.3.0-无公开版本级-nday-同产品实例静态克隆-nginx-api-前缀路由",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 285,
+   "code": "cn7-gameplat-构建哈希指纹-前端bundle-hash-fofa枚举同构建舰队",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 286,
+   "code": "cn7-10666-java-deser-jndi-log4j-all-negative",
+   "src_path": "pocs/cn7-10666-java-deser-jndi-log4j-all-negative/poc.md",
+   "dst_path": "pocs/cn7-10666-java-deser-jndi-log4j-all-negative/poc.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 287,
+   "code": "cn7-gameplat-多租户saas-未授权-api-tenant-setting-getpersonalcent",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 288,
+   "code": "cn7-gameplat-多租户博彩-saas-未授权跨租户配置泄露-getpersonalcenter-getcon",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 289,
+   "code": "cn7-gameplat-api-config-promote-是推广跳转-catch-all-302-而非受门控",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 290,
+   "code": "web-缓存投毒-缓存欺骗面一站式测绘脚本-含缓存键归一化与-unkeyed-头判定",
+   "src_path": "pocs/web-缓存投毒-缓存欺骗面一站式测绘脚本-含缓存键归一化与-unkeyed-头判定/cache_poison_probe.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 291,
+   "code": "cdngreat-缓存-防护层指纹识别与缓存范围-缓存键判定方法",
+   "src_path": "pocs/cdngreat-缓存-防护层指纹识别与缓存范围-缓存键判定方法/cdngreat_fingerprint.md",
+   "dst_path": "pocs/cdngreat-缓存-防护层指纹识别与缓存范围-缓存键判定方法/cdngreat_fingerprint.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 292,
+   "code": "fakertoken-服务无鉴权探测-fbsport-v1-gettoken-与-ob-v2-gettrytoken-泄漏后端域名与-token",
+   "src_path": "pocs/fakertoken-服务无鉴权探测-fbsport-v1-gettoken-与-ob-v2-gettrytoken-泄漏后端域名与-token/fakertoken_recon.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 293,
+   "code": "对象存储未授权列举-写入判定-含-spa-回落假阳性排除-写探针回滚",
+   "src_path": "pocs/对象存储未授权列举-写入判定-含-spa-回落假阳性排除-写探针回滚/objstore_authz_probe.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 294,
+   "code": "vite-vue3-minify-spa-接口调用点与请求体还原器-三层别名映射",
+   "src_path": "pocs/vite-vue3-minify-spa-接口调用点与请求体还原器-三层别名映射/vite_api_callsite_resolver.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 295,
+   "code": "用户可控字段-无鉴权公开接口渲染-面向全站访客的投毒链-四步验证-如实边界",
+   "src_path": "pocs/用户可控字段-无鉴权公开接口渲染-面向全站访客的投毒链-四步验证-如实边界/user_field_public_render_poison.md",
+   "dst_path": "pocs/用户可控字段-无鉴权公开接口渲染-面向全站访客的投毒链-四步验证-如实边界/user_field_public_render_poison.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 296,
+   "code": "前端硬编码-requestdata-常量重放-未授权签发第三方平台-token-与线路域名路由表",
+   "src_path": "pocs/前端硬编码-requestdata-常量重放-未授权签发第三方平台-token-与线路域名路由表/hardcoded_requestdata_replay.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 297,
+   "code": "fakertoken-硬编码-requestdata-常量重放-未认证签发-ob-平台登录-token-与线路后端域名表-rb88-ob-站群通用",
+   "src_path": "pocs/fakertoken-硬编码-requestdata-常量重放-未认证签发-ob-平台登录-token-与线路后端域名表-rb88-ob-站群通用/poc.txt",
+   "dst_path": "pocs/fakertoken-硬编码-requestdata-常量重放-未认证签发-ob-平台登录-token-与线路后端域名表-rb88-ob-站群通用/poc.txt",
+   "action": "text-materialized"
+  },
+  {
+   "id": 298,
+   "code": "vite-spa-资金接口静态还原-二维码渲染定性-含带会话的页面内-fetch-验证",
+   "src_path": "pocs/vite-spa-资金接口静态还原-二维码渲染定性-含带会话的页面内-fetch-验证/webpay_static_reverse.md",
+   "dst_path": "pocs/vite-spa-资金接口静态还原-二维码渲染定性-含带会话的页面内-fetch-验证/webpay_static_reverse.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 299,
+   "code": "统一-20000-未登录拦截的绕过穷尽判定法-含-body-ct-归因控制实验-防-116-误报",
+   "src_path": "pocs/统一-20000-未登录拦截的绕过穷尽判定法-含-body-ct-归因控制实验-防-116-误报/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 300,
+   "code": "cmwall-过移动墙-服务管理面板-example.com-未授权读写-38888-零风险写验证流程",
+   "src_path": "pocs/cmwall-过移动墙-服务管理面板-v1.35-未授权读写-38888-零风险写验证流程/cmwall_panel_unauth.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 301,
+   "code": "前端资源投毒可行性判定法-客户端渲染资金字段-无-sri-无-csp-资源域写方法-含正确分级口径",
+   "src_path": "pocs/前端资源投毒可行性判定法-客户端渲染资金字段-无-sri-无-csp-资源域写方法-含正确分级口径/poc.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 302,
+   "code": "支付回调-通知端点探测法-静态零引用判定-未知路由三态判别-按站点命名风格派生字典-含负结论口径",
+   "src_path": "pocs/支付回调-通知端点探测法-静态零引用判定-未知路由三态判别-按站点命名风格派生字典-含负结论口径/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 303,
+   "code": "fakertoken-ob-的-api-参数解密-硬编码-aes-ecb-密钥-obty20220712obty-与-requestdata-不可解结论",
+   "src_path": "pocs/fakertoken-ob-的-api-参数解密-硬编码-aes-ecb-密钥-obty20220712obty-与-requestdata-不可解结论/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 304,
+   "code": "cmwall-过移动墙-wizard-面板-静态分析速查-命令注入实现基础-含厂商公开包-部署路径-注入验证要点",
+   "src_path": "pocs/cmwall-过移动墙-wizard-面板-静态分析速查-命令注入实现基础-含厂商公开包-部署路径-注入验证要点/cmwall_wizard_static_analysis.md",
+   "dst_path": "pocs/cmwall-过移动墙-wizard-面板-静态分析速查-命令注入实现基础-含厂商公开包-部署路径-注入验证要点/cmwall_wizard_static_analysis.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 305,
+   "code": "waf-绕过-能力修正-直连-https-清空-sni-任意-host-200-带真实-target320.example.com-rst-按-sni-丢包",
+   "src_path": "pocs/waf-绕过-能力修正-直连-https-清空-sni-任意-host-200-带真实-target320.example.com-rst-按-sni-丢包/sni_none_direct_api_bypass.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 306,
+   "code": "加固-apk-zxprotect-抽取壳-零依赖逆向-example.com-配置引导链提取",
+   "src_path": "pocs/加固-apk-zxprotect-抽取壳-零依赖逆向-config2.json-配置引导链提取/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 307,
+   "code": "lhzs-lhservice-v27-网关免签名面定位-两层签名校验拒绝码判据",
+   "src_path": "pocs/lhzs-lhservice-v27-网关免签名面定位-两层签名校验拒绝码判据/lhzs_v27_gateway_probe.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 308,
+   "code": "原生-socket-端口普查器-绕代理假象-tcpscan.py",
+   "src_path": "pocs/原生-socket-端口普查器-绕代理假象-tcpscan.py/tcpscan.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 309,
+   "code": "lhzs-靶标节点签名探测器-严格判据-lhprobe.py",
+   "src_path": "pocs/lhzs-靶标节点签名探测器-严格判据-lhprobe.py/lhprobe.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 310,
+   "code": "tls-证书抓取-从-der-提-cn-san-证书归属判定-certgrab.py",
+   "src_path": "pocs/tls-证书抓取-从-der-提-cn-san-证书归属判定-certgrab.py/certgrab.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 311,
+   "code": "多目标业务路径-host-vhost-覆盖探测器-sweep.py",
+   "src_path": "pocs/多目标业务路径-host-vhost-覆盖探测器-sweep.py/sweep.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 312,
+   "code": "非标准服务四态识别器-rawprobe.py",
+   "src_path": "pocs/非标准服务四态识别器-rawprobe.py/rawprobe.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 313,
+   "code": "端口-banner-抓取器-自动判-ssh-mysql-http-banner.py",
+   "src_path": "pocs/端口-banner-抓取器-自动判-ssh-mysql-http-banner.py/banner.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 314,
+   "code": "web-指纹探测-标题-lhzs-特征签名-httpfp.py",
+   "src_path": "pocs/web-指纹探测-标题-lhzs-特征签名-httpfp.py/httpfp.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 315,
+   "code": "单目标业务路径-vhost-探测-先看正文再判归属-bizprobe.py",
+   "src_path": "pocs/单目标业务路径-vhost-探测-先看正文再判归属-bizprobe.py/bizprobe.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 316,
+   "code": "dns-解析-指定-sni-host-的-https-定向探测-sni72.py",
+   "src_path": "pocs/dns-解析-指定-sni-host-的-https-定向探测-sni72.py/sni72.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 317,
+   "code": "nginx-tomcat-..-归一化差异-穿-location-白名单-跨-context-横向-含绕开-nginx-死上游-504-manager-ip-阀",
+   "src_path": "pocs/nginx-tomcat-..-归一化差异-穿-location-白名单-跨-context-横向-含绕开-nginx-死上游-504-manager-ip-阀/poc.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 318,
+   "code": "tomcat-拿-shell-路线的快速判死-put-405-options-无-put-cve-2017-12615-12617-2025-24813-全灭",
+   "src_path": "pocs/tomcat-拿-shell-路线的快速判死-put-405-options-无-put-cve-2017-12615-12617-2025-24813-全灭/poc.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 319,
+   "code": "全量参数钥匙-批量候选参数名越过老-servlet-的-integer.parseint-门槛-分组探测-二分收敛-通用可复用",
+   "src_path": "pocs/全量参数钥匙-批量候选参数名越过老-servlet-的-integer.parseint-门槛-分组探测-二分收敛-通用可复用/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 320,
+   "code": "tomcat-manager-快速判死-403-页字节级指纹-同版本-stock-页跨机器-sha1-完全一致-端口面普查-只暴露-nginx-头伪造必然无效",
+   "src_path": "pocs/tomcat-manager-快速判死-403-页字节级指纹-同版本-stock-页跨机器-sha1-完全一致-端口面普查-只暴露-nginx-头伪造必然无效/poc.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 321,
+   "code": "盲-ssrf-判定法-差分三值-死地址基线-内网-外带-a-b-a-交替复测识破抖动-附-零差异-无-ssrf-实测样例与真-ssrf-对照特征",
+   "src_path": "pocs/盲-ssrf-判定法-差分三值-死地址基线-内网-外带-a-b-a-交替复测识破抖动-附-零差异-无-ssrf-实测样例与真-ssrf-对照特征/ssrf_diff_test.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 322,
+   "code": "六助-target336.example.com-客户端接口字段名与请求体结构全表",
+   "src_path": "pocs/六助-lhzs-app-v4.0.8-客户端接口字段名与请求体结构全表/poc.http",
+   "dst_path": "pocs/六助-target336.example.com-客户端接口字段名与请求体结构全表/poc.http",
+   "action": "text-materialized"
+  },
+  {
+   "id": 323,
+   "code": "lhzs-v27-管理台-认证链精确字段-admin-query-信封-release.publish-ssrf-storage.configure-落盘可控",
+   "src_path": "pocs/lhzs-v27-管理台-认证链精确字段-admin-query-信封-release.publish-ssrf-storage.configure-落盘可控/poc.http",
+   "dst_path": "pocs/lhzs-v27-管理台-认证链精确字段-admin-query-信封-release.publish-ssrf-storage.configure-落盘可控/poc.http",
+   "action": "text-materialized"
+  },
+  {
+   "id": 324,
+   "code": "技巧-java-异常行号-oracle-用-tomcat-错误页的-class.java-nn-行号推进-零猜测定位-servlet-参数与鉴权门槛",
+   "src_path": "pocs/技巧-java-异常行号-oracle-用-tomcat-错误页的-class.java-nn-行号推进-零猜测定位-servlet-参数与鉴权门槛/java_line_oracle.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 325,
+   "code": "技巧-参数钥匙串-批量命中老-java-servlet-数据分支-390-个候选参数各-1-一次请求绕过猜参数名-单请求拿到-143kb-408-条用户记录",
+   "src_path": "pocs/技巧-参数钥匙串-批量命中老-java-servlet-数据分支-390-个候选参数各-1-一次请求绕过猜参数名-单请求拿到-143kb-408-条用户记录/param_keychain.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 326,
+   "code": "漏洞-nginx-tomcat-归一化穿越-..-绕开-nginx-location-白名单-未认证直达-tomcat-root-docs-examples-并",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 327,
+   "code": "原生-socket-手工-tls-探测骨架-绕本机-http-代理污染-binary_form-证书取证-定制404-spring404-406-三态判存",
+   "src_path": "pocs/原生-socket-手工-tls-探测骨架-绕本机-http-代理污染-binary_form-证书取证-定制404-spring404-406-三态判存/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 328,
+   "code": "老式-java-servlet-分块灌参-栈行号二分收敛-参数发现法-tomcat-报错栈当-oracle",
+   "src_path": "pocs/老式-java-servlet-分块灌参-栈行号二分收敛-参数发现法-tomcat-报错栈当-oracle/servlet_param_delta.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 329,
+   "code": "uploadpic-三个入口对照表-upload2-唯一真写点-写-oss-无扩展名分支-只回-url-模板不落盘-upload-的-head-四字段-真字段但",
+   "src_path": "pocs/uploadpic-三个入口对照表-upload2-唯一真写点-写-oss-无扩展名分支-只回-url-模板不落盘-upload-的-head-四字段-真字段但/uploadpic_three_endpoints.md",
+   "dst_path": "pocs/uploadpic-三个入口对照表-upload2-唯一真写点-写-oss-无扩展名分支-只回-url-模板不落盘-upload-的-head-四字段-真字段但/uploadpic_three_endpoints.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 330,
+   "code": "方法-负面知识-四步判死-无条件假成功-写端点-参数级-delta-证明-uploadpicservlet-只读-userid-一个参数-无文件名-路径可控-无",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 331,
+   "code": "行号-oracle-参数隔离法-附-puttp-判死实测-用-tomcat-错误页的-类名.java-行号-逐级隔离参数-二分求最小集-判-post-是否独立分",
+   "src_path": "pocs/行号-oracle-参数隔离法-附-puttp-判死实测-用-tomcat-错误页的-类名.java-行号-逐级隔离参数-二分求最小集-判-post-是否独立分/lineno_oracle.md",
+   "dst_path": "pocs/行号-oracle-参数隔离法-附-puttp-判死实测-用-tomcat-错误页的-类名.java-行号-逐级隔离参数-二分求最小集-判-post-是否独立分/lineno_oracle.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 332,
+   "code": "技巧-把老-servlet-入参面压到-1-个-最小必需参数集二分-行号-oracle-定位-parseint-参数-用-操作过于频繁-当分支存在判据-实测-l",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 333,
+   "code": "方法论-五步判据-老-java-servlet-读写判别-参数要补齐-防假否定-读回要跨时间窗-防缓存假否定-值域枚举看文案推进而非限流触发-防假肯定-探针换假",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 334,
+   "code": "oracle-判定-验证码到底有没有真的发出去-用错码探-用码-分支-请先获取验证码-vs-验证码错误-两句文案即判据-零成本-不消耗真码-无需目标手机",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 335,
+   "code": "复现冲突四步法-纯读稳定性-裸-戴钥匙对照-逐个剔除定最小集-跨时间窗读回-写侧-读侧都做对才不误判",
+   "src_path": "pocs/复现冲突四步法-纯读稳定性-裸-戴钥匙对照-逐个剔除定最小集-跨时间窗读回-写侧-读侧都做对才不误判/repro_conflict_4steps.md",
+   "dst_path": "pocs/复现冲突四步法-纯读稳定性-裸-戴钥匙对照-逐个剔除定最小集-跨时间窗读回-写侧-读侧都做对才不误判/repro_conflict_4steps.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 336,
+   "code": "jadx-卡死时的替代-最小-dex-解析器-字符串表邻接-簇分析-无需反编译",
+   "src_path": "pocs/jadx-卡死时的替代-最小-dex-解析器-字符串表邻接-簇分析-无需反编译/dex_strings.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 337,
+   "code": "如何证明-我的会话确实生效了-同一端点有无会话的响应差异自证法-400-动作级-vs-403-路径级",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 338,
+   "code": "go-自研代理服务-管理口-代理口-免凭据探测与绕过穷尽核查脚本",
+   "src_path": "pocs/go-自研代理服务-管理口-代理口-免凭据探测与绕过穷尽核查脚本/go_proxy_panel_probe.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 339,
+   "code": "fastadmin-cve-2024-7928-任意文件读取-ajax-lang-lang-参数",
+   "src_path": "pocs/fastadmin-cve-2024-7928-任意文件读取-ajax-lang-lang-参数/fastadmin-cve-2024-7928-file-read.md",
+   "dst_path": "pocs/fastadmin-cve-2024-7928-任意文件读取-ajax-lang-lang-参数/fastadmin-cve-2024-7928-file-read.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 340,
+   "code": "php-.user.ini-两用技巧-追加-open_basedir-破除目录限制-auto_prepend_file-绕过-.php-写入黑名单落马-冰蝎-v",
+   "src_path": "pocs/php-.user.ini-两用技巧-追加-open_basedir-破除目录限制-auto_prepend_file-绕过-.php-写入黑名单落马-冰蝎-v/userini_rce.md",
+   "dst_path": "pocs/php-.user.ini-两用技巧-追加-open_basedir-破除目录限制-auto_prepend_file-绕过-.php-写入黑名单落马-冰蝎-v/userini_rce.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 341,
+   "code": "php-.user.ini-覆盖导致-open_basedir-逃逸-可写子目录-整机文件系统访问",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 342,
+   "code": "宝塔防篡改只锁-.php-替代后缀不被解析的实测判据-.php5-.phtml-.inc-换后缀拿不到-webshell",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 343,
+   "code": "boyue-webman-博彩站群会员端-upload-qrcode-任意扩展名写入-同源存储型-xss-withdrawcontroller-uploadqr",
+   "src_path": "pocs/boyue-webman-博彩站群会员端-upload-qrcode-任意扩展名写入-同源存储型-xss-withdrawcontroller-uploadqr/upload_qrcode_xss.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 344,
+   "code": "boyue-webman-pear-admin-博彩站群后台指纹-路由表-密钥-免登录路由-速查手册",
+   "src_path": "pocs/boyue-webman-pear-admin-博彩站群后台指纹-路由表-密钥-免登录路由-速查手册/boyue_webman_recon_playbook.md",
+   "dst_path": "pocs/boyue-webman-pear-admin-博彩站群后台指纹-路由表-密钥-免登录路由-速查手册/boyue_webman_recon_playbook.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 345,
+   "code": "本机-fake-ip-dns-规则型本地代理下-用-connect-自定义-sni-直达-nginx-vhost-绕过假性-目标封-ip",
+   "src_path": "pocs/本机-fake-ip-dns-规则型本地代理下-用-connect-自定义-sni-直达-nginx-vhost-绕过假性-目标封-ip/connect_sni_vhost.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 346,
+   "code": "webman-插件路由指向非插件命名空间控制器-accesscontrol-中间件失效导致后台接口未授权",
+   "src_path": "pocs/webman-插件路由指向非插件命名空间控制器-accesscontrol-中间件失效导致后台接口未授权/webman_plugin_route_namespace_unauth.md",
+   "dst_path": "pocs/webman-插件路由指向非插件命名空间控制器-accesscontrol-中间件失效导致后台接口未授权/webman_plugin_route_namespace_unauth.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 347,
+   "code": "webman-路由大小写不敏感-绕过按路径精确匹配的-功能关闭-开关-可救回代码生成器写文件-monitor-热重载-rce",
+   "src_path": "pocs/webman-路由大小写不敏感-绕过按路径精确匹配的-功能关闭-开关-可救回代码生成器写文件-monitor-热重载-rce/poc.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 348,
+   "code": "webman-默认-自动-路由绕过路由级-authmiddleware-未授权直达控制器方法-通用",
+   "src_path": "pocs/webman-默认-自动-路由绕过路由级-authmiddleware-未授权直达控制器方法-通用/webman_default_route_auth_bypass.md",
+   "dst_path": "pocs/webman-默认-自动-路由绕过路由级-authmiddleware-未授权直达控制器方法-通用/webman_default_route_auth_bypass.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 349,
+   "code": "webman-admin-tablecontroller-crud-代码生成器-docblock-注入-写-app-controller-.php-monito",
+   "src_path": "pocs/webman-admin-tablecontroller-crud-代码生成器-docblock-注入-写-app-controller-.php-monito/table_crud_docblock_inject.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 350,
+   "code": "webman-pear-admin-目标-上传-执行-全判定手册-include-lfi-phar-模板-四路排除-扩展名名单测绘",
+   "src_path": "pocs/webman-pear-admin-目标-上传-执行-全判定手册-include-lfi-phar-模板-四路排除-扩展名名单测绘/webman-upload-to-rce-checklist.md",
+   "dst_path": "pocs/webman-pear-admin-目标-上传-执行-全判定手册-include-lfi-phar-模板-四路排除-扩展名名单测绘/webman-upload-to-rce-checklist.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 351,
+   "code": "webman-响应加密-x-encrypted-1-硬编码-aes-密钥解密-加密请求体构造",
+   "src_path": "pocs/webman-响应加密-x-encrypted-1-硬编码-aes-密钥解密-加密请求体构造/webman_xencrypted_bypass.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 352,
+   "code": "webman-自动路由绕过鉴权中间件-controller-action-零凭证直连",
+   "src_path": "pocs/webman-自动路由绕过鉴权中间件-controller-action-零凭证直连/webman_autoroute_authbypass.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 353,
+   "code": "webman-自动路由作为-方法存在性-oracle-零凭证枚举部署版控制器方法-区分零鉴权直出-需登录-只判角色",
+   "src_path": "pocs/webman-自动路由作为-方法存在性-oracle-零凭证枚举部署版控制器方法-区分零鉴权直出-需登录-只判角色/webman_autoroute_method_oracle.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 354,
+   "code": "webman-自动路由未授权接口普查-crypto-硬编码密钥解密响应",
+   "src_path": "pocs/webman-自动路由未授权接口普查-crypto-硬编码密钥解密响应/webman_autoroute_unauth_probe.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 355,
+   "code": "nginx-vhost-oracle-枚举-host-头区分真实虚拟主机-识别同名后端多品牌",
+   "src_path": "pocs/nginx-vhost-oracle-枚举-host-头区分真实虚拟主机-识别同名后端多品牌/vhost_oracle_enum.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 356,
+   "code": "跨-vhost-同源-xss-可执行性判定矩阵-多域名站群-uploads-可达性-app-admin-交叉对照",
+   "src_path": "pocs/跨-vhost-同源-xss-可执行性判定矩阵-多域名站群-uploads-可达性-app-admin-交叉对照/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 357,
+   "code": "webman-admin-vue-art-design-pro-后台会话与请求加密规范-403-开关大小写绕过-crud-docblock-注入开火参数",
+   "src_path": "pocs/webman-admin-vue-art-design-pro-后台会话与请求加密规范-403-开关大小写绕过-crud-docblock-注入开火参数/poc.js",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 358,
+   "code": "boyue-pearadmin-充值渠道链上收款地址未授权替换-poc-payset-update-configs_data-trc20",
+   "src_path": "pocs/boyue-pearadmin-充值渠道链上收款地址未授权替换-poc-payset-update-configs_data-trc20/payset_replace.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 359,
+   "code": "webman-显式路由-vs-自动路由-双姿势鉴权-闸门-oracle-可复用-一次判定整族方法被哪一层拦",
+   "src_path": "pocs/webman-显式路由-vs-自动路由-双姿势鉴权-闸门-oracle-可复用-一次判定整族方法被哪一层拦/webman_dual_form_oracle.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 360,
+   "code": "webman-自动路由-形参绑定-未授权身份-id-注入-request-all-控制器形参",
+   "src_path": "pocs/webman-自动路由-形参绑定-未授权身份-id-注入-request-all-控制器形参/webman_param_binding_uid_injection.md",
+   "dst_path": "pocs/webman-自动路由-形参绑定-未授权身份-id-注入-request-all-控制器形参/webman_param_binding_uid_injection.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 361,
+   "code": "webman-形参名-oracle-用-missinginput-inputtype-错误页在线反推控制器方法签名",
+   "src_path": "pocs/webman-形参名-oracle-用-missinginput-inputtype-错误页在线反推控制器方法签名/webman_param_name_oracle.md",
+   "dst_path": "pocs/webman-形参名-oracle-用-missinginput-inputtype-错误页在线反推控制器方法签名/webman_param_name_oracle.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 362,
+   "code": "ssrf-原语筛查法-从形参到外发-url-的四步数据流溯源-含二阶配置写入者追踪",
+   "src_path": "pocs/ssrf-原语筛查法-从形参到外发-url-的四步数据流溯源-含二阶配置写入者追踪/ssrf_urlparam_screening.md",
+   "dst_path": "pocs/ssrf-原语筛查法-从形参到外发-url-的四步数据流溯源-含二阶配置写入者追踪/ssrf_urlparam_screening.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 363,
+   "code": "零副作用验证判据套件-身份注入-原密码强校验-验证码校验-用不存在-uid-与现值回写",
+   "src_path": "pocs/零副作用验证判据套件-身份注入-原密码强校验-验证码校验-用不存在-uid-与现值回写/zero_side_effect_verdicts.md",
+   "dst_path": "pocs/零副作用验证判据套件-身份注入-原密码强校验-验证码校验-用不存在-uid-与现值回写/zero_side_effect_verdicts.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 364,
+   "code": "路径穿越有效性判定-归一化等价对照法-nginx-alias-前缀映射场景",
+   "src_path": "pocs/路径穿越有效性判定-归一化等价对照法-nginx-alias-前缀映射场景/traversal_equiv_test.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 365,
+   "code": "任意后缀上传-同源存储型-xss-localstorage-jwt-会话窃取-无限速资金密码-oracle-账号接管-盗资金组合链",
+   "src_path": "pocs/任意后缀上传-同源存储型-xss-localstorage-jwt-会话窃取-无限速资金密码-oracle-账号接管-盗资金组合链/xss_localstorage_token_steal.md",
+   "dst_path": "pocs/任意后缀上传-同源存储型-xss-localstorage-jwt-会话窃取-无限速资金密码-oracle-账号接管-盗资金组合链/xss_localstorage_token_steal.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 366,
+   "code": "gofly-客服系统鉴权模型与越权判定-2-族-401vs403-判据-ws_kefu-ws_visitor-子协议票据",
+   "src_path": "pocs/gofly-客服系统鉴权模型与越权判定-2-族-401vs403-判据-ws_kefu-ws_visitor-子协议票据/poc.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 367,
+   "code": "上游-供应链域名-可控性-判定流水线-whois-rdap-dns-http-ct-tls-家族挖掘",
+   "src_path": "pocs/上游-供应链域名-可控性-判定流水线-whois-rdap-dns-http-ct-tls-家族挖掘/upstream-domain-takeover-check.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 368,
+   "code": "suo5-classic-隧道断链自愈-php5.4-冰蝎马-openssl_decrypt-aes128-返回-false-导致-200-空响应",
+   "src_path": "pocs/suo5-classic-隧道断链自愈-php5.4-冰蝎马-openssl_decrypt-aes128-返回-false-导致-200-空响应/suo5_selfheal.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 369,
+   "code": "thinkphp3-后台-cookie-会话伪造-admin_user-username-admin_id-password哈希",
+   "src_path": "pocs/thinkphp3-后台-cookie-会话伪造-admin_user-username-admin_id-password哈希/poc.http",
+   "dst_path": "pocs/thinkphp3-后台-cookie-会话伪造-admin_user-username-admin_id-password哈希/poc.http",
+   "action": "text-materialized"
+  },
+  {
+   "id": 370,
+   "code": "thinkphp3-后台-api-article_save-任意文件写入-data-伪协议-webshell",
+   "src_path": "pocs/thinkphp3-后台-api-article_save-任意文件写入-data-伪协议-webshell/poc.http",
+   "dst_path": "pocs/thinkphp3-后台-api-article_save-任意文件写入-data-伪协议-webshell/poc.http",
+   "action": "text-materialized"
+  },
+  {
+   "id": 371,
+   "code": "冰蝎马-php-5.6-适配-openssl_decrypt-aes128-失效须改-aes-128-ecb",
+   "src_path": "pocs/冰蝎马-php-5.6-适配-openssl_decrypt-aes128-失效须改-aes-128-ecb/poc.php",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 372,
+   "code": "thinkphp-3.1.3-站群-cms-extends-action-的-admin-控制器绕鉴权-微信签名可自算-未授权文件写入-wechat-index",
+   "src_path": "pocs/thinkphp-3.1.3-站群-cms-extends-action-的-admin-控制器绕鉴权-微信签名可自算-未授权文件写入-wechat-index/thinkphp313_cms_action_authbypass.md",
+   "dst_path": "pocs/thinkphp-3.1.3-站群-cms-extends-action-的-admin-控制器绕鉴权-微信签名可自算-未授权文件写入-wechat-index/thinkphp313_cms_action_authbypass.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 373,
+   "code": "php-fpm-fastcgi-未授权访问-php_admin_value-解除-open_basedir-清空-disable_functions-纯-php",
+   "src_path": "pocs/php-fpm-fastcgi-未授权访问-php_admin_value-解除-open_basedir-清空-disable_functions-纯-php/fcgi_exec.php",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 374,
+   "code": "thinkphp-3.1.3-站群-cms-home-order-get_html1-零凭证覆盖模板文件-app-tpl-home-index_index.ht",
+   "src_path": "pocs/thinkphp-3.1.3-站群-cms-home-order-get_html1-零凭证覆盖模板文件-app-tpl-home-index_index.ht/get_html1_template_overwrite.md",
+   "dst_path": "pocs/thinkphp-3.1.3-站群-cms-home-order-get_html1-零凭证覆盖模板文件-app-tpl-home-index_index.ht/get_html1_template_overwrite.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 375,
+   "code": "thinkphp-3.1.3-未授权模板写入-编译执行-rce-链-home-order-get_html1-app-tpl-app-runtime-cache",
+   "src_path": "pocs/thinkphp-3.1.3-未授权模板写入-编译执行-rce-链-home-order-get_html1-app-tpl-app-runtime-cache/tp3_unauth_template_write_to_rce.md",
+   "dst_path": "pocs/thinkphp-3.1.3-未授权模板写入-编译执行-rce-链-home-order-get_html1-app-tpl-app-runtime-cache/tp3_unauth_template_write_to_rce.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 376,
+   "code": "admin-wechat-免鉴权签名绕过-token-空串伪造-sha1-签名",
+   "src_path": "pocs/admin-wechat-免鉴权签名绕过-token-空串伪造-sha1-签名/wechat_signature_bypass.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 377,
+   "code": "thinkphp-3.1.3-站群-cms-模板烘焙-rce-链完整打法-两个否证-oracle-get_html1-零凭证覆盖模板-abrdns-抓取源陷阱",
+   "src_path": "pocs/thinkphp-3.1.3-站群-cms-模板烘焙-rce-链完整打法-两个否证-oracle-get_html1-零凭证覆盖模板-abrdns-抓取源陷阱/thinkphp313-cms-template-bake-chain.md",
+   "dst_path": "pocs/thinkphp-3.1.3-站群-cms-模板烘焙-rce-链完整打法-两个否证-oracle-get_html1-零凭证覆盖模板-abrdns-抓取源陷阱/thinkphp313-cms-template-bake-chain.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 378,
+   "code": "冰蝎马-python-自动化客户端-php-5.6.40-需把-cipher-改成-aes-128-ecb",
+   "src_path": "pocs/冰蝎马-python-自动化客户端-php-5.6.40-需把-cipher-改成-aes-128-ecb/behinder_py_client.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 379,
+   "code": "thinkphp-3-var_filters-filter_exp-让-exp-数组注入全线失效-静默丢字段-无痕-判定向量-无效绕过清单",
+   "src_path": "pocs/thinkphp-3-var_filters-filter_exp-让-exp-数组注入全线失效-静默丢字段-无痕-判定向量-无效绕过清单/tp3-exp-array-injection-neutralized-by-filter_exp.md",
+   "dst_path": "pocs/thinkphp-3-var_filters-filter_exp-让-exp-数组注入全线失效-静默丢字段-无痕-判定向量-无效绕过清单/tp3-exp-array-injection-neutralized-by-filter_exp.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 380,
+   "code": "webman-nginx-站群-app-admin-被-nginx-静态-location-遮蔽-路径-头-方",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 381,
+   "code": "站群通用-article.ename-创建者-admin-用户名-home-index-bbs-post-lt-id-gt-零凭证渲染点-枚举后台账号名-内容可",
+   "src_path": "pocs/站群通用-article.ename-创建者-admin-用户名-home-index-bbs-post-lt-id-gt-零凭证渲染点-枚举后台账号名-内容可/poc.http",
+   "dst_path": "pocs/站群通用-article.ename-创建者-admin-用户名-home-index-bbs-post-lt-id-gt-零凭证渲染点-枚举后台账号名-内容可/poc.http",
+   "action": "text-materialized"
+  },
+  {
+   "id": 382,
+   "code": "ueditor-php-零鉴权面盲探-config-泄露-listimage-路径枚举-upload-目录存在性-catchimage-ssrf",
+   "src_path": "pocs/ueditor-php-零鉴权面盲探-config-泄露-listimage-路径枚举-upload-目录存在性-catchimage-ssrf/ueditor_probe.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 383,
+   "code": "thinkphp3.1.3-站群-cms-通杀-rce-admin-表哈希即凭据-home-article-edit_cont-写-article.title",
+   "src_path": "pocs/thinkphp3.1.3-站群-cms-通杀-rce-admin-表哈希即凭据-home-article-edit_cont-写-article.title/tp313-sitegroup-rce-chain.md",
+   "dst_path": "pocs/thinkphp3.1.3-站群-cms-通杀-rce-admin-表哈希即凭据-home-article-edit_cont-写-article.title/tp313-sitegroup-rce-chain.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 384,
+   "code": "thinkphp3.1.3-站群通用链-后台-mass-assignment-写-article.title-零凭证-get_html1-模板烘焙-首页-rce",
+   "src_path": "pocs/thinkphp3.1.3-站群通用链-后台-mass-assignment-写-article.title-零凭证-get_html1-模板烘焙-首页-rce/tp31_article_title_to_rce.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 385,
+   "code": "php-fpm-unix-socket-未授权-php_admin_value-清空-open_basedir-disable_functions-全盘任意文件",
+   "src_path": "pocs/php-fpm-unix-socket-未授权-php_admin_value-清空-open_basedir-disable_functions-全盘任意文件/phpfpm_fcgi_open_basedir_bypass.php",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 386,
+   "code": "对手检测能力画像-站群运营方-thinkphp3-后门自查脚本-jnbgg.sh-我们的规避指南",
+   "src_path": "pocs/对手检测能力画像-站群运营方-thinkphp3-后门自查脚本-jnbgg.sh-我们的规避指南/adversary_tp3_backdoor_scan_jnbgg.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 387,
+   "code": "php-fpm-fastcgi-沙箱逃逸-php_admin_value-清零-open_basedir-与-disable_functions-宝塔环境通用",
+   "src_path": "pocs/php-fpm-fastcgi-沙箱逃逸-php_admin_value-清零-open_basedir-与-disable_functions-宝塔环境通用/fcgi_run.php",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 388,
+   "code": "站群兄弟节点发现-从目标自己的-vhost-访问日志-referer-反查-日志分块读-一条请求判定同站群",
+   "src_path": "pocs/站群兄弟节点发现-从目标自己的-vhost-访问日志-referer-反查-日志分块读-一条请求判定同站群/recon_vhost_referer_sibling_discovery.php",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 389,
+   "code": "php-fpm-fastcgi-sendmail_path-劫持-绕过-disable_functions-拿命令执行-mail-的-c-层-popen",
+   "src_path": "pocs/php-fpm-fastcgi-sendmail_path-劫持-绕过-disable_functions-拿命令执行-mail-的-c-层-popen/fcgi_sendmail_path_rce.php",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 390,
+   "code": "ty-sdk-yewu40-signed-channel-no-replay-protection",
+   "src_path": "pocs/ty-sdk-yewu40-signed-channel-no-replay-protection/poc.md",
+   "dst_path": "pocs/ty-sdk-yewu40-signed-channel-no-replay-protection/poc.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 391,
+   "code": "vernemq-ws-anon-bus-eval",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 392,
+   "code": "phpwind-7.x-8.x-版本指纹识别-robots.txt-meta-generator-路径特征",
+   "src_path": "pocs/phpwind-7.x-8.x-版本指纹识别-robots.txt-meta-generator-路径特征/poc.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 393,
+   "code": "fofa-官方接口可用性切换-target417.example.com-失效-example.com",
+   "src_path": "pocs/fofa-官方接口可用性切换-target417.example.com-失效-fofa.info/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 394,
+   "code": "宝塔-waf-对备份-源码文件扩展名的拦截-本站无-保留路径-的可用绕过-尾斜杠-3f-只改路径-读不到文件",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 395,
+   "code": "phpwind-站点精确版本与数据库表前缀的无认证识别",
+   "src_path": "pocs/phpwind-站点精确版本与数据库表前缀的无认证识别/poc.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 396,
+   "code": "baota-persource-ban-free-proxy-pool-any-port-egress",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 397,
+   "code": "phpwind-7.3.2-admin-lock-bypass-xff",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 398,
+   "code": "宝塔-waf-按真实源ip-cc-封禁下-用免费http代理池逐请求轮换出口放大后台口令喷洒吞吐-含判据陷阱",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 399,
+   "code": "wordpress-woocommerce-匿名攻击面清单-版本泄露-rest未授权-store-api非授权写入-xml-rpc爆破",
+   "src_path": "pocs/wordpress-woocommerce-匿名攻击面清单-版本泄露-rest未授权-store-api非授权写入-xml-rpc爆破/wordpress_woo_unauth_recon.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 400,
+   "code": "博彩-phpwind-站群实战结论集-203.0.113.84-24-判死路线-8-条可复用判据",
+   "src_path": "pocs/203.0.113.1-站群跳转机全机地图与负面情报-唯一动态程序-phpwind-7.3.2-全静态页-三套异机真入口/poc.http",
+   "dst_path": "pocs/博彩-phpwind-站群实战结论集-203.0.113.84-24-判死路线-8-条可复用判据/poc.http",
+   "action": "text-materialized"
+  },
+  {
+   "id": 401,
+   "code": "ssh-批量作业-banner-抖动-vs-真防护-判据-单发复验可救回被误判的整批目标",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 402,
+   "code": "fastapi-openapi-未授权测绘-openapi.json-泄露全端点-按-security-标记自动分类实测",
+   "src_path": "pocs/fastapi-openapi-未授权测绘-openapi.json-泄露全端点-按-security-标记自动分类实测/fastapi_openapi_enum.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 403,
+   "code": "thinkphp5-kj-开奖数据接口未授权读取",
+   "src_path": "pocs/thinkphp5-kj-开奖数据接口未授权读取/tp5_kj_unauth.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 404,
+   "code": "自研bbs-站群-json-api-硬编码密钥-接口协议逆向",
+   "src_path": "pocs/自研bbs-站群-json-api-硬编码密钥-接口协议逆向/bbs_api_probe.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 405,
+   "code": "phpwind-后台登录判据纠正-失败态-14540b-页内计数文案-失败也下发-cookie-必须带-cookie-复访验证",
+   "src_path": "pocs/phpwind-后台登录判据纠正-失败态-14540b-页内计数文案-失败也下发-cookie-必须带-cookie-复访验证/phpwind_admin_login_judgement.md",
+   "dst_path": "pocs/phpwind-后台登录判据纠正-失败态-14540b-页内计数文案-失败也下发-cookie-必须带-cookie-复访验证/phpwind_admin_login_judgement.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 406,
+   "code": "页面源码挖自动生成-vhost-从-html-js-提取域名并批量解析-补字典爆破盲区",
+   "src_path": "pocs/页面源码挖自动生成-vhost-从-html-js-提取域名并批量解析-补字典爆破盲区/mine_hosts.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 407,
+   "code": "minio-console-two-stage-login-enum",
+   "src_path": "pocs/minio-console-two-stage-login-enum/minio_console_user_enum.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 408,
+   "code": "tls-cert-san-domain-harvest",
+   "src_path": "pocs/tls-cert-san-domain-harvest/tls_cert_san_harvest.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 409,
+   "code": "aj-captcha-protocol-and-secretkey",
+   "src_path": "pocs/aj-captcha-protocol-and-secretkey/aj_captcha_protocol.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 410,
+   "code": "tls-证书-san-反查域名-同-ip-vhost-路由发现-纯-ip-段挖真实域名-避免错过-target",
+   "src_path": "pocs/tls-证书-san-反查域名-同-ip-vhost-路由发现-纯-ip-段挖真实域名-避免错过-target/tls_san_vhost_discovery.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 411,
+   "code": "母舰域名编号枚举-一次画出攻击者全部节点-56-节点-10-网段实测",
+   "src_path": "pocs/母舰域名编号枚举-一次画出攻击者全部节点-56-节点-10-网段实测/mastedomain_enum.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 412,
+   "code": "spa-后台突破-从前端-api.js-提取全接口清单-定向弱口令-实测-admin-admin123-拿到超管",
+   "src_path": "pocs/spa-后台突破-从前端-api.js-提取全接口清单-定向弱口令-实测-admin-admin123-拿到超管/spa_api_pivot.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 413,
+   "code": "synology-dsm-unauth-initdata-recon",
+   "src_path": "pocs/synology-dsm-unauth-initdata-recon/synology_dsm_unauth_recon.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 414,
+   "code": "nmap-highrate-false-positive-on-appliance",
+   "src_path": "pocs/nmap-highrate-false-positive-on-appliance/highrate_scan_false_positive.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 415,
+   "code": "synology-dsm-static-bundle-unauth-harvest",
+   "src_path": "pocs/synology-dsm-static-bundle-unauth-harvest/synology_bundle_harvest.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 416,
+   "code": "synology-error-code-120-not-unauth",
+   "src_path": "pocs/synology-error-code-120-not-unauth/dsm_error_code_120_reading.md",
+   "dst_path": "pocs/synology-error-code-120-not-unauth/dsm_error_code_120_reading.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 417,
+   "code": "webman-nofpm-upload-qrcode-to-rce-negative",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 418,
+   "code": "webman-monitor-热重载写入rce-负面-落盘路径不可控-插件命名空间自动路由不可达-appadmin-ng",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 419,
+   "code": "target448.example.com-mock-登录认证绕过-alipay-mock-按-phone-无口令接管任意已知手",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 420,
+   "code": "shopnn-adyyyk-mock-login-mysql-error-leak-and-escalation-neg",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 422,
+   "code": "gofly-attach-card-safechatassetpath-bypass-xss-delivery",
+   "src_path": "pocs/gofly-attach-card-safechatassetpath-bypass-xss-delivery/poc.md",
+   "dst_path": "pocs/gofly-attach-card-safechatassetpath-bypass-xss-delivery/poc.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 423,
+   "code": "safeline-宝塔站群-waf-精确触发签名-union-select-需带操作数-相邻-..-sleep-括",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 424,
+   "code": "phpdisk-6.8-adminlogin-账号枚举-bind_user-无频控口令校验双通道",
+   "src_path": "pocs/phpdisk-6.8-adminlogin-账号枚举-bind_user-无频控口令校验双通道/phpdisk_enum_brute.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 425,
+   "code": "phpdisk-6.x-adminlogin-注入面三点连测-后台-gid-1-校验",
+   "src_path": "pocs/phpdisk-6.x-adminlogin-注入面三点连测-后台-gid-1-校验/phpdisk_sqli_triage.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 426,
+   "code": "new-api-定制构建-全关闭-实例-注册关-setup已初始化-smtp缺省下的负面情报与速判清单",
+   "src_path": "pocs/new-api-定制构建-全关闭-实例-注册关-setup已初始化-smtp缺省下的负面情报与速判清单/poc.md",
+   "dst_path": "pocs/new-api-定制构建-全关闭-实例-注册关-setup已初始化-smtp缺省下的负面情报与速判清单/poc.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 427,
+   "code": "go-captcha-drag-sobel-edge-template-crack",
+   "src_path": "pocs/go-captcha-drag-sobel-edge-template-crack/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 428,
+   "code": "token-quota-panel-config-leak-and-token-status-judgement",
+   "src_path": "pocs/token-quota-panel-config-leak-and-token-status-judgement/poc.txt",
+   "dst_path": "pocs/token-quota-panel-config-leak-and-token-status-judgement/poc.txt",
+   "action": "text-materialized"
+  },
+  {
+   "id": 429,
+   "code": "new-api-mailtm-tempmail-register-flow-api-modelsell-cc",
+   "src_path": "pocs/new-api-mailtm-tempmail-register-flow-api-modelsell-cc/poc.md",
+   "dst_path": "pocs/new-api-mailtm-tempmail-register-flow-api-modelsell-cc/poc.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 430,
+   "code": "discuz-7.2-后台-runquery-sql-导入对非创始人-adminid-1-全线-403-isfounde",
+   "src_path": "pocs/discuz-7.2-后台-runquery-sql-导入对非创始人-adminid-1-全线-403-isfounde/poc.txt",
+   "dst_path": "pocs/discuz-7.2-后台-runquery-sql-导入对非创始人-adminid-1-全线-403-isfounde/poc.txt",
+   "action": "text-materialized"
+  },
+  {
+   "id": 431,
+   "code": "phpwind-后台操作日志-data-bbscache-admin_record.php-零鉴权直读-含真实-admi",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 432,
+   "code": "无-cve-设计缺陷-new-api-邮箱验证注册绕过-一次性邮箱-6-位十六进制验证码-无图形验证码",
+   "src_path": "pocs/无-cve-设计缺陷-new-api-邮箱验证注册绕过-一次性邮箱-6-位十六进制验证码-无图形验证码/newapi_register_bypass.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 433,
+   "code": "phpwind-732-source-obtain-wayback",
+   "src_path": "pocs/phpwind-732-source-obtain-wayback/poc.md",
+   "dst_path": "pocs/phpwind-732-source-obtain-wayback/poc.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 434,
+   "code": "import-requests-url-https-target-melody-admin-pageconfig",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 435,
+   "code": "import-base64-hmac-hashlib-json-urllib.parse-requests-r",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 436,
+   "code": "renren-fast-派生后台-sql-复制角色绕过角色创建者校验-自建管理员规避-token-ip-互踢",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 437,
+   "code": "melody-会员面-pageconfig-sysparam-签名-only-未授权读不可提权-ag49-生产实例",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 438,
+   "code": "七牛-kodo-泄露-ak-sk-全量枚举-精确计量与公开读桶匿名外带",
+   "src_path": "pocs/七牛-kodo-泄露-ak-sk-全量枚举-精确计量与公开读桶匿名外带/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 439,
+   "code": "ag49-会员端-spring-boot-2.x-框架层-n-day-与反序列化全否-shiro-spring4shel",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 440,
+   "code": "artx-melody-schedule-mode-udf-neg",
+   "src_path": "pocs/artx-melody-schedule-mode-udf-neg/artx_melody_schedule_udf_neg.md",
+   "dst_path": "pocs/artx-melody-schedule-mode-udf-neg/artx_melody_schedule_udf_neg.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 441,
+   "code": "openresty-1.29-spring-boot-请求走私-cl.te-te.cl-te.te-与-h2-降级全",
+   "src_path": "pocs/openresty-1.29-spring-boot-请求走私-cl.te-te.cl-te.te-与-h2-降级全/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 442,
+   "code": "melody-admin-彩种模板同步-ssrf-回显只认-data-数组信封-60s-时延不能当内网-drop-判据",
+   "src_path": "pocs/melody-admin-彩种模板同步-ssrf-回显只认-data-数组信封-60s-时延不能当内网-drop-判据/melody_ssrf_readback.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 443,
+   "code": "ag49-im-节点-203.0.113.92-2585-配置未授权读不可提权-管理面-写面-注入全阴性-登录滑块",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 444,
+   "code": "ip-spoof-x-forwarded-for",
+   "src_path": "pocs/ip-spoof-x-forwarded-for/poc.java",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 445,
+   "code": "mysql-root-空口令远程直连检测-只读取证脚本",
+   "src_path": "pocs/mysql-root-空口令远程直连检测-只读取证脚本/mysql_empty_root_probe.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 446,
+   "code": "laravel-图片上传-客户端后缀白名单-雪花id重命名-flysystem-path-参数-无法转-rce-残留-s",
+   "src_path": "pocs/laravel-图片上传-客户端后缀白名单-雪花id重命名-flysystem-path-参数-无法转-rce-残留-s/poc.txt",
+   "dst_path": "pocs/laravel-图片上传-客户端后缀白名单-雪花id重命名-flysystem-path-参数-无法转-rce-残留-s/poc.txt",
+   "action": "text-materialized"
+  },
+  {
+   "id": 447,
+   "code": "import-json-base64-from-crypto.publickey-import-rsa-from-cr",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 448,
+   "code": "短信找回密码链-sendsmscode-响应明文回显-otp-modifypasswordbysms-未认证改密",
+   "src_path": "pocs/短信找回密码链-sendsmscode-响应明文回显-otp-modifypasswordbysms-未认证改密/ato_sms_reset.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 449,
+   "code": "php-session.upload_progress-会话文件注入-lfi-预认证-rce-chain-a",
+   "src_path": "pocs/php-session.upload_progress-会话文件注入-lfi-预认证-rce-chain-a/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 450,
+   "code": "php-var_destroy-二次析构-uaf-proc-self-mem-覆写-internal-function-handler-rce-chain-b",
+   "src_path": "pocs/php-var_destroy-二次析构-uaf-proc-self-mem-覆写-internal-function-handler-rce-chain-b/poc.php",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 451,
+   "code": "php-session-serialize_handler-不一致-解码失败仍触发-__destruct-pop-gadget-rce-chain-c",
+   "src_path": "pocs/php-session-serialize_handler-不一致-解码失败仍触发-__destruct-pop-gadget-rce-chain-c/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 452,
+   "code": "cve-2026-109618-apache-mod_php-multipart-解析期-oom-longjmp-跳过-init_executor-shutdo",
+   "src_path": "pocs/cve-2026-109618-apache-mod_php-multipart-解析期-oom-longjmp-跳过-init_executor-shutdo/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 453,
+   "code": "cve-2026-109619-nginx-php-fpm-脏-bg-unserialize-状态被下一请求消费-__destruct-rce-chain-e",
+   "src_path": "pocs/cve-2026-109619-nginx-php-fpm-脏-bg-unserialize-状态被下一请求消费-__destruct-rce-chain-e/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 454,
+   "code": "php-环境存在性判别器-跑-php2shell-五链前的必备预检",
+   "src_path": "pocs/php-环境存在性判别器-跑-php2shell-五链前的必备预检/php_sapi_judge.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 455,
+   "code": "授权总控类面板默认口令-admin-admin-http-basic-全量授权码-机器绑定接管",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 457,
+   "code": "php2shell-exploit-framework-cve-2026-109618-619-heap-oob-asl",
+   "src_path": "pocs/php2shell-exploit-framework-cve-2026-109618-619-heap-oob-asl/php2shell-exploit-framework.md",
+   "dst_path": "pocs/php2shell-exploit-framework-cve-2026-109618-619-heap-oob-asl/php2shell-exploit-framework.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 458,
+   "code": "somcns-thinkphp3.1.3-站群-精简版-实测负面清单-控制器文件存在性预言机-wechat-auto",
+   "src_path": "pocs/somcns-thinkphp3.1.3-站群-精简版-实测负面清单-控制器文件存在性预言机-wechat-auto/poc.md",
+   "dst_path": "pocs/somcns-thinkphp3.1.3-站群-精简版-实测负面清单-控制器文件存在性预言机-wechat-auto/poc.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 459,
+   "code": "thinkphp-3.1.3-站群-cms-admin-控制器-403-假分叉-判别-实为-nginx-层危险函数",
+   "src_path": "pocs/thinkphp-3.1.3-站群-cms-admin-控制器-403-假分叉-判别-实为-nginx-层危险函数/poc.txt",
+   "dst_path": "pocs/thinkphp-3.1.3-站群-cms-admin-控制器-403-假分叉-判别-实为-nginx-层危险函数/poc.txt",
+   "action": "text-materialized"
+  },
+  {
+   "id": 460,
+   "code": "somcns-thinkphp3.1.3-站群-166-站-admin-autoart-控制器脱队-extends-ac",
+   "src_path": "pocs/somcns-thinkphp3.1.3-站群-166-站-admin-autoart-控制器脱队-extends-ac/poc.txt",
+   "dst_path": "pocs/somcns-thinkphp3.1.3-站群-166-站-admin-autoart-控制器脱队-extends-ac/poc.txt",
+   "action": "text-materialized"
+  },
+  {
+   "id": 461,
+   "code": "thinkphp-站群-kindeditor-php-版本-upload_json.php-file_manager",
+   "src_path": "pocs/thinkphp-站群-kindeditor-php-版本-upload_json.php-file_manager/poc.txt",
+   "dst_path": "pocs/thinkphp-站群-kindeditor-php-版本-upload_json.php-file_manager/poc.txt",
+   "action": "text-materialized"
+  },
+  {
+   "id": 462,
+   "code": "thinkphp-3.1.3-站群-home-index-bbs-的-post-参数零鉴权渲染文章正文-游客态可批量拖",
+   "src_path": "pocs/thinkphp-3.1.3-站群-home-index-bbs-的-post-参数零鉴权渲染文章正文-游客态可批量拖/poc.txt",
+   "dst_path": "pocs/thinkphp-3.1.3-站群-home-index-bbs-的-post-参数零鉴权渲染文章正文-游客态可批量拖/poc.txt",
+   "action": "text-materialized"
+  },
+  {
+   "id": 463,
+   "code": "somcns-站群前台会员登录-home-index-login-无验证码无频控-test-test-直登-后台登",
+   "src_path": "pocs/somcns-站群前台会员登录-home-index-login-无验证码无频控-test-test-直登-后台登/poc.txt",
+   "dst_path": "pocs/somcns-站群前台会员登录-home-index-login-无验证码无频控-test-test-直登-后台登/poc.txt",
+   "action": "text-materialized"
+  },
+  {
+   "id": 464,
+   "code": "thinkphp-3.1.3-站群两个零凭证原生语-think_page_trace-泄全部内部路径-app",
+   "src_path": "pocs/thinkphp-3.1.3-站群两个零凭证原生语-think_page_trace-泄全部内部路径-app/poc.txt",
+   "dst_path": "pocs/thinkphp-3.1.3-站群两个零凭证原生语-think_page_trace-泄全部内部路径-app/poc.txt",
+   "action": "text-materialized"
+  },
+  {
+   "id": 466,
+   "code": "somcns-thinkphp3.1.3-站群-从被-get_html1-覆盖的模板渲染里抠出后台-host-白名单-闸",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 467,
+   "code": "目标站后台-host-白名单闸门可用-包含白名单串的任意-host-绕过-大小写敏感子串匹配",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 468,
+   "code": "thinkphp3.1.3-站群-cms-home-order-get_html1-零凭证覆盖线上模板文件-app-t",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 469,
+   "code": "166-kindeditor-上传-文件管理接口未授权-可零凭证上传-html-图片并回读-目录列举",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 470,
+   "code": "192.0.2.2-somcns-thinkphp3.1.3-后台-autoart-控制器未授权访问-绕过后台",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 471,
+   "code": "thinkphp-3.1.3-站群-cms-166-admin-autoart-控制器零鉴权读取后台并可直接写入开奖数",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 472,
+   "code": "somcns-站群-cms-零凭证渲染文章内容-home-index-bbs-可未授权遍历读取-article-表数据",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 473,
+   "code": "192.0.2.2-somcns-thinkphp-后台登录面零阻可达-path_info-执行泄露绝对路",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 474,
+   "code": "前台会员登录弱口令-test-test-且无验证码无频控-可被在线口令爆破",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 475,
+   "code": "后台模板源码未授权读取-app-tpl-静态直出-泄露后台全部控制器与登录页",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 480,
+   "code": "sub2api-admin-login-weak-password-domain-derived-jwt-takeove",
+   "src_path": "pocs/sub2api-admin-login-weak-password-domain-derived-jwt-takeove/sub2api_admin_weak_password.md",
+   "dst_path": "pocs/sub2api-admin-login-weak-password-domain-derived-jwt-takeove/sub2api_admin_weak_password.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 481,
+   "code": "sub2api-0.2.x-插件机制-rce-判死-未签名-.s2plugin-上传一律-400-内置发布者公钥无官方私",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 482,
+   "code": "sub2api-0.2.19-adminauth-认证实现层无可绕过变异-空key-前缀-大小写-重复头-jwt混淆全阴",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 483,
+   "code": "sub2api-网关-api-key-未随凭据轮换失效-dump-泄露的-sk-key-仍可调用-v1-付费接口",
+   "src_path": "pocs/sub2api-网关-api-key-未随凭据轮换失效-dump-泄露的-sk-key-仍可调用-v1-付费接口/poc.md",
+   "dst_path": "pocs/sub2api-网关-api-key-未随凭据轮换失效-dump-泄露的-sk-key-仍可调用-v1-付费接口/poc.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 484,
+   "code": "sub2api-邮箱验证码接口账号存在性枚举-oracle-公开-api-v1-auth-send-verify-co",
+   "src_path": "pocs/sub2api-邮箱验证码接口账号存在性枚举-oracle-公开-api-v1-auth-send-verify-co/sub2api_email_enum_oracle.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 485,
+   "code": "sub2api-plain-http-no-redirect-missing-hsts-sslstrip",
+   "src_path": "pocs/sub2api-plain-http-no-redirect-missing-hsts-sslstrip/poc.md",
+   "dst_path": "pocs/sub2api-plain-http-no-redirect-missing-hsts-sslstrip/poc.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 486,
+   "code": "edge-host-127.0.0.1-baota-default-site-nginx-stub-status-una",
+   "src_path": "pocs/edge-host-127.0.0.1-baota-default-site-nginx-stub-status-una/poc.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 487,
+   "code": "sub2api-validate-promo-code-unauth-enum-oracle",
+   "src_path": "pocs/sub2api-validate-promo-code-unauth-enum-oracle/sub2api_promo_code_oracle.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 488,
+   "code": "sub2api-invalid-auth-rate-limit-429-shared-bucket-dos",
+   "src_path": "pocs/sub2api-invalid-auth-rate-limit-429-shared-bucket-dos/sub2api_invalid_auth_dos.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 489,
+   "code": "photon-edge-clte-desync-smuggle-0chunk-tail-forwarded",
+   "src_path": "pocs/photon-edge-clte-desync-smuggle-0chunk-tail-forwarded/photon_edge_clte_smuggle.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 490,
+   "code": "sub2api-photonedge-nginx-path-normalization-no-auth-bypass",
+   "src_path": "pocs/sub2api-photonedge-nginx-path-normalization-no-auth-bypass/poc.txt",
+   "dst_path": "pocs/sub2api-photonedge-nginx-path-normalization-no-auth-bypass/poc.txt",
+   "action": "text-materialized"
+  },
+  {
+   "id": 492,
+   "code": "sub2api-0.2.19-密码重置链审查-feature-gate-双开关-token-设计-reset-不清-to-cve-2026-27812",
+   "src_path": "pocs/sub2api-0.2.19-密码重置链审查-feature-gate-双开关-token-设计-reset-不清-to-cve-2026-27812/poc.txt",
+   "dst_path": "pocs/sub2api-0.2.19-密码重置链审查-feature-gate-双开关-token-设计-reset-不清-to-cve-2026-27812/poc.txt",
+   "action": "text-materialized"
+  },
+  {
+   "id": 494,
+   "code": "sclub-168six-up_photo-a_photo-头像与直播台图标上传-.php-文件名被丢弃-gd-重编码裁",
+   "src_path": "pocs/sclub-168six-up_photo-a_photo-头像与直播台图标上传-.php-文件名被丢弃-gd-重编码裁/sclub_168six_upload_php_not_exec.md",
+   "dst_path": "pocs/sclub-168six-up_photo-a_photo-头像与直播台图标上传-.php-文件名被丢弃-gd-重编码裁/sclub_168six_upload_php_not_exec.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 495,
+   "code": "mysql-3306-exposed-host-not-allowed-ip-whitelist-three-egres",
+   "src_path": "pocs/mysql-3306-exposed-host-not-allowed-ip-whitelist-three-egres/poc.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 496,
+   "code": "h2c-grpc-日志摄取接口-pb.logingestservice-ingestlogevents-未授权调用-无",
+   "src_path": "pocs/h2c-grpc-日志摄取接口-pb.logingestservice-ingestlogevents-未授权调用-无/grpc-h2c-logingest-unauth.md",
+   "dst_path": "pocs/h2c-grpc-日志摄取接口-pb.logingestservice-ingestlogevents-未授权调用-无/grpc-h2c-logingest-unauth.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 497,
+   "code": "minio-streaming-unsigned-payload-trailer-sigv4-bypass-cve-20",
+   "src_path": "pocs/minio-streaming-unsigned-payload-trailer-sigv4-bypass-cve-20/minio-streaming-unsigned-payload-trailer-sigbypass.md",
+   "dst_path": "pocs/minio-streaming-unsigned-payload-trailer-sigv4-bypass-cve-20/minio-streaming-unsigned-payload-trailer-sigbypass.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 498,
+   "code": "minio-admin-v3-streaming-unsigned-payload-trailer-bypass-cve",
+   "src_path": "pocs/minio-admin-v3-streaming-unsigned-payload-trailer-bypass-cve/minio_admin_v3_streaming_bypass.md",
+   "dst_path": "pocs/minio-admin-v3-streaming-unsigned-payload-trailer-bypass-cve/minio_admin_v3_streaming_bypass.md",
+   "action": "text-materialized"
+  },
+  {
+   "id": 499,
+   "code": "minio-console-ak-existence-oracle-and-get-bypass-boundary",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 500,
+   "code": "edge-host-whitelist-third-party-vhost-isolation-config-and-p",
+   "src_path": "pocs/edge-host-whitelist-third-party-vhost-isolation-config-and-p/edge_host_whitelist_vhost_isolation_plans_leak.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 501,
+   "code": "omnihelm-console-grpc-bff-host-oracle",
+   "src_path": "pocs/omnihelm-console-grpc-bff-host-oracle/poc.py",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 502,
+   "code": "3x-ui-x-ui-assets-unauth-directory-listing-and-dual-404-base",
+   "src_path": "pocs/3x-ui-x-ui-assets-unauth-directory-listing-and-dual-404-base/poc.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 503,
+   "code": "sub2api-fork-dahurj999-admin-面-9-载体黑盒矩阵全阴-gin-18b-58b-路由存",
+   "src_path": "",
+   "dst_path": null,
+   "action": "no-source-path"
+  },
+  {
+   "id": 504,
+   "code": "oss-listbucket-denied-getobject-allowed-anon-read-matrix",
+   "src_path": "pocs/oss-listbucket-denied-getobject-allowed-anon-read-matrix/poc.sh",
+   "dst_path": null,
+   "action": "exec-not-materialized"
+  },
+  {
+   "id": 505,
+   "code": "sub2api-0.2.19-activities-fork-reset-feature-gate-dead",
+   "src_path": "pocs/sub2api-0.2.19-activities-fork-reset-feature-gate-dead/poc.txt",
+   "dst_path": "pocs/sub2api-0.2.19-activities-fork-reset-feature-gate-dead/poc.txt",
+   "action": "text-materialized"
+  }
+ ]
+}

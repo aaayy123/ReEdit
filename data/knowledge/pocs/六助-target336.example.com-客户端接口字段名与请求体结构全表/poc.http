@@ -1,0 +1,225 @@
+# 六助(LHZS) App example.com 客户端接口字段名与请求体结构全表
+
+来源样本：`example.com`（包名 `example.com`，App 名「六助」，example.com/versionCode 28，
+SHA256 `de51673edf1c228acfd1496ccbf058fc620c36905be6798f1fd5e0d044de9fa8`，44,840,633 字节）
+目标 dex：`classes2.dex`（7,870,036 字节 / 59,393 strings / 6,210 类 / 53,130 方法）
+提取角色：exploit
+
+## 提取方法（可复现）
+```
+# 1) 解包
+python -c "import zipfile;z=zipfile.ZipFile('example.com');open('classes2.dex','wb').write(z.read('classes2.dex'))"
+# 2) 自研 DEX 解析：numpy 向量化扫 const-string (0x1A, 格式 21c) / const-string/jumbo (0x1B, 格式 31c)，
+#    再二分归属到 code_item，建立 "字符串常量 -> 引用它的方法" 映射
+python dexref2.py classes2.dex --build-seqs seqs.json     # 方法 -> 有序字符串序列（41,423 code_item，2 秒）
+python dexref2.py classes2.dex --seq "/register18"          # 查某字符串被哪些方法引用并打印该方法全部字符串
+# 3) 静态常量值（int 枚举）
+python staticvals.py classes2.dex AdminUtil
+```
+> 要点：R8/ProGuard 混淆只改**标识符**（类名/字段名变单字母），**字符串常量（含 JSON key、接口路径）保持明文**。
+> 因此从 `const-string` 指令即可精确读出请求体字段名 —— **不需要猜**。
+
+---
+
+## 一、URL 构造机制（解释所有 base 从哪来）
+
+### 1.1 项目名常量（`Lcom/marksix/util/CheckUrlUtils`)
+`LHService` / `Tk_Kj` / `IMService` / `UpLoadPic` / `PayBmob`
+另有 `fast_` 前缀变体：`fast_LHService`、`fast_Tk_Kj`、`fast_IMService`、`fast_UpLoadPic`、`fast_PayBmob`
+（代码里还有笔误串 `fast_pLoadPic`）
+
+**拼装规则**：`appUrl` + `/` + `<项目名>` + `/` + `<接口名>`
+日志线索：`'项目=====>'`、`'path=====>'`、`'原 url=====>'`、`'返回原 url=====>'`、`'response=====>'`
+
+### 1.2 服务器下发地址清单（`Lcom/marksix/util/CheckUrlUtils$1/$2;->onResponse`）
+JSON 字段：`all_urls` / `base_urls` / `tkkj_urls` / `im_urls` / `upLoad_urls` / `pay_urls`
+映射：`base_urls`→`LHService`、`tkkj_urls`→`Tk_Kj`、`im_urls`→`IMService`、`upLoad_urls`→`UpLoadPic`、`pay_urls`→`PayBmob`
+
+### 1.3 ★★ 配置源（`Lcom/marksix/lhzs/Splash;->setUpAppurl` 、`CheckUrlUtils$1`)
+```
+https://target337.example.com/u10.txt
+https://example.com/u10.txt
+https://target338.example.com/u10.txt
+https://target339.example.com/u.txt
+http://203.0.113.9/u10.txt        <-- 明文 HTTP，最易劫持
+https://target340.example.com/u.txt
+```
+限频串：`'last_setUpAppurl'`、`'=====每分钟只能获取一次url最佳线路：'`
+⇒ **这 6 个地址是全局唯一的"地址源"。任一被改写 ⇒ 全 App 所有接口地址被劫持。**
+
+### 1.4 硬编码 base（兜底线路）
+```
+http://203.0.113.10/LHService
+http://203.0.113.10/Tk_Kj
+http://203.0.113.10/IMService
+http://203.0.113.10/PayBmob
+http://203.0.113.24:8080/UpLoadPic
+http://203.0.113.25:8080/IMService/jielong     <-- 实路径
+http://203.0.113.17:8080/LHService
+http://203.0.113.23:8080/PayBmob
+http://192.168.31.58:8080/IMService              <-- 内网地址
+http://192.168.1.69:8080/LHService  /  Tk_Kj     <-- 内网地址
+https://example.com  /  https://example.com
+```
+
+---
+
+## 二、★★★ 请求体字段名（代码原文，按指令顺序）
+
+### 2.1 `/register18` —— 注册
+来源 `Lcom/marksix/lhzs/RegisterActivity$MyTask;->doInBackground()` code_off=0x20966c
+```
+username, password, name, yzm, flag, registerLv, isReal
+flag: "0"/"1"    isReal: "0"/"1"
+```
+```
+POST <base>/register18
+username=<>&password=<>&name=<>&yzm=<>&flag=1&registerLv=<>&isReal=1
+```
+
+### 2.2 `/login4` —— 登录（**3 个调用点，字段不同**）
+**(a) 账号密码登录** `Lcom/marksix/lhzs/LoginActivity$MyTask;->doInBackground()` code_off=0x1fefd8
+```
+username, password, yzm, flag="1", token, loginType
+```
+**(b) 获取验证码** `Lcom/marksix/lhzs/LoginActivity;->getYzm()` code_off=0x1ff5fc
+```
+username, flag="0"
+```
+**(c) 切换用户/顶号** `Lcom/marksix/Fragment/Geren_Fragment;->changeUser()` code_off=0x1c8414
+```
+userid, usercid, flag="3"
+```
+
+### 2.3 ★ `/admin` —— 统一管理操作入口
+来源 `Lcom/marksix/util/AdminUtil;->admin(Activity,int,int,String,String,String,int)` code_off=0x21a290
+```
+type, cz, bz, flag, json
+type (int) / cz (int) / bz (String 备注) / flag / json (String，数据体)
+```
+**`type` 真实数值**（`Lcom/marksix/util/AdminUtil` static_values_off=0x72fc0d）：
+```
+BBS_TieZi    = 0    -> TypeNames[0] = 论坛帖子
+BBS_Huitie   = 1    -> TypeNames[1] = 论坛回帖
+BBS_Dianping = 2    -> TypeNames[2] = 论坛点评
+TK_PingLun   = 3    -> TypeNames[3] = 图库评论
+User_Liuyan  = 4    -> TypeNames[4] = 用户留言板
+```
+`cz` 语义候选（`AdminUtil;->adminTiezi()` 菜单原文）：
+`删除` / `转区` / `改期` / `置顶` / `取消置顶` / `查看举报人`
+备注原因枚举（`AdminUtil;->showBeizhu()`，共 11 项 + 「其他」）：
+`发表联系方式` / `发布广告,卖料,拉网投等广告信息` / `发表色情,淫秽信息` / `发表谩骂或使用暴力、粗俗、攻击性语言` /
+`恶意举报他人` / `图片内含有网址` / `发表内容与板块无关` / `收费战绩在论坛内打广告` /
+`公开他人收费战绩` / `诱导他人发表联系方式等违规内容` / `其他`
+
+### 2.4 ★ `/upload` 与 `/upload2` —— 上传（离 getshell 最近）
+**(a) `/upload`** 头像上传 `Lcom/marksix/Fragment/Geren_Fragment$MyUploadHeadTask;->doInBackground()` code_off=0x1c7ab4
+```
+userid, flag, head, base64, type
+（head = base64 图片内容；上传成功后取 headurl，再调 /user_set 写回）
+```
+
+**(b) `/upload2`** 通用图片上传 `Lcom/marksix/util/UpLoadUtil;->upLoad()` code_off=0x226c4c
+```
+content, file, Token
+响应字段：linkurl
+```
+**(c) 手工 multipart 报文** `Lcom/marksix/util/UpLoadUtil;->formUpload()` code_off=0x2265a0
+```
+POST
+Connection: Keep-Alive
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; zh-CN; rv:203.0.113.5)
+Content-Type: multipart/form-data; boundary=---------------------------123821742118716
+Content-Disposition: form-data; name="<field>"; filename="<name>"
+（文件名后缀硬编码 .png；MIME 取 image/png | image/jpeg | application/octet-stream）
+```
+
+**(d) 发帖带图** `Lcom/marksix/util/UpLoadUtil;->setImgByStr()` code_off=0x22643c
+```
+路径 /Fatie
+字段：imgStr, imgName, username, id, title, body, fid
+```
+⇒ **`imgName` 是客户端可控的文件名** —— 若服务端直接用它落盘，即路径/扩展名可控。
+
+**(e) `Lcom/marksix/util/UpLoadUtil;-><clinit>()` 里的硬编码七牛云上传凭证**
+```
+um6IEH7mtwnwkGpjImD08JdxlvViuELhI4mFfoeL:NCnWTr1D3jR_9_dxj6geIgPBQq4=:eyJzY29wZSI6ImFuZHJvaWRkZW1vIiwiZGVhZGxpbmUiOjIzMDk5MjE5MTIsInJldHVybkJvZHkiOiJ7IFwiaGFzaFwiOiQoZXRhZyksXCJrZXlcIjokKGtleSksXCJtaW1lVHlwZVwiOiQobWltZVR5cGUpLCBcImZzaXplXCI6JChmc2l6ZSl9In0=
+```
+Base64 解码 policy 段：
+```json
+{"scope":"androiddemo","deadline":2309921912,"returnBody":"{ \"hash\":$(etag),\"key\":$(key),\"mimeType\":$(mimeType), \"fsize\":$(fsize)}"}
+```
+AccessKey=`um6IEH7mtwnwkGpjImD08JdxlvViuELhI4mFfoeL`，bucket/scope=`androiddemo`，
+`deadline=2309921912`（≈ 2043-03-09，几乎不过期）。**疑似照抄七牛官方 demo 凭证，需实测有效性。**
+
+### 2.5 其它已提取到字段名的接口
+| 接口 | 字段（代码原文） | 来源方法 |
+|---|---|---|
+| `/user_set` | `type, userid, im, frd, hongbao, liuyan, jianjie, daan, index, oldpswd, password` | `Lcom/marksix/Activity/UserSetActivity2$MyTask;->doInBackground` |
+| `liuyan`（删留言） | `userid, liuyan_id, flag` | `Lcom/marksix/Adapter/LiuyanAdapter;->DeleteLiuyan` |
+| `redpacket` | `action, id, token, quanxian` | `Lcom/marksix/Activity/ChatActivity;->sendRedpacket` |
+| `/bbsReply` | `id, title, body, imgurl, fid, redpacket` | `Lcom/marksix/Task/FaTieTask;->doInBackground` |
+| `chatRoom` | `mute, admin, attributeList, log` | `Lcom/marksix/Activity/ChatActivity$9;->onResponse` |
+
+---
+
+## 三、★ 完整接口路径总表（~110 个，来自两个"接口常量类"）
+
+来源 `Lcom/marksix/Dao/AppUrl;-><init>()` code_off=0x1b5c90
+来源 `Lcom/marksix/Dao/MyUrl;-><init>()` code_off=0x1bcf60
+（顺序即代码顺序）
+
+```
+init, fenleilist, ZiLiao, ZiLiaoBody, Toupiao, Paihang, Niuren, ChangeInfo,
+gethuitielist, getdianping, dianping, guanzhu, user_tiezi, user_list, userinfo,
+post_user_msg, get_user_msg, uploadpic, liuyan, delete, changetiezi, shangbang,
+gaoshoubang, getzhanji2_4, guanli, getbbslist2_4, peizhi, peizhi2_7, mingrentang,
+fatie2_4, Init, kj_lishi, setgz, shangbang_2015, zj_info, zj_set, get_GSB, user_set,
+get_msg, add_frd, login_2015, json, zhichong, paylog, userlist, hongbao, mailiao,
+zan, video, gl_center, Register_phone, touzhuInfo, touzhu, testpool, setzj,
+chongzhi, vip, xunzhang, master, xiaoheiwu, userxunzhang, phb, zoushi, im_friend,
+chongzhi_mob, setmailiao, goon, zj_dszs, wtkj, notify, fatie3_0, gethuitie, jubao,
+edit_tiezi, get_GSB2_8, pingbi, config, getTj, zj_dingyue, gsb_renwu, getrenwu,
+getlianxiren, getTj2, get_rw_ph, register18, getdianping3_0, gettk, tp, pay3,
+payConfig, getkjdate, zuijiubukai, zan2, replytk, liuyan2, getliuyan2, getbbsreply,
+bbsReply, redpacket, sendMsg, getMsg, chatRoom, userRelationship, sysMsg, getLuntan,
+editBbsReply, login_2020, shangbang_2020, getZhanji3_0, getKJ2_8, getShangbang,
+upload2, login4, upload
+```
+
+---
+
+## 四、v27 接口（example.com 新版）—— 静态拿不到，需脱壳
+
+example.com（包名含 `com.marksix`，含 v27）的 `classes.dex` 里，**以下字符串存在于字符串表但零引用**：
+```
+/LHService/v27/auth/refresh
+/auth/login/, /auth/login/send, /auth/login/finish, /auth/login/code/start, /auth/login/status, /auth/login/choose
+/auth/password/, /auth/password/start, /auth/password/finish, /auth/password/renew
+/auth/register/, /auth/register/start, /auth/register/finish, /auth/register/email
+/auth/refresh
+/IMService/v27/chat/query, /IMService/v27/chat/command
+/LHService/v27/public/query, /Tk_Kj/v27/public/query
+/v27/routing/health, /v27/
+LHZSV2
+/(LHService|Tk_Kj|IMService)/v27/[a-z/]+      <-- 正则，用于匹配
+com.marksix.workbench.v27.*    /    com.marksix.routing.v27.*    /    com.marksix.chat.v27.*
+```
+**验证结论（重要）**：
+- lz2 的 `classes.dex`（11,805,553 字节）= 壳头(9,672B) + 真 dex1(3,173,588B @0x25C8) + 真 dex2(8,622,108B @0x3092C8)
+- 两个真 dex **没有 nop 方法体**（isnop 统计：全 0 方法体 = 0）
+- 但 `auth/register/start`（dex2 string index=27285）在**整个 dex 的 raw 字节里 const-string 引用数 = 0**
+- `method_ids_size = 58,853` 而可从 class_data 枚举到的方法仅 `51,342` —— **7,511 个方法签名孤立、方法体被抽走**
+⇒ **zxprotect 抽取壳把 v27 网络层方法体移入加密 payload
+  `assets/vwwwwwvwww/{arm,arm64,x86,x86_64}/lib830f622c2304076e.so`**
+⇒ **v27 的请求体字段名静态不可得，必须脱壳（或从服务端 schema / 错误回显侧信道获取）**
+
+---
+
+## 五、给前线的优先测试建议
+1. **6 个 `u.txt` / `u10.txt` 配置源**（尤 `http://203.0.113.9/u10.txt` 明文 HTTP）的**写权限** → 写进去即全局劫持所有接口地址
+2. **`/UpLoadPic/upload2`（content/file/Token）与 `/UpLoadPic/upload`（head/userid/flag/type）** →
+   测：扩展名校验、`filename` 可控性、`content`/`head` 是 base64 还是裸字节、落盘路径与返回 `linkurl` 规律
+3. **`/Fatie` 的 `imgName`** 是否直接用于落盘文件名（路径穿越 / 后缀可控）
+4. **`/admin`**（`type`=0..4 已知、`cz` 待枚举）→ 未认证或普通 session 直调
+5. 上述 ~110 个接口逐个探未授权（尤其 `userinfo`/`userlist`/`gl_center`/`master`/`guanli`/`peizhi`/`config`/`paylog`/`Register_phone`/`user_set`）

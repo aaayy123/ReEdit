@@ -1,0 +1,35 @@
+## 现象
+未携带任何 Cookie/Session 直接 POST 业务接口，响应 JSON 的 msg 字段内直接拼接了**数据库执行层错误信息**，把原始 SQL 完整吐回来：
+
+```
+POST /example.com?g=Home&m=Index&a=buy_art HTTP/1.1
+Host: <target>
+X-Requested-With: XMLHttpRequest
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+
+nub=1&name=x&art_id=1
+```
+响应：
+```json
+{"status":0,"msg":"出错!UPDATE `user` SET `balance`=balance-0 WHERE ( `id` = null )"}
+```
+（实际为 JSON unicode 转义；解码后如上）
+
+## 从这一条要读出什么
+1. **表名**：`user`（业务主表）
+2. **敏感字段与运算**：`balance`，且写法为 `balance-<N>` —— 这是**资金扣减/加减**逻辑，是可篡改面
+3. **条件拼接结构**：`WHERE ( `id` = <值> )` —— 反引号包裹表名/字段名、变量内联，属**字符串拼接 SQL**而非绑定参数
+4. **未鉴权可达**：`id = null` 说明未登录时 `$this->user_id` 为 null 且被直接写进 SQL 文本，接口没有先做登录校验
+5. 反引号包裹 ⇒ 后端为 **MySQL**，ThinkPHP 的 `Model->where()` 生成 `( `id` = null )` 这种带括号形式
+
+## 后续动作（关键）
+**不要**直接判定为 SQL 注入 —— 必须做参数矩阵证明参数能进入 SQL 文本：
+- 依次改 `nub` / `name` / `art_id` 为 `1`、`0`、`999`、`1'`、`1 AND 1=1`、`1) OR 1=1-- -`
+- 若响应 SQL 文本**随之变化**（数字变化 / 出现注入片段 / 报语法错）⇒ 真注入，可上 sqlmap 或手搓
+- 若响应**完全一致**（本项目实测即如此）⇒ 参数与 SQL 骨架无关，只属**报错信息泄露**，不可注入
+
+## 通用价值
+同类接口遍布 ThinkPHP/自研 PHP 后台：任何把 `$model->getError()` / `$this->error()` 或 MySQL 报错原文塞进 JSON `msg` 返回的接口，都会以同样方式暴露表结构、字段名与资金逻辑。这类接口是**快速拿到数据模型、进而定位注入点与越权点**的捷径。
+
+## 危害定级建议
+单独的信息泄露通常为中危；但泄露**资金字段与运算方式**（`balance-N`）+ 接口未鉴权，应为**中危偏上**，并作为资金篡改与越权的优先探测入口上报。

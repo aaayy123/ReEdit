@@ -1,0 +1,4 @@
+实测矩阵（2026-11-03，i8222，直连 Photon-Edge，单发 13s 间隔）：
+baseline/nobody/X-Forwarded-Host/X-Forwarded-Proto+Host/Forwarded/X-Forwarded-Server/X-Host → 403|89 同 body；Host: evil 或 suffix → 连接被 RST（边缘按 Host 路由）；Host: 127.0.0.1 → nginx 404/548（未进应用）；reset-password 假 token → 403|89；reset 空体 → 400/349 字段校验；send-verify-code → 200/102 与 409 EMAIL_EXISTS。
+前端 bundle 仅 /auth/forgot-password 与 /auth/reset-password 两个别名，无 fork 专属重置端点；captcha 三类开关全关。
+回捡条件：password_reset_enabled 变 true（此时仍需能读 user@example.com 邮箱，且 reset 不清 totp、登录仍要 TOTP）。

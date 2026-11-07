@@ -1,0 +1,12 @@
+# 阴性结论（勿重复）
+50+ 变体全部 401/404/301/200-HTML/400，无 200 JSON、无 403 Admin access required。
+- 归一化掉（→401，仍走 adminAuth）：仅尾 `/.` 与尾 `/%2e`
+- 不归一化（→gin 404）：`//`（段内）、`/./`（中间）、`/../`、`%2e%2e`、尾分号 `;x=1`、`.json`、`%20`、`%09`
+- 落 SPA 200 HTML：前导 `//`、`/%2f`、`/%2f%2f`、`/./` 前缀、全大写 `/API/V1/ADMIN/BACKUPS`、双编码 `/%2561pi`
+- 400：`%00`（nginx 页，暴露源站 nginx）
+
+# 可用原语
+`%2f` 编码整条前缀 `/api%2fv1%2fadmin%2fbackups` 仍命中同一 handler（401），可绕按字面前缀匹配的 WAF 规则。
+
+# 判据
+无凭据 58B UNAUTHORIZED；bogus Bearer 50B INVALID_TOKEN；bogus x-api-key 62B INVALID_ADMIN_KEY；18B 404 page not found=未匹配；200 text/html=SPA（Go 渲染版 3.4KB 带 __APP_CONFIG__，nginx 静态版 798B 带 Last-Modified）。

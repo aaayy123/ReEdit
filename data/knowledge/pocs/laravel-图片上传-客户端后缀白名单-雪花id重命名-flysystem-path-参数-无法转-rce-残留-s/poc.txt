@@ -1,0 +1,13 @@
+实测记录（2026-10-22, task-591）：
+- 端点：https://example.com/epay/api/upload/uploadImage（ecapi/peapi/uzapi 同构同洞）
+- 匿名上传返回：{"success":true,"data":{"suffix":"png","storage_path":"20261021","object_name":"971593763418259456.png","url":"/uploadfile/20261021/971593763418259456.png"}}
+- 回读：GET 该 URL -> 200 image/png，内容原样。
+- 后缀白名单实测：a.php / a.PHP / a.Php / a.pHp / a.php3-8 / a.phtml / a.pht / a.phar / a.phps / a.inc / a.shtml / a.php. / a.php.. / a.php(空格) / a.jpg.php / a.png.php / a.jpg/.php / .htaccess / .user.ini -> success=false, "The image must be a file of type: jpg, jpeg, png, gif, svg, bmp."
+- 仅末段扩展命中白名单才通过：a.jpg.php.png->png、a.png.php.jpg->jpg、a.jpg;.php->jpg；NUL 只截断 filename。
+- 回读执行测试：/<id>.jpg/.php、;.php、%2f.php、.php、..php -> 404 code2100（try_files 回落 example.com）。
+- path 参数：path=public 可在 /uploadfile/public/<id>.png 回读；path=/tmp2->tmp2；path=.. / ../x / x/../../y / ..\..\public -> 500 upload error；path=..%2f..%2fx、....//x 被当字面目录名。
+- *.php 目录：path=shell591.php 建成目录，其本身/example.com/x.jpg.php 全 404，子文件静态 image/png。
+- SVG XSS：/uploadfile/20261021/971596920336662528.svg -> 200 image/svg+xml, 无 nosniff；chrome --headless=new --dump-dom 得到 data-xss="EXEC_https://example.com_0"。
+- DoS：4096KB multipart -> 502（openresty），约 5s 后 getConfig 200 自愈；4200KB -> 413。
+- 旁路：203.0.113.94:3306 MySQL 8.4.11 用 24 组默认/弱口令全 1045；SSH 22 未爆破。
+判定：该上传点不能转 RCE，任务要 shell 需另寻 API 鉴权/IDOR/SQLi、Laravel N-day 或后台入口。

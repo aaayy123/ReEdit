@@ -1,0 +1,25 @@
+## 两个原生语
+
+### A. think_page_trace 全开（零凭证）
+任意请求（含后台登录页、登录失败页）页面尾部输出：
+- 15 个加载文件的绝对路径（`/www/wwwroot/<项目>/App/Runtime/~runtime.php`、`App/Conf/config.db.php`、`App/Conf/target406.example.com.php` …）
+- 后台控制器/模板编译缓存文件名
+- DB 驱动类与真实表标识（本例 `online.admin`）
+- `查询信息 : N queries M writes` 与错误堆栈
+
+### B. /App/ 目录 PATH_INFO 执行
+```
+GET /App/Lib/Action/Home/OrderAction.class.php/  → 200/158B
+Fatal error: Class 'CommonAction' not found in /www/wwwroot/<项目>/App/Lib/Action/Home/OrderAction.class.php on line 3
+
+GET /App/Conf/config.php/                        → 200/0B   （文件存在且被 PHP-FPM 执行）
+GET /App/Conf/config.php~                        → 403      （备份后缀被 nginx deny，反证文件真实存在）
+```
+⇒ nginx 对 `/App/` 下 .php 无 deny；尾斜杠触发 `fastcgi_split_path_info` 后直接执行该文件。
+
+## 附带产出：文件缓存 md5 算法
+`md5('/www/wwwroot/<项目>/App/Tpl/Admin/Index_login.html')` → `/App/Runtime/Cache/Admin/<md5>.php`（200），可据此枚举/读取编译后的模板缓存。
+
+## 影响
+- 精确锁定配置文件清单、表前缀/库名，为 LFI/配置读取提供落点
+- `/App/` 下落地 .php 即执行的通道，是写文件原语 → RCE 闭环的关键前置

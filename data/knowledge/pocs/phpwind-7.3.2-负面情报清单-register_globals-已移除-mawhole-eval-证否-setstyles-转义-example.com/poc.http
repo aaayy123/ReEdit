@@ -1,0 +1,65 @@
+# PHPWind 7.3.2（GBK / PHP 5.5.38）负面情报 —— 已判定不可用或已封堵的路线，别再消耗封禁额度
+
+## 〇、最致命的一条环境事实：register_globals 已不存在
+PHP 5.5.38 中 register_globals 于 **PHP 5.4.0 被彻底移除**。因此**所有 2010-2013 年 phpwind 老 EXP 里形如 `?v=<code>`、`?cmd=<code>`、`?GLOBALS[x]=...` 的传参手法全部失效**。
+· 具体后果：`${@eval($v)}`、`${@eval($a)}`、`${@eval($_)}$` 这类 payload **落进 bank_sort.php 也不会执行出效果**（eval 收到空字符串）。
+· 目标上已存在的 `${@eval($a)}` uid=8916 / `${@eval($_)}` uid=8913 是**前人留下的无效 payload**，不要以为照着做就能打通。
+· **正确做法**：payload 必须显式引用超全局变量，如 `${@eval($_POST[1])}`；或使用短常量参数，如 `${system(id)}`（PHP<8 下裸词 `id` 回退成字符串 'id'）。
+
+## 一、target108.example.com:992/1023 eval 点 —— 源码级证否（死路）
+```php
+if ($topped > 0){ eval("\$specialSort = PW_THREADSPECIALSORT_TOP$topped;"); }
+```
+· 全文件 `$topped` 唯一来源：line 919 `S::gp(array('topped',...))` → line 921 `$topped = intval($topped);` → **被强转 int，不可能注入**。
+· 另 line 65 `$admincheck = pwRights($isBM, 'topped');` 还需版主权限。
+· 结论：**别再为这个 eval 花任何一个包**。
+
+## 二、admin/setstyles.php 写 CSS —— 写入侧有 `$` 转义（A1 那条 eval 的拦路虎）
+```php
+// target188.example.com:154
+$style_css = str_replace("$","\$",$cssadd[0].'<!--css-->'.$style_css.'<!--css-->'.$cssadd[2]);
+// target188.example.com:156
+writeover(D_P."data/style/{$tplpath}_css.htm",$style_css);
+```
+· 后台正常改 CSS 会把每个 `$` 变成 `\$`，进 eval 的双引号字符串后成为字面 `$`，**插值/Eval 失效**。
+· 想走 admin/target117.example.com:684 那个 eval，必须另找**能把 `${...}` 原样写入 `data/style/*_css.htm` 的写入点**（风格包 zip 导入解压 / 任意文件写 / SQL OUTFILE）。不要指望在后台 CSS 编辑框里直接填 payload。
+
+## 三、example.com?H_name= 看似 LFI —— 实为白名单锁死
+```php
+S::gp(array('H_name'));
+if (preg_match('/^http/i',$H_name)) { Showmsg($H_name); }
+elseif(!$db_hackdb[$H_name] || !is_dir(R_P.'hack/'.$H_name) || !file_exists(R_P."hack/$H_name/example.com")){ Showmsg('hack_error'); }
+define('H_P',R_P."hack/$H_name/");
+require_once(H_P.'example.com');
+```
+· `$db_hackdb[$H_name]` 是**数据库 hack 插件表的存在性判断** —— 传 `../../upload/xx` 时该键不存在，第一道就 `hack_error`，**路径穿越不可行**。
+· 能用的 H_name 仅限已注册插件：**bank / blog / new / passport / rate / toolcenter**（8.7 源码 hack/ 目录实测清单）。
+· 结论：example.com 本身不是洞；价值只在 `H_name=bank` 触发的 bank_sort.php include。
+
+## 四、api / UCenter / windid / phpMyAdmin（题设已确认）
+· 目标 `/bbs/api/`、`/bbs/uc/`、windid 接口**全 404** → pw_api.php → api/class_base.php 本地包含链、UCenter 相关链全部不可用。
+· 目标无 phpMyAdmin → 不要指望 SQL 面板直接可用。
+
+## 五、前台注入面（题设已测排除，勿重复）
+fid / tid / keyword / orderby / asc / page 均已过 intval 或白名单；宽字节已试；`pw_example.com?action=pcdelimg` 在该版本无此 action。**别再刷这些参数**——目标限流极狠，出口 IP 已被封过一次。
+
+## 六、PHPWind S::escapePath（8.x 的防护，7.3.2 需实测）
+```php
+function _escapePath($fileName,$ifCheck=true){
+    $tmpname = strtolower($fileName);
+    $tmparray = array('://',"\0");
+    $ifCheck && $tmparray[] = '..';
+    if (str_replace($tmparray,'',$tmpname) != $tmpname) return false;
+    return true;
+}
+```
+· 8.x 里凡 `S::escapePath()` 包裹的 include/写文件点，都挡掉了 `://`、NUL、`..`（**但 `php://filter` 含 `://` 会被挡**）。
+· 7.3.2 是否为该写法需实测；若不包裹则上面的文件包含链才有戏。
+
+## 七、本机 nuclei 模板库命中情况（13764 条模板里只有 1 条与 phpwind 相关）
+```
+http/misconfiguration/installer/phpwind-installer.yaml
+name: phpwind Installer Exposure   severity: high   tags: misconfig,phpwind,exposure,install,vuln
+```
+· 直接跑：`nuclei -t http/misconfiguration/installer/phpwind-installer.yaml -u https://TARGET/bbs/`
+· **这条的分量被低估了**：老版本 phpwind 若不删除/不锁 `install.php`，可被**重装覆盖**（改管理员口令、写站点配置），是绕过「后台入口已改名」的一条近路。**值得优先花 1 个包确认 `/bbs/install.php` 是否存在**。

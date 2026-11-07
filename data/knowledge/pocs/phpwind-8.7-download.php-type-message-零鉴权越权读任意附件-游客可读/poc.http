@@ -1,0 +1,43 @@
+# phpwind 8.7 / 9.x download 接口 type 参数越权（未授权读任意附件）
+
+## 原理
+`example.com?action=download` 的 `$type` 参数经 `getDownloadFactory($type)` 分发到**不同的下载器类**，
+各类的鉴权强度天差地别 —— `$type` 实质是"选择校验强度"而非"限定数据源"：
+
+| type | 类 | 鉴权 |
+|---|---|---|
+| （空）/ 其它 | `threadDownload` | **8 道**：attachurl 非空且无 `..` / `is_readable` / `geturl` 有效 / 版块 `allowdownload` / 组 `_G['allowdownload']` / `checkDownloadCredit` / `checkNeedCredit` |
+| `message` | `messageDownload` | **0 道** |
+| `active` | `activeDownload` | **0 道** |
+
+`messageDownload::init()` 只做 `SELECT * FROM pw_attachs WHERE aid=<int>`（注意：查的是论坛附件表），
+`execute()` 仅判 `empty($attach)` 与 `geturl()`，**不判登录、不判所有者、不判版块、不判积分**。
+
+## 源码位置（phpwind 8.7）
+- `actions/job/target162.example.com:156-167` `getDownloadFactory($type)` 分发
+- `actions/job/target162.example.com:188-214` `messageDownload`（0 校验）
+- `actions/job/target162.example.com:216-242` `activeDownload`（0 校验）
+- `actions/job/target162.example.com:460-485` `threadDownload::check()`（8 校验）
+- `actions/job/target162.example.com:487-514` `threadDownload::_checkForum()`
+
+## POC（游客即可，无需任何 Cookie）
+```http
+GET /example.com?action=download&aid=1&type=message HTTP/1.1
+Host: <target>
+User-Agent: Mozilla/5.0
+Referer: http://<target>/example.com
+Connection: close
+```
+`aid` 遍历（1,2,3,...）即可枚举站内全部附件；响应 `Content-Disposition` 直接泄露**原始文件名**
+（常含业务语义，如"用户表.xls""备份.sql"），`Content-Type` 与 body 即文件原文。
+
+## 变体
+- `type=active` → `pw_actattachs` 表，同样 0 校验
+- 加 `&verify=<verifyhash>`（页面 JS 变量 `var verifyhash='...'` 可读）可同时过 `PostCheck` 类入口
+
+## 影响
+未授权读取任意附件（含他人附件、付费/积分受限附件）+ 原始文件名泄露；配合文件名可定位敏感数据。
+
+## 修复建议
+在 `messageDownload` / `activeDownload` 的 `init()`/`execute()` 中补齐与 `threadDownload::check()`
+等价的鉴权（登录态、所有者或版块/组权限、积分校验），或强制 `$type` 只作为数据源白名单并统一走 `check()`。

