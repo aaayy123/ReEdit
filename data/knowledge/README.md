@@ -34,8 +34,13 @@ Copy-Item "D:\Chromedownload\ReEdit\data\knowledge\pocs" "$rt\pocs" -Recurse -Fo
 # 3) 写入 poc 表与 FTS
 python -c "import sqlite3,sys; c=sqlite3.connect(r'$rt\knowledge.db'); c.executescript(open(r'D:\Chromedownload\ReEdit\data\knowledge\artex-poc-insert.sql',encoding='utf-8').read()); c.commit(); print('rows=',c.execute('select count(*) from poc').fetchone()[0])"
 
-# 4) 同步技能（包内 skills/redteam 会在插件启动时自动同步到 $rt\skills；
-#    如需立即生效不必手工复制）
+# 4) 同步技能（必须手工复制）
+#    注意：installBundledSkills() 只从「已安装插件目录」的 skills/redteam 同步，
+#    而 ~/.dsh/plugins/reedit-purge 没有 skills/ 目录 → 自动同步返回 missing，什么也不会发生。
+#    所以要真正生效，必须手工把 105 个 md 放进 $rt\skills（同名覆盖，原 20 个同名文件先备份）。
+Copy-Item "$rt\skills" "$rt\skills.bak-$(Get-Date -f yyyyMMdd-HHmmss)" -Recurse -Force
+Copy-Item "D:\Chromedownload\ReEdit\skills\redteam\*.md" "$rt\skills\" -Force
+(Get-ChildItem "$rt\skills" -Filter *.md).Count   # 期望 105 + 本地独有 3 = 108
 ```
 
 ## 验证（逐项给出实际输出，不通过即回滚）
